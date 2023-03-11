@@ -8,6 +8,11 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state,
                 currentUser: action.payload?.currentUserPayload ?? null
             }
+        case 'setNoUser':
+            return {
+                ...state,
+                currentUser: null
+            }
         case 'setNoParameter':
             return {
                 ...state,

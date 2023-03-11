@@ -1,8 +1,7 @@
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { auth, db } from "../firebase";
-import { logInFormInterface, signUpFormInterface } from "../Types/types";
-
+import { useAuth } from "../Contexts/AppContext";
 
 export async function signUpUser(email: string, password: string, username: string){
     await createUserWithEmailAndPassword(auth, email, password)
@@ -15,6 +14,7 @@ export async function signUpUser(email: string, password: string, username: stri
     })
     
 }
+
 
 export async function loginUser(email: string, password: string){
     await signInWithEmailAndPassword(auth, email, password)

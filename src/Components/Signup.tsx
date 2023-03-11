@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../Contexts/AppContext'
-import { signUpUser } from '../Functions/Functions'
+import {  signUpUser } from '../Functions/Functions'
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import Loader from './Loader'
+import GoogleSignIn from './GoogleSignIn'
 
 export default function Signup() {
     
     const { currentUser, username, password, email, dispatch, errorMessage } = useAuth()
 
     const [loading, setLoading] = useState(false)
-    
     useEffect(()=>{
         dispatch({
             type: 'setNoParameter'
@@ -102,8 +102,9 @@ export default function Signup() {
                     placeholder='Password'
                 />
                 
-                <button disabled={loading} type='submit' className='text-white w-[300px] p-4 bg-blue-500 rounded-lg text-[1.3rem] font-bold tracking-wide'>Sign Up</button>
+                <button disabled={loading} type='submit' className='text-white w-[300px] p-4 bg-blue-500 rounded-lg text-[1.3rem] font-bold tracking-wide mt-6'>Sign Up</button>
             </form>
+            <GoogleSignIn />
             <p className='mt-6 text-white'>Already have an account? <Link to='/login' className='text-blue-400 '>Log In</Link></p>
         </div>
     )
