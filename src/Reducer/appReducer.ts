@@ -24,12 +24,12 @@ export function appReducer(state: AppContextType, action: AppActionType){
         case 'setEmail':
             return {
                 ...state,
-                username: action.payload?.emailPayload ?? ''
+                email: action.payload?.emailPayload ?? ''
             }
         case 'setPassword':
             return {
                 ...state,
-                username: action.payload?.passwordPayload ?? ''
+                password: action.payload?.passwordPayload ?? ''
             }
         case 'setError':
             return {

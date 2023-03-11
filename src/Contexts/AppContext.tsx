@@ -31,10 +31,11 @@ export function AppProvider({children}: {children: ReactNode}){
                 }
             })
         })
+        return unsubscribe
     },[])
     return (
-        <AppContext.Provider value={mainState}>
-
+        <AppContext.Provider value={{...mainState, dispatch}}>
+            {children}
         </AppContext.Provider>
     )
 }
