@@ -19,7 +19,7 @@ export default function GoogleSignIn() {
     })
   }
   return (
-    <button onClick={logInWithGoogle} className='bg-white shadow-lg mt-4 shadow-slate-400 p-4 rounded-lg w-[300px] text-[1.1rem] font-bold flex items-center justify-center gap-3'>
+    <button onClick={logInWithGoogle} className='bg-white shadow-sm mt-4 shadow-slate-400 p-4 rounded-lg w-[300px] text-[1.1rem] font-bold flex items-center justify-center gap-3'>
       <i className='text-[1.8rem]'><FcGoogle /> </i>
       <p> Sign In With Google</p>
     </button>

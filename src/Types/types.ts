@@ -29,3 +29,31 @@ export type AppContextType = {
     errorMessage: string;
     dispatch: React.Dispatch<AppActionType>
 }
+
+export type allboardsType = BoardType[]
+
+
+export type BoardType = {
+    id: number;
+    name: string;
+    columns: columnType[]
+}
+
+export type columnType = {
+    id: number;
+    name: string;
+    tasks: tasksType[]
+}
+export type tasksType = {
+    id: number;
+    description: string;
+    title: string;
+    status: string;
+    statusId: Number;
+    subtasks: subtasksType[]
+}
+
+export type subtasksType = {
+    title: string;
+    isCompleted: Boolean;
+}

@@ -44,6 +44,10 @@ export default function DashBoard() {
             })
         }
     },[])
+
+    useEffect(()=>{
+        
+    },[])
     
     if(!currentUser){
         return <Navigate to='/login' />
