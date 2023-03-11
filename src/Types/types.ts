@@ -18,6 +18,7 @@ export type AppActionType = {
         passwordPayload?: string;
         usernamePayload?: string;
         errorPayload? : string;
+        BoardsPayload?: BoardType[]
     }
 }
 
@@ -27,25 +28,25 @@ export type AppContextType = {
     username: string;
     password: string;
     errorMessage: string;
-    dispatch: React.Dispatch<AppActionType>
+    dispatch: React.Dispatch<AppActionType>,
+    Boards: BoardType[]
 }
 
 export type allboardsType = BoardType[]
 
-
 export type BoardType = {
-    id: number;
+    id: number | string;
     name: string;
     columns: columnType[]
 }
 
 export type columnType = {
-    id: number;
+    id: number | string;
     name: string;
     tasks: tasksType[]
 }
 export type tasksType = {
-    id: number;
+    id: number | string;
     description: string;
     title: string;
     status: string;

@@ -43,7 +43,7 @@ export default function Login() {
         }
         setLoading(false)
     }
-    
+
     if(currentUser){
         return <Navigate to ='/' />
     }

@@ -41,6 +41,16 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state,
                 errorMessage : action.payload?.errorPayload ?? ''
             }
+        case 'setBoards':
+            return {
+                ...state,
+                Boards: action.payload?.BoardsPayload ?? []
+            }
+        case 'setNoBoards':
+            return {
+                ...state,
+                Boards: []
+            }
         default:
             return state
     }

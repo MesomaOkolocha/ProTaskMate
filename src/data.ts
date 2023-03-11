@@ -1,6 +1,6 @@
 import { allboardsType } from "./Types/types";
 
-const t: allboardsType = [{
+const defaultBoard: allboardsType = [{
     id: 0,
     name: "Platform Launch",
     columns: [{
@@ -361,8 +361,8 @@ const t: allboardsType = [{
         tasks: []
     }]
 }];
-var e = {
-    boards: t
+var allBoards = {
+    boards: defaultBoard
 };
 
-export {t, e}
+export { defaultBoard, allBoards }

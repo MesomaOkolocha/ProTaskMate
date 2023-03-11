@@ -10,7 +10,8 @@ const AppContext = createContext<AppContextType>({
     username: '',
     password: '',
     errorMessage: '',
-    dispatch: ()=>{}
+    dispatch: ()=>{},
+    Boards: []
 })
 
 export function useAuth(){
