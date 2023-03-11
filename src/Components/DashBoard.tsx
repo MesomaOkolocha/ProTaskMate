@@ -57,17 +57,6 @@ export default function DashBoard() {
     },[])
 
     useEffect(()=>{
-       if(username !== ''){
-        onValue(ref(db, 'users/'+username+'/tasks'), snapshot=>{
-            const data = snapshot.val()
-            if(data===null){
-                createInitialTaskDataOnDatabase(username, defaultBoard)
-            }
-        })
-       }
-    },[username])
-
-    useEffect(()=>{
         if(username!=='' && Boards.length === 0){
 
             const reference = ref(db, 'users/'+username+'/tasks')

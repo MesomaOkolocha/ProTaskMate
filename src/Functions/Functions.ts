@@ -3,14 +3,15 @@ import { onValue, push, ref, set, update } from "firebase/database";
 import { auth, db } from "../firebase";
 import { allboardsType, BoardType } from "../Types/types";
 
-export async function signUpUser(email: string, password: string, username: string){
+export async function signUpUser(email: string, password: string, username: string, boards: BoardType[]){
     await createUserWithEmailAndPassword(auth, email, password)
     const reference = ref(db, 'users/'+username)
     
     set(reference, {
         email: email,
         password: password,
-        username: username
+        username: username,
+        tasks: boards
     })
     
 }
@@ -41,7 +42,6 @@ export function createNewBoard(username:string, parameter: BoardType){
     onValue(reference, snapshot=>{
         const item = snapshot.val()
         data = item.tasks
-        console.log(data)
     })
     update(reference, {tasks: [...data, parameter]})
 }

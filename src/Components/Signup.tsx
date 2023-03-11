@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import Loader from './Loader'
 import GoogleSignIn from './GoogleSignIn'
+import { defaultBoard } from '../data'
 
 export default function Signup() {
     
@@ -31,7 +32,7 @@ export default function Signup() {
         
         try{
             setLoading(true)
-            await signUpUser(email, password, username)
+            await signUpUser(email, password, username, defaultBoard)
         }catch{
             dispatch({
                 type: 'setError',
