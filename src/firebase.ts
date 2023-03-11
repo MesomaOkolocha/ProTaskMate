@@ -25,4 +25,4 @@ const db = getDatabase(app)
 const auth = getAuth(app)
 
 export default app
-export {analytics, db, auth}
+export { analytics, db, auth }

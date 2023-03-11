@@ -1,22 +1,29 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { ref, set } from "firebase/database";
 import { auth, db } from "../firebase";
 import { logInFormInterface, signUpFormInterface } from "../Types/types";
 
 
-export async function signUpUser(formData: signUpFormInterface){
-    await createUserWithEmailAndPassword(auth, formData.email, formData.password)
-    const reference = ref(db, 'users/')
+export async function signUpUser(email: string, password: string, username: string){
+    await createUserWithEmailAndPassword(auth, email, password)
+    const reference = ref(db, 'users/'+username)
     
     set(reference, {
-        email: formData.email,
-        password: formData.password,
-        firstName: formData.firstname,
-        lastname: formData.lastName
+        email: email,
+        password: password,
+        username: username
     })
     
 }
 
-export async function loginUser(formData: logInFormInterface){
-    await signInWithEmailAndPassword(auth, formData.email, formData.password)
+export async function loginUser(email: string, password: string){
+    await signInWithEmailAndPassword(auth, email, password)
+}
+
+export function logout(){
+    signOut(auth)
+}
+
+export async function forgotPassword(email: string){
+    await sendPasswordResetEmail(auth, email)
 }
