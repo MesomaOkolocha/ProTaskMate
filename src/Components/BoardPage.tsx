@@ -29,6 +29,7 @@ export default function BoardPage() {
                 <Aside />
                 <Body />
             </main>
+            
         </div>
     )
 }

@@ -1,9 +1,11 @@
 import { useAuth } from '../Contexts/AppContext'
+import { logout } from '../Functions/Functions'
 
 export default function Body() {
 
-    const { currentBoard } = useAuth()
+    const { currentBoard, dispatch } = useAuth()
 
+    
     return (
         <div className=' px-4 py-6 md:px-10 overflow-x-scroll flex min-h-[80vh] md:ml-[300px]'>
             {currentBoard.columns.map(column=>{

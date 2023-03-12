@@ -11,7 +11,6 @@ import BoardPage from './BoardPage'
 
 export default function DashBoard() {
     const { currentUser, dispatch , username, Boards, currentBoard } = useAuth()
-    const [loading, setLoading] = useState(false)
 
     const location = useLocation()
     
@@ -73,11 +72,6 @@ export default function DashBoard() {
         }
     },[username, Boards])
 
-    async function generateBoard(){
-        setLoading(true)
-        await createNewBoard(username, Board)
-        setLoading(false)
-    }
     
     if(!currentUser){
         return <Navigate to='/login' />
@@ -86,26 +80,10 @@ export default function DashBoard() {
     if(username === ''){
         return <Loader />
     }
-
-    function logoutUser(){
-        logout()
-        dispatch({
-            type: 'setNoUser'
-        })
-        dispatch({
-            type: 'setNoParameter'
-        })
-
-        dispatch({
-            type: 'setNoBoards'
-        })
-    }
     
     return (
         <div className=''>
             <BoardPage />
-            <button className='bg-blue-100 p-2 text-white rounded-sm' onClick={logoutUser}>Logout</button>
-            <button disabled={loading} className='text-white ml-3 bg-blue-600 rounded-md p-2' onClick={generateBoard}>Create New Board</button>
         </div>
     )
 }
