@@ -14,7 +14,6 @@ export default function DashBoard() {
     const [loading, setLoading] = useState(false)
 
     const location = useLocation()
-    console.log(currentBoard)
     
     useEffect(()=>{
         window.scrollTo(0, 0);

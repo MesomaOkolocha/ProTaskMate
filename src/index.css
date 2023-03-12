@@ -60,3 +60,19 @@ animation-delay: -0.5s;
     transform: scaleY(1);
 }
 }
+
+::-webkit-scrollbar {
+    max-width: 10px;
+    border-radius: 5px
+}
+
+::-webkit-scrollbar-track {
+    background: #20212C; 
+}
+
+.clamp{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
