@@ -5,7 +5,7 @@ export default function Body() {
     const { currentBoard } = useAuth()
 
     return (
-        <div className=' px-4 py-6 md:px-10 overflow-x-scroll flex min-h-[80vh] ml-[300px]'>
+        <div className=' px-4 py-6 md:px-10 overflow-x-scroll flex min-h-[80vh] md:ml-[300px]'>
             {currentBoard.columns.map(column=>{
                 return (
                     <div key={column.id} className='min-w-[17.5rem] flex flex-col mr-8 h-full text-white overflow-y-scroll'>
