@@ -1,3 +1,4 @@
+import { allBoards } from "../data";
 import { AppActionType, AppContextType } from "../Types/types";
 
 export function appReducer(state: AppContextType, action: AppActionType){
@@ -50,6 +51,11 @@ export function appReducer(state: AppContextType, action: AppActionType){
             return {
                 ...state,
                 Boards: []
+            }
+        case 'setCurrentBoard':
+            return {
+                ...state,
+                currentBoard: action.payload?.currentBoardPayload ?? allBoards.boards[0]
             }
         default:
             return state

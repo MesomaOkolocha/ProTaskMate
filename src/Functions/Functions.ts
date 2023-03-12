@@ -9,7 +9,6 @@ export async function signUpUser(email: string, password: string, username: stri
     
     set(reference, {
         email: email,
-        password: password,
         username: username,
         tasks: boards
     })
@@ -36,7 +35,7 @@ export function createInitialTaskDataOnDatabase(username: string, data: allboard
     }
 }
 
-export function createNewBoard(username:string, parameter: BoardType){
+export async function createNewBoard(username:string, parameter: BoardType){
     const reference = ref(db, 'users/'+username)
     let data: BoardType[] = []
     onValue(reference, snapshot=>{

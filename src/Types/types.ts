@@ -18,7 +18,8 @@ export type AppActionType = {
         passwordPayload?: string;
         usernamePayload?: string;
         errorPayload? : string;
-        BoardsPayload?: BoardType[]
+        BoardsPayload?: BoardType[],
+        currentBoardPayload?: BoardType
     }
 }
 
@@ -29,7 +30,8 @@ export type AppContextType = {
     password: string;
     errorMessage: string;
     dispatch: React.Dispatch<AppActionType>,
-    Boards: BoardType[]
+    Boards: BoardType[],
+    currentBoard: BoardType
 }
 
 export type allboardsType = BoardType[]

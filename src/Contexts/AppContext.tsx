@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
+import { allBoards } from "../data";
 import { auth } from "../firebase";
 import { appReducer } from "../Reducer/appReducer";
 import { AppContextType } from "../Types/types";
@@ -11,7 +12,8 @@ const AppContext = createContext<AppContextType>({
     password: '',
     errorMessage: '',
     dispatch: ()=>{},
-    Boards: []
+    Boards: [],
+    currentBoard: allBoards.boards[0]
 })
 
 export function useAuth(){

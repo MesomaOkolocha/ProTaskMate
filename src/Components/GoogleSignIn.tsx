@@ -23,19 +23,18 @@ export default function GoogleSignIn() {
       const newReference = ref(db, 'users/'+result.user.displayName+'/tasks')
 
       onValue(newReference, snapshot=>{
-        console.log(snapshot.val())
         if(snapshot.val()!==null){
           data= snapshot.val()
         }
       })
 
       if(data.length === 0){
-        set(newReference, {
+        set(reference, {
           email: result.user.email,
           username: result.user.displayName,
           tasks: defaultBoard
         })
-      }else{
+      } else{
         update(reference, {
           tasks: [...data], 
           email: result.user.email, 

@@ -1,19 +1,20 @@
 import { Navigate } from 'react-router-dom'
-import {  useEffect } from 'react'
+import {  useEffect, useState } from 'react'
 import { useAuth } from '../Contexts/AppContext' 
-import { onValue, ref, set } from '@firebase/database'
+import { onValue, ref } from '@firebase/database'
 import { db } from '../firebase'
 import Loader from './Loader'
 import { useLocation } from 'react-router-dom'
-import { createInitialTaskDataOnDatabase, createNewBoard, logout } from '../Functions/Functions'
-import { defaultBoard } from '../data'
+import { createNewBoard, logout } from '../Functions/Functions'
 import { Board } from './Board'
+import BoardPage from './BoardPage'
 
 export default function DashBoard() {
-    const { currentUser, dispatch , username, Boards} = useAuth()
+    const { currentUser, dispatch , username, Boards, currentBoard } = useAuth()
+    const [loading, setLoading] = useState(false)
 
-    console.log(username, Boards)
     const location = useLocation()
+    console.log(currentBoard)
     
     useEffect(()=>{
         window.scrollTo(0, 0);
@@ -73,8 +74,10 @@ export default function DashBoard() {
         }
     },[username, Boards])
 
-    function generateBoard(){
-        createNewBoard(username, Board)
+    async function generateBoard(){
+        setLoading(true)
+        await createNewBoard(username, Board)
+        setLoading(false)
     }
     
     if(!currentUser){
@@ -93,6 +96,7 @@ export default function DashBoard() {
         dispatch({
             type: 'setNoParameter'
         })
+
         dispatch({
             type: 'setNoBoards'
         })
@@ -100,8 +104,9 @@ export default function DashBoard() {
     
     return (
         <div className=''>
+            <BoardPage />
             <button className='bg-blue-100 p-2 text-white rounded-sm' onClick={logoutUser}>Logout</button>
-            <button className='text-white ml-3 bg-blue-600 rounded-md p-2' onClick={generateBoard}>Create New Board</button>
+            <button disabled={loading} className='text-white ml-3 bg-blue-600 rounded-md p-2' onClick={generateBoard}>Create New Board</button>
         </div>
     )
 }
