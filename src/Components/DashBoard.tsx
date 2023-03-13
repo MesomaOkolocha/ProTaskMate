@@ -1,18 +1,19 @@
 import { Navigate } from 'react-router-dom'
 import {  useEffect, useState } from 'react'
 import { useAuth } from '../Contexts/AppContext' 
-import { onValue, ref } from '@firebase/database'
+import { onValue, ref, set, update } from '@firebase/database'
 import { db } from '../firebase'
 import Loader from './Loader'
 import { useLocation } from 'react-router-dom'
-import { createNewBoard, logout } from '../Functions/Functions'
-import { Board } from './Board'
+
 import BoardPage from './BoardPage'
 
 export default function DashBoard() {
     const { currentUser, dispatch , username, Boards, currentBoard } = useAuth()
 
     const location = useLocation()
+
+    console.log(Boards)
     
     useEffect(()=>{
         window.scrollTo(0, 0);
@@ -56,6 +57,16 @@ export default function DashBoard() {
     },[])
 
     useEffect(()=>{
+        if(username!==''){
+            const reference = ref(db, 'users/'+username)
+
+            update(reference, {
+                tasks: Boards
+            })
+        }
+    },[Boards])
+
+    useEffect(()=>{
         if(username!=='' && Boards.length === 0){
 
             const reference = ref(db, 'users/'+username+'/tasks')
@@ -82,8 +93,6 @@ export default function DashBoard() {
     }
     
     return (
-        <div className=''>
-            <BoardPage />
-        </div>
+        <BoardPage />
     )
 }

@@ -39,6 +39,7 @@ export type allboardsType = BoardType[]
 export type BoardType = {
     id: number | string;
     name: string;
+    isActive: boolean;
     columns: columnType[]
 }
 

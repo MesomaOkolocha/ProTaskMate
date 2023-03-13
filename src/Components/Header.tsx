@@ -16,7 +16,7 @@ export default function Header() {
                 />
                 <h1 className='text-[1.5rem] text-white font-extrabold'>TaskMate</h1>
             </div>
-            <div className='flex items-center justify-between md:justify-start w-full px-4 py-6 md:px-10 border-b-[1px] border-[#8686861a] h-[6rem]'>
+            <div className='flex items-center justify-between w-full px-4 py-6 md:px-10 border-b-[1px] border-[#8686861a] h-[6rem]'>
                 <div className='flex items-center gap-3'>
                     <img src='https://kanban-app-jay.netlify.app/assets/logo-mobile.c1810dc7.svg' 
                         className='min-w-[1.5rem] md:hidden'
@@ -27,9 +27,9 @@ export default function Header() {
                     </div>
                 </div>
                 <div className='flex items-center gap-3 md:ml-10 lg:ml-[30%]'>
-                    <button className='bg-[#635FC7] md:flex items-center gap-1 px-3 py-1 rounded-full'>
+                    <button className='bg-[#635FC7] md:flex items-center rounded-full gap-1 px-3 py-1 md:px-6 md:rounded-lg md:py-3 lg:rounded-full'>
                         <i className='font-bold text-[1.2rem] text-white md:text-[0.8rem]'><GoPlus /></i>
-                        <p className='hidden md:block font-semibold text-[1.1rem] text-white'>Add New Task</p>
+                        <p className='hidden md:block font-semibold text-[1.1rem] md:text-[0.8rem] text-white'>Add New Task</p>
                     </button>
                     <button>
                         <i className='text-[1.2rem] text-[#88899b] min-w-[22px] h-[38px]'><IoEllipsisVerticalOutline /></i>

@@ -3,6 +3,7 @@ import { allboardsType } from "./Types/types";
 const defaultBoard: allboardsType = [{
     id: 0,
     name: "Platform Launch",
+    isActive: true,
     columns: [{
         id: 0,
         name: "Todo",
@@ -246,6 +247,7 @@ const defaultBoard: allboardsType = [{
 }, {
     id: 1,
     name: "Marketing Plan",
+    isActive: false,
     columns: [{
         id: 0,
         name: "Todo",
@@ -318,6 +320,7 @@ const defaultBoard: allboardsType = [{
 }, {
     id: 2,
     name: "Roadmap",
+    isActive: false,
     columns: [{
         name: "Now",
         id: 0,

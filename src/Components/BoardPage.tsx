@@ -11,14 +11,19 @@ export default function BoardPage() {
   const [currentBoardSet, setCurrentBoardSet] = useState(false);
 
     useEffect(()=>{
-        if(Boards.length>0 && !currentBoardSet){
-            dispatch({
-                type: 'setCurrentBoard',
-                payload:{
-                    currentBoardPayload: Boards[0]
-                }
+        if (Boards.length > 0 && !currentBoardSet) {
+            const mainboard = Boards.find((item) => {
+                return item.isActive === true
             })
-            setCurrentBoardSet(true)
+            if (mainboard) {
+                dispatch({
+                    type: 'setCurrentBoard',
+                    payload: {
+                        currentBoardPayload: mainboard
+                    }
+                })
+                setCurrentBoardSet(true)
+            }
         }
     },[Boards])
 

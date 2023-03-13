@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 export const Board:BoardType = {
     id: nanoid(),
     name: "Project Board",
+    isActive: true,
     columns: [
       {
         id: nanoid(),

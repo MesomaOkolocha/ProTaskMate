@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import { onValue, push, ref, set, update } from "firebase/database";
+import { onValue, push, ref, remove, set, update } from "firebase/database";
 import { auth, db } from "../firebase";
 import { allboardsType, BoardType } from "../Types/types";
 
@@ -35,6 +35,12 @@ export function createInitialTaskDataOnDatabase(username: string, data: allboard
     }
 }
 
+export async function deleteUserAccount(username:string){
+    const reference = ref(db, 'users/'+username)
+
+    await remove(reference)
+}
+
 export async function createNewBoard(username:string, parameter: BoardType){
     const reference = ref(db, 'users/'+username)
     let data: BoardType[] = []
@@ -42,5 +48,11 @@ export async function createNewBoard(username:string, parameter: BoardType){
         const item = snapshot.val()
         data = item.tasks
     })
-    update(reference, {tasks: [...data, parameter]})
+    const newdata = data.map(item=>{
+        return {
+            ...item,
+            isActive: false
+        }
+    })
+    update(reference, {tasks: [...newdata, parameter]})
 }
