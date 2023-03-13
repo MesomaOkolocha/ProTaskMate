@@ -62,12 +62,18 @@ animation-delay: -0.5s;
 }
 
 ::-webkit-scrollbar {
-    max-width: 10px;
-    border-radius: 5px
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
     background: #20212C; 
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #888;
+    border-radius: 5px;
 }
 
 .clamp{
@@ -75,4 +81,8 @@ animation-delay: -0.5s;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     word-break: break-word;
+}
+
+.no-scrollbar::-webkit-scrollbar{
+    display: none;
 }
