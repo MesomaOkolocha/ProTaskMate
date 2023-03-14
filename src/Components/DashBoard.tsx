@@ -7,13 +7,14 @@ import Loader from './Loader'
 import { useLocation } from 'react-router-dom'
 
 import BoardPage from './BoardPage'
+import { createBaseBoard } from './Board'
 
 export default function DashBoard() {
     const { currentUser, dispatch , username, Boards, currentBoard } = useAuth()
 
     const location = useLocation()
 
-    console.log(Boards)
+    console.log(Boards, currentBoard)
     
     useEffect(()=>{
         window.scrollTo(0, 0);
@@ -72,12 +73,21 @@ export default function DashBoard() {
             const reference = ref(db, 'users/'+username+'/tasks')
             onValue(reference, snapshot=>{
                 const data = snapshot.val()
+               if(data!==null){
+                    dispatch({
+                        type: 'setBoards',
+                        payload:{
+                            BoardsPayload: data
+                        }
+                    })
+               } else {
                 dispatch({
                     type: 'setBoards',
                     payload:{
-                        BoardsPayload: data
+                        BoardsPayload: [createBaseBoard()]
                     }
                 })
+               }
             })
 
         }

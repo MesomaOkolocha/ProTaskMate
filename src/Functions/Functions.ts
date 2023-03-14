@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { onValue, push, ref, remove, set, update } from "firebase/database";
+import { nanoid } from "nanoid";
 import { auth, db } from "../firebase";
 import { allboardsType, BoardType } from "../Types/types";
 
@@ -55,4 +56,8 @@ export async function createNewBoard(username:string, parameter: BoardType){
         }
     })
     update(reference, {tasks: [...newdata, parameter]})
+}
+
+export const generateId = (): string => {
+    return nanoid()
 }

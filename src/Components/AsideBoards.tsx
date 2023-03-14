@@ -4,7 +4,7 @@ import { TbLayoutBoardSplit } from 'react-icons/tb'
 import { useAuth } from '../Contexts/AppContext'
 import { createNewBoard } from '../Functions/Functions'
 import AsideFooter from './AsideFooter'
-import { Board } from './Board'
+import { createBaseBoard } from './Board'
 
 export default function AsideBoards() {
     const [loading, setLoading] = useState(false)
@@ -25,6 +25,8 @@ export default function AsideBoards() {
                 }
             }
         })
+
+        console.log(currentBoard)
         
         dispatch({
             type: 'setBoards',
@@ -42,10 +44,12 @@ export default function AsideBoards() {
             type: 'setBoardsModalFalse'
         })
     }
+    
 
     async function generateBoard(){
+        const newBoard = createBaseBoard()
         setLoading(true)
-        await createNewBoard(username, Board)
+        await createNewBoard(username, newBoard)
         setLoading(false)
     }
 

@@ -19,7 +19,7 @@ export type AppActionType = {
         usernamePayload?: string;
         errorPayload? : string;
         BoardsPayload?: BoardType[],
-        currentBoardPayload?: BoardType
+        currentBoardPayload?: BoardType | null
     }
 }
 
@@ -31,7 +31,7 @@ export type AppContextType = {
     errorMessage: string;
     dispatch: React.Dispatch<AppActionType>,
     Boards: BoardType[],
-    currentBoard: BoardType,
+    currentBoard: BoardType | null,
     modals: {
         boardsModal: boolean,
         editBoardmodal: boolean

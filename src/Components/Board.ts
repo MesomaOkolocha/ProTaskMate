@@ -1,7 +1,9 @@
 import { BoardType } from "../Types/types";
-import { nanoid } from "nanoid";
+import { generateId } from "../Functions/Functions";
+import {nanoid} from 'nanoid'
 
-export const Board:BoardType = {
+export const createBaseBoard = () =>{
+  return {
     id: nanoid(),
     name: "Project Board",
     isActive: true,
@@ -84,5 +86,6 @@ export const Board:BoardType = {
         ]
       }
     ]
-  }
+}
+}
   

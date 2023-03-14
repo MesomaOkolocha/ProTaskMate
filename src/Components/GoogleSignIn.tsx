@@ -17,33 +17,34 @@ export default function GoogleSignIn() {
 
     setLoading(true)
 
-    await signInWithPopup(auth, provider).then(result=>{
-      const reference = ref(db, 'users/'+result.user.displayName)
-      let data: BoardType[] = [] 
-      const newReference = ref(db, 'users/'+result.user.displayName+'/tasks')
+      await signInWithPopup(auth, provider)
+        .then(result=>{
+        const reference = ref(db, 'users/'+result.user.displayName)
+        let data: BoardType[] = [] 
+        const newReference = ref(db, 'users/'+result.user.displayName+'/tasks')
 
-      onValue(newReference, snapshot=>{
-        if(snapshot.val()!==null){
-          data= snapshot.val()
+        onValue(newReference, snapshot=>{
+          if(snapshot.val()!==null){
+            data = snapshot.val()
+          }
+        })
+
+        if(data.length === 0){
+          set(reference, {
+            email: result.user.email,
+            username: result.user.displayName,
+            tasks: defaultBoard
+          })
+        } else{
+          update(reference, {
+            tasks: [...data], 
+            email: result.user.email, 
+            username: result.user.displayName
+          })
         }
+      }).catch(error=>{
+        console.log(error)
       })
-
-      if(data.length === 0){
-        set(reference, {
-          email: result.user.email,
-          username: result.user.displayName,
-          tasks: defaultBoard
-        })
-      } else{
-        update(reference, {
-          tasks: [...data], 
-          email: result.user.email, 
-          username: result.user.displayName
-        })
-      }
-    }).catch(error=>{
-      console.log(error)
-    })
 
     setLoading(false)
   }

@@ -8,15 +8,16 @@ import EditBoardModal from './Modals/EditBoardModal';
 
 export default function BoardPage() {
 
-    const { Boards, dispatch, modals } = useAuth()
+    const { Boards, dispatch, modals, currentBoard } = useAuth()
     
-  const [currentBoardSet, setCurrentBoardSet] = useState(false);
+    const [currentBoardSet, setCurrentBoardSet] = useState(false);
 
     useEffect(()=>{
-        if (Boards.length > 0 && !currentBoardSet) {
+        if (Boards.length > 0) {
             const mainboard = Boards.find((item) => {
                 return item.isActive === true
             })
+            console.log(mainboard)
             if (mainboard) {
                 dispatch({
                     type: 'setCurrentBoard',
@@ -27,7 +28,7 @@ export default function BoardPage() {
                 setCurrentBoardSet(true)
             }
         }
-    },[Boards])
+    },[Boards, currentBoard])
 
     return (
         <div className=''>

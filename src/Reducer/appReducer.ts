@@ -55,7 +55,12 @@ export function appReducer(state: AppContextType, action: AppActionType){
         case 'setCurrentBoard':
             return {
                 ...state,
-                currentBoard: action.payload?.currentBoardPayload ?? allBoards.boards[0]
+                currentBoard: action.payload?.currentBoardPayload ?? null
+            }
+        case 'setNoBoard':
+            return {
+                ...state,
+                currentBoard: null
             }
         case 'setBoardsModalCurrent':
             return {

@@ -43,8 +43,8 @@ export default function AsideFooter() {
                 </div>
                 <i><MdWbSunny /></i>
             </div>
-            <div className='mt-4 hidden md:flex justify-between px-4'>
-                <div className='flex items-center gap-3 text-[0.9rem] font-semibold text-[#828fa3]'>
+            <div className='mt-4 flex justify-center md:justify-between gap-4 md:gap-0 px-4'>
+                <div className='hidden md:flex items-center gap-3 text-[0.9rem] font-semibold text-[#828fa3]'>
                     <i className='text-[1.2rem]'><BiHide /></i>
                     <p>Hide Sidebar</p>
                 </div>
