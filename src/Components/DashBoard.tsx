@@ -88,6 +88,10 @@ export default function DashBoard() {
         return <Navigate to='/login' />
     }
     
+    if(currentUser && username === ''){
+        return <Loader />
+    }
+    
     if(username === ''){
         return <Loader />
     }

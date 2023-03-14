@@ -1,17 +1,24 @@
 import { useAuth } from '../Contexts/AppContext'
 import { logout } from '../Functions/Functions'
+import useWindowDimensions from '../Hooks/windowDimensions'
+import AsideBoards from './AsideBoards'
 
 export default function Body() {
 
-    const { currentBoard, Boards } = useAuth()
-
+    const { currentBoard } = useAuth()
+    
+    const {height} = useWindowDimensions()
+    const newHeight = height-96
+    const style = {
+        height: newHeight
+    }
     return (
-        <div className=' px-4 py-6 md:px-10 overflow-x-scroll flex min-h-[80vh] md:ml-[300px] scrollbar'>
+        <div className='px-4 py-6 md:px-10 overflow-x-scroll bodyScrollbarH flex md:ml-[300px] scrollbar' style={style}>
             {currentBoard.columns.map(column=>{
                 const tasks = column.tasks || []
                 const length = tasks.length
                 return (
-                    <div key={column.id} className='min-w-[17.5rem] flex flex-col mr-8 h-full text-white overflow-y-scroll'>
+                    <div key={column.id} className='min-w-[17.5rem] flex flex-col mr-8 h-full text-white overflow-y-scroll no-scrollbar'>
                         <div className='flex items-center gap-2 tracking-[2.4px] font-semibold text-[0.75rem] text-[#828fa3]'>
                             <div className='h-[15px] w-[15px] bg-[#49C4E5] rounded-full'></div>
                             <h3>{`${column.name.toUpperCase()}(${length})`}</h3>

@@ -31,7 +31,11 @@ export type AppContextType = {
     errorMessage: string;
     dispatch: React.Dispatch<AppActionType>,
     Boards: BoardType[],
-    currentBoard: BoardType
+    currentBoard: BoardType,
+    modals: {
+        boardsModal: boolean,
+        editBoardmodal: boolean
+    }
 }
 
 export type allboardsType = BoardType[]

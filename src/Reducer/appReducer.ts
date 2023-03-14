@@ -57,6 +57,38 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state,
                 currentBoard: action.payload?.currentBoardPayload ?? allBoards.boards[0]
             }
+        case 'setBoardsModalCurrent':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    boardsModal: !state.modals.boardsModal
+                }
+            }
+        case 'setBoardsModalFalse':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    boardsModal: false
+                }
+            }
+        case 'setEditBoardsModal':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    editBoardmodal: !state.modals.editBoardmodal
+                }
+            }
+        case 'setEditBoardsModalFalse':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    editBoardmodal: false
+                }
+            }
         default:
             return state
     }

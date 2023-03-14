@@ -7,10 +7,11 @@ import GoogleSignIn from './GoogleSignIn'
 
 export default function Login() {
     
-    const {currentUser, password, email, dispatch, errorMessage } = useAuth()
+    const { currentUser, username, password, email, dispatch, errorMessage } = useAuth()
 
     const [loading, setLoading] = useState(false)
     
+    console.log(currentUser)
     
     useEffect(()=>{
         dispatch({
@@ -46,6 +47,10 @@ export default function Login() {
 
     if(currentUser){
         return <Navigate to ='/' />
+    }
+
+    if(currentUser && username === ''){
+        return <Loader />
     }
     
     if(loading){

@@ -13,7 +13,11 @@ const AppContext = createContext<AppContextType>({
     errorMessage: '',
     dispatch: ()=>{},
     Boards: [],
-    currentBoard: allBoards.boards[0]
+    currentBoard: allBoards.boards[0],
+    modals: {
+        boardsModal: false,
+        editBoardmodal: false
+    }
 })
 
 export function useAuth(){
