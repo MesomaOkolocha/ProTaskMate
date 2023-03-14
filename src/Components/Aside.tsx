@@ -1,7 +1,6 @@
 import {useState} from 'react'
 import { useAuth } from '../Contexts/AppContext'
 import { createNewBoard, deleteUserAccount, logout } from '../Functions/Functions'
-import { Board } from './Board'
 import useWindowDimensions from '../Hooks/windowDimensions'
 import { TbLayoutBoardSplit } from 'react-icons/tb'
 import { GoPlus } from 'react-icons/go'

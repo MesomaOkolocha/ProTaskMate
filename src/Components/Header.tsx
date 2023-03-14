@@ -34,7 +34,7 @@ export default function Header() {
                         className='min-w-[1.5rem] md:hidden'
                     />
                     <div className='flex gap-1 items-center'>
-                        <p className='flex max-w-[10rem] md:max-w-[13rem] overflow-hidden text-ellipsis text-left whitespace-nowrap font-bold text-white text-[1.2rem] md:text-[1.5rem]'>{currentBoard.name}</p>
+                        <p className='flex max-w-[10rem] md:max-w-[13rem] overflow-hidden text-ellipsis text-left whitespace-nowrap font-bold text-white text-[1.2rem] md:text-[1.5rem]'>{currentBoard?.name}</p>
                         <button className='md:hidden' onClick={boardsDropdown}><i className='text-[#635FC7] font-extrabold text-[1.3rem]'><RxCaretDown /></i></button>
                     </div>
                     <div className='md:hidden'>
