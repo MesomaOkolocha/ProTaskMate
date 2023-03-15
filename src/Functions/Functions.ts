@@ -42,6 +42,7 @@ export async function deleteUserAccount(username:string){
     await remove(reference)
 }
 
+
 export async function createNewBoard(username:string, parameter: BoardType){
     const reference = ref(db, 'users/'+username)
     let data: BoardType[] = []
@@ -60,4 +61,21 @@ export async function createNewBoard(username:string, parameter: BoardType){
 
 export const generateId = (): string => {
     return nanoid()
+}
+
+export async function deleteBoard(id: string | number, username: string){
+    const reference = ref(db, 'users/'+username+'/tasks')
+    
+    let data: BoardType[] = []
+    
+    onValue(reference, snapshot=>{
+        console.log(snapshot.val())
+        if(snapshot.val()){
+            data = snapshot.val()
+        }
+    })
+
+    const newData = data.filter(item=>item.id !== id)
+    const newReference =  ref(db, 'users/'+username)
+    await update(newReference,{ tasks: newData})
 }

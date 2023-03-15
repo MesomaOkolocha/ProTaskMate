@@ -5,6 +5,7 @@ import AsideBoards from './AsideBoards';
 import Body from './Body';
 import Header from './Header';
 import BoardsModal from './Modals/BoardsModal';
+import DeleteBoardModal from './Modals/DeleteBoardModal';
 import EditBoardModal from './Modals/EditBoardModal';
 
 export default function BoardPage() {
@@ -26,6 +27,15 @@ export default function BoardPage() {
                     }
                 })
                 setCurrentBoardSet(true)
+            }else {
+                const newMainBoard = Boards[0]
+                newMainBoard.isActive = true
+                dispatch({
+                    type: 'setCurrentBoard',
+                    payload: {
+                        currentBoardPayload: newMainBoard
+                    }
+                })
             }
         }
     },[Boards, currentBoard])
@@ -35,7 +45,8 @@ export default function BoardPage() {
             <Header />
             {modals.boardsModal && <div className='md:hidden relative'><BoardsModal /></div>}
             {modals.editBoardmodal && <div className='relative'><EditBoardModal /></div>}
-            <main className={`flex ${modals.boardsModal ? 'opacity-40 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
+            {modals.deleteBoardModal && <div className='relative flex items-center justify-center'><DeleteBoardModal /></div>}
+            <main className={`flex ${modals.boardsModal || modals.deleteBoardModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
                 <Body />
             </main>

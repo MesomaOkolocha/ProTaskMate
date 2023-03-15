@@ -16,7 +16,8 @@ const AppContext = createContext<AppContextType>({
     currentBoard: allBoards.boards[0],
     modals: {
         boardsModal: false,
-        editBoardmodal: false
+        editBoardmodal: false,
+        deleteBoardModal: false,
     }
 })
 

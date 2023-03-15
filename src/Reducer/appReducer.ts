@@ -94,6 +94,32 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     editBoardmodal: false
                 }
             }
+        case 'setDeleteBoardModalTrue':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    deleteBoardModal: true
+                }
+            }
+        case 'setDeleteBoardModalFalse':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    deleteBoardModal: false
+                }
+            }
+        case 'setNoModals':{
+            return {
+                ...state,
+                modals: {
+                    editBoardmodal: false,
+                    boardsModal: false,
+                    deleteBoardModal: false
+                }
+            }
+        }
         default:
             return state
     }

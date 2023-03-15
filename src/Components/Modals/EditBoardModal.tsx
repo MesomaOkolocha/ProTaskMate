@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../Contexts/AppContext';
+import { deleteBoard } from '../../Functions/Functions';
 
 export default function EditBoardModal() {
   
-  const { modals, dispatch } = useAuth()
+  const { modals, dispatch, username, currentBoard, Boards } = useAuth()
 
   const modalRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -31,13 +32,22 @@ export default function EditBoardModal() {
     }
   }, [modals]);
 
+  function deleteBoardOpen(){
+    dispatch({
+      type: 'setDeleteBoardModalTrue'
+    })
+    dispatch({
+      type: 'setEditBoardsModalFalse'
+    })
+  }
+
   return (
     <>
     {
-      isOpen &&
+      isOpen && currentBoard &&
       <div className='bg-[#20212C] absolute right-6 md:right-12 md:-top-3 -top-6 z-[9999] flex flex-col gap-3 p-4 rounded-md' ref={modalRef}>
         <button className='hover:opacity-70 font-semibold text-[#88899b] text-left pr-10'>Edit Board</button>
-        <button className='hover:opacity-70 font-semibold text-[#c22d2d] pr-10 text-left'>Delete Board</button>
+        <button onClick={deleteBoardOpen} className='hover:opacity-70 font-semibold text-[#c22d2d] pr-10 text-left'>Delete Board</button>
       </div>
     }
     </>

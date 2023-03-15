@@ -34,7 +34,8 @@ export type AppContextType = {
     currentBoard: BoardType | null,
     modals: {
         boardsModal: boolean,
-        editBoardmodal: boolean
+        editBoardmodal: boolean,
+        deleteBoardModal: boolean
     }
 }
 
