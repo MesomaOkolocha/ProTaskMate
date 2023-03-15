@@ -1,4 +1,5 @@
 import {useState, useEffect, useRef} from 'react'
+import { FaTimes } from 'react-icons/fa'
 import { useAuth } from '../../Contexts/AppContext'
 import {  deleteBoard } from '../../Functions/Functions'
 
@@ -61,12 +62,13 @@ export default function DeleteBoardModal() {
         <>
         {
             isOpen && currentBoard &&
-            <div ref={modalRef} className='p-10 rounded-[10px] bg-[#2B2C37] max-w-[30rem] p-8 fixed top-0 md:top-[30%] z-[99999] h-full md:h-[250px] md:flex md:flex-col md:justify-between'>
-                <h3 className='text-[#ea5555] mb-8 text-[1.125rem] font-bold'>Delete this board?</h3>
-                <p className='text-[#828fa3] text-[0.8125rem] font-semibold'>
+            <div ref={modalRef} className='p-10 rounded-[10px] bg-[#2B2C37] max-w-[30rem]  fixed top-0 md:top-[30%] z-[99999] h-full md:h-[250px] md:flex md:flex-col md:justify-between'>
+              <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-white'><FaTimes /></button>
+                <h3 className='text-[#ea5555] text-[1.125rem] font-bold mb-6 md:md-0'>Delete this board?</h3>
+                <p className='text-[#828fa3] text-[0.8125rem] font-semibold mb-6 md:mb-0'>
                     {`Are you sure you want to delete the '${currentBoard?.name}' board? This action will remove all columns and tasks and cannot be reversed`}
                 </p>
-                <div className='grid grid-cols-2 gap-5 mt-6'>
+                <div className='grid grid-cols-2 gap-5 md:mt-6'>
                     <button disabled={loading} onClick={()=>deleteBoardItem(currentBoard?.id)} className='text-white font-semibold rounded-full py-2 bg-red-400 hover:opacity-60'>
                         Delete
                     </button>

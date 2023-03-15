@@ -41,12 +41,21 @@ export default function EditBoardModal() {
     })
   }
 
+  function editBoard(){
+    dispatch({
+      type: 'setEditModalTrue'
+    })
+    dispatch({
+      type: 'setEditBoardsModalFalse'
+    })
+  }
+
   return (
     <>
     {
       isOpen && currentBoard &&
       <div className='bg-[#20212C] absolute right-6 md:right-12 md:-top-3 -top-6 z-[9999] flex flex-col gap-3 p-4 rounded-md' ref={modalRef}>
-        <button className='hover:opacity-70 font-semibold text-[#88899b] text-left pr-10'>Edit Board</button>
+        <button onClick={editBoard} className='hover:opacity-70 font-semibold text-[#88899b] text-left pr-10'>Edit Board</button>
         <button onClick={deleteBoardOpen} className='hover:opacity-70 font-semibold text-[#c22d2d] pr-10 text-left'>Delete Board</button>
       </div>
     }

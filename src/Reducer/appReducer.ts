@@ -110,13 +110,31 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     deleteBoardModal: false
                 }
             }
+        case 'setAddColumnModalTrue':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    addColumnModal: true
+                }
+            }
+        case 'setEditModalTrue':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    editModal: true
+                }
+            }
         case 'setNoModals':{
             return {
                 ...state,
                 modals: {
                     editBoardmodal: false,
                     boardsModal: false,
-                    deleteBoardModal: false
+                    deleteBoardModal: false,
+                    addColumnModal: false,
+                    editModal: false
                 }
             }
         }

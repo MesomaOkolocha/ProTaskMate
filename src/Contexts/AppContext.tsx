@@ -18,6 +18,8 @@ const AppContext = createContext<AppContextType>({
         boardsModal: false,
         editBoardmodal: false,
         deleteBoardModal: false,
+        addColumnModal: false,
+        editModal: false
     }
 })
 

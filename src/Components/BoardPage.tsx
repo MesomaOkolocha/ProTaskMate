@@ -4,9 +4,11 @@ import Aside from './Aside';
 import AsideBoards from './AsideBoards';
 import Body from './Body';
 import Header from './Header';
+import AddColumnModal from './Modals/AddColumnModal';
 import BoardsModal from './Modals/BoardsModal';
 import DeleteBoardModal from './Modals/DeleteBoardModal';
 import EditBoardModal from './Modals/EditBoardModal';
+import EditModal from './Modals/EditModal';
 
 export default function BoardPage() {
 
@@ -40,13 +42,17 @@ export default function BoardPage() {
         }
     },[Boards, currentBoard])
 
+    const {editBoardmodal, editModal, boardsModal, deleteBoardModal, addColumnModal} = modals
+    
     return (
         <div className=''>
             <Header />
-            {modals.boardsModal && <div className='md:hidden relative'><BoardsModal /></div>}
-            {modals.editBoardmodal && <div className='relative'><EditBoardModal /></div>}
-            {modals.deleteBoardModal && <div className='relative flex items-center justify-center'><DeleteBoardModal /></div>}
-            <main className={`flex ${modals.boardsModal || modals.deleteBoardModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
+            {boardsModal && <div className='md:hidden relative'><BoardsModal /></div>}
+            {editBoardmodal && <div className='relative'><EditBoardModal /></div>}
+            {deleteBoardModal && <div className='relative flex items-center justify-center'><DeleteBoardModal /></div>}
+            {addColumnModal && <div className='relative flex items-center justify-center'><AddColumnModal /></div>}
+            {editModal && <div className='relative flex items-center justify-center'><EditModal /></div>}
+            <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
                 <Body />
             </main>

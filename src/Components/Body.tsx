@@ -3,6 +3,7 @@ import { useAuth } from '../Contexts/AppContext'
 import { logout } from '../Functions/Functions'
 import useWindowDimensions from '../Hooks/windowDimensions'
 import AsideBoards from './AsideBoards'
+import NewColumn from './NewColumn'
 
 export default function Body() {
 
@@ -20,12 +21,12 @@ export default function Body() {
                 const tasks = column.tasks || []
                 const length = tasks.length
                 return (
-                    <div key={`${column.id}${index}`} className='min-w-[17.5rem] flex flex-col mr-8 h-full text-white overflow-y-scroll no-scrollbar'>
+                    <div key={`${column.id}${index}`} className={` min-w-[17.5rem] flex flex-col mr-8 h-full text-white overflow-y-scroll no-scrollbar p-1`}>
                         <div className='flex items-center gap-2 tracking-[2.4px] font-semibold text-[0.75rem] text-[#828fa3]'>
                             <div className='h-[15px] w-[15px] bg-[#49C4E5] rounded-full'></div>
                             <h3>{`${column.name.toUpperCase()}(${length})`}</h3>
                         </div>
-                        <div className='mt-6'>
+                        <div className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-[#2B2C37] outline-2 rounded-lg' : ''}`}>
                         {column.tasks && column.tasks.map((task, index) => {
                             const subtasks = task.subtasks || []
                             const number = subtasks.filter(item => item.isCompleted).length
@@ -40,6 +41,7 @@ export default function Body() {
                     </div>
                 )
             })}
+            <NewColumn />
         </div>
     )
 }

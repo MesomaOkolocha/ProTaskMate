@@ -86,13 +86,13 @@ export default function BoardsModal() {
         <>
         {
             isOpen &&
-            <div ref={modalRef} className='fixed top-20 z-[9999] left-[15%] px-6 sm:px-10 md:px-0 bg-[#2b2c37] md:bg-transparent md:relative md:top-0 md:left-[0] py-6 rounded-lg md:rounded-none transition-all delay-150 ease-linear'>
+            <div ref={modalRef} className='fixed top-20 z-[9999] left-[15%] px-6 sm:px-10 md:px-0 bg-[#2b2c37] md:bg-transparent md:relative md:top-0 md:left-[0] py-6 rounded-lg md:rounded-none transition-all delay-50 ease-linear'>
                 <h3 className='font-semibold text-[#828fa3] text-[0.75rem] mb-4 tracking-[2.4px] px-4 md:px-10'>{`ALL BOARDS (${Boards.length})`}</h3>
                 <div className='max-h-[200px] overflow-y-scroll no-scrollbar'>
                     {Boards.map(board=>{
                         //Aside Boards
                         return (
-                            <div key={board.id} onClick={()=>changeBoard(board.id)} className={`flex ${board.isActive ? 'text-white bg-[#635FC7]': 'text-[#828fa3] md:bg-transparent hover:bg-[#635FC7] hover:opacity-70'} px-4 md:px-10 rounded-r-full items-center gap-2 text-left min-h-[2.8rem] h-fit mb-[0.2rem] relative cursor-pointer transition-all delay-200 ease-in`}>
+                            <div key={board.id} onClick={()=>changeBoard(board.id)} className={`flex ${board.isActive ? 'text-white bg-[#635FC7]': 'text-[#828fa3] md:bg-transparent hover:bg-[#635FC7] hover:opacity-70 hover:text-white'} px-4 md:px-10 rounded-r-full items-center gap-2 text-left min-h-[2.8rem] h-fit mb-[0.2rem] relative cursor-pointer transition-all delay-50 ease-linear`}>
                                 <i className='text-[1.5rem]'><TbLayoutBoardSplit /></i>
                                 <p className='text-[1rem] font-semibold'>{board.name}</p>          
                             </div>
