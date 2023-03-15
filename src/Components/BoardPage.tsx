@@ -4,6 +4,7 @@ import Aside from './Aside';
 import AsideBoards from './AsideBoards';
 import Body from './Body';
 import Header from './Header';
+import BoardsModal from './Modals/BoardsModal';
 import EditBoardModal from './Modals/EditBoardModal';
 
 export default function BoardPage() {
@@ -17,7 +18,6 @@ export default function BoardPage() {
             const mainboard = Boards.find((item) => {
                 return item.isActive === true
             })
-            console.log(mainboard)
             if (mainboard) {
                 dispatch({
                     type: 'setCurrentBoard',
@@ -33,7 +33,7 @@ export default function BoardPage() {
     return (
         <div className=''>
             <Header />
-            {modals.boardsModal && <div className='md:hidden relative'><AsideBoards /></div>}
+            {modals.boardsModal && <div className='md:hidden relative'><BoardsModal /></div>}
             {modals.editBoardmodal && <div className='relative'><EditBoardModal /></div>}
             <main className={`flex ${modals.boardsModal ? 'opacity-40 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />

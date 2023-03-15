@@ -29,6 +29,7 @@ export function AppProvider({children}: {children: ReactNode}){
     const value = useAuth()
     const [mainState, dispatch] = useReducer(appReducer, value)
 
+    console.log(mainState)
     useEffect(()=>{
         const unsubscribe = auth.onAuthStateChanged(user=>{
             dispatch({

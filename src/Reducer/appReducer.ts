@@ -67,7 +67,7 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state, 
                 modals: {
                     ...state.modals,
-                    boardsModal: !state.modals.boardsModal
+                    boardsModal: true
                 }
             }
         case 'setBoardsModalFalse':
@@ -83,7 +83,7 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state, 
                 modals: {
                     ...state.modals,
-                    editBoardmodal: !state.modals.editBoardmodal
+                    editBoardmodal: true
                 }
             }
         case 'setEditBoardsModalFalse':
