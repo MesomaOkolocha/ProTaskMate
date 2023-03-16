@@ -22,18 +22,19 @@ export default function AddColumnModal() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
+      event.stopPropagation()
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        // dispatch({
-        //   type: 'setNoModals'
-        // })
-      }
+          dispatch({
+            type: 'setNoModals'
+          })
+        }
     }
-    
+
     window.addEventListener("click", handleClickOutside);
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
-  }, [modalRef]);
+  }, [modalRef, modals.addColumnModal]);
 
   useEffect(() => {
     setIsOpen(modals.addColumnModal)
@@ -93,7 +94,7 @@ export default function AddColumnModal() {
                       defaultValue={item.name}
                       className=' w-[90%] bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] '
                     />
-                    <button type='button' onClick={()=>deleteItem(item.id)} className='text-[#808080] opacity-20 text-[1.5rem]'><FaTimes /></button>
+                    <button type='button' onClick={(e)=>{e.stopPropagation(); deleteItem(item.id)}} className='text-[#808080] opacity-20 text-[1.5rem]'><FaTimes /></button>
                   </label>
                 )
               })}

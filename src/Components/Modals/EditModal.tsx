@@ -6,76 +6,81 @@ import { generateColumn } from '../../Functions/Functions'
 
 export default function EditModal() {
     const [loading, setLoading] = useState(false)
-    const {dispatch, username, Boards, modals, currentBoard} = useAuth()
-    const [currentBoardCopy, setCurrentBoardCopy] = useState<BoardType | null>(currentBoard)
+    const {dispatch, username, Boards, modals, currentBoard, currentBoardCopy} = useAuth()
+    
 
     const modalRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
     
-    useEffect(() => {
-      function handleClickOutside(event: MouseEvent) {
-        if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-          dispatch({
-            type: 'setNoModals'
-          })
-        }
-      }
-      window.addEventListener("click", handleClickOutside);
-      return () => {
-        window.removeEventListener("click", handleClickOutside);
-      };
-    }, [modalRef]);
-
-    useEffect(() => {
-        if (modals.editModal) {
-          setIsOpen(true);
-        } else {
-          setIsOpen(false);
-        }
-    }, [modals]);
-
-    function cancel(){
+    useEffect(()=>{
       dispatch({
-        type: 'setNoModals'
+        type: 'setCurrentBoardCopy',
+        payload: {
+          currentBoardCopyPayload: currentBoard
+        }
       })
-    }
+    }, [])
 
-    async function addColumn(){
-    
-      if(currentBoardCopy){
-        setCurrentBoardCopy(prevBoard =>{
-          if(prevBoard){
-            return {
-              ...prevBoard,
-              columns: [...prevBoard?.columns, generateColumn()]
-            }
-          }else {
-            return null
-          }
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      event.stopPropagation()
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        dispatch({
+          type: 'setNoModals'
         })
       }
     }
 
-    function deleteColumn(id: string | number){
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [modalRef, modals.addColumnModal]);
 
-      setCurrentBoardCopy((prevState)=>{
-        if(prevState){
-          return {
-            ...prevState,
-            columns: prevState.columns.filter(item=>item.id!==id)
-          }
-        }else {
-          return null
+
+  useEffect(() => {
+      if (modals.editModal) {
+        setIsOpen(true);
+      } else {
+        setIsOpen(false);
+      }
+  }, [modals]);
+
+  function cancel(){
+    dispatch({
+      type: 'setNoModals'
+    })
+  }
+
+  function addColumn(){
+    if(currentBoardCopy){
+      const Board = {...currentBoardCopy, columns: [...currentBoardCopy.columns, generateColumn()]}
+      dispatch({
+        type: 'setCurrentBoardCopy',
+        payload: {
+          currentBoardCopyPayload: Board
         }
       })
-        
     }
+  }
+
+  function deleteItem(id: string | number){
+    if(currentBoardCopy){
+      const newBoard = {...currentBoardCopy, columns: currentBoardCopy.columns.filter(item=>item.id!==id)}
+      dispatch({
+        type: 'setCurrentBoardCopy',
+        payload: {
+          currentBoardCopyPayload: newBoard
+        }
+      })
+    }
+  }
     
     return (
       <>
       {
         isOpen && currentBoardCopy &&
-          <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[20%] z-[99999] h-full md:min-h-[250px] md:max-h-[500px] md:flex md:flex-col'>  
+          <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[10%] z-[99999] h-full md:min-h-[250px] md:max-h-[550px] md:flex md:flex-col'>  
             <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-white'><FaTimes /></button>
             <h3 className='mb-4 text-[1.125rem] font-semibold text-white'>Edit Board</h3>
             <form>
@@ -89,7 +94,7 @@ export default function EditModal() {
                   />
                 </label>
               </div>
-              <div className='flex flex-col mt-6 max-h-[300px] overflow-y-scroll no-scrollbar'>
+              <div className='flex flex-col mt-6 max-h-[250px] overflow-y-scroll no-scrollbar'>
                 <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Columns</h3>
                 {currentBoardCopy.columns.map(item=>{
                   return (
@@ -99,7 +104,7 @@ export default function EditModal() {
                         defaultValue={item.name}
                         className=' w-[90%] bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] '
                       />
-                      <button type='button' className='text-[#808080] opacity-20 text-[1.5rem]' onClick={()=>deleteColumn(item.id)}><FaTimes /></button>
+                      <button type='button' className='text-[#808080] opacity-20 text-[1.5rem]' onClick={(e)=>{e.stopPropagation(); deleteItem(item.id)}}><FaTimes /></button>
                     </label>
                   )
                 })}
