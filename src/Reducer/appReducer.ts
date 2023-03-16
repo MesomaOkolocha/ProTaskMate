@@ -1,4 +1,5 @@
 import { allBoards } from "../data";
+import { generateColumn } from "../Functions/Functions";
 import { AppActionType, AppContextType } from "../Types/types";
 
 export function appReducer(state: AppContextType, action: AppActionType){
@@ -56,6 +57,11 @@ export function appReducer(state: AppContextType, action: AppActionType){
             return {
                 ...state,
                 currentBoard: action.payload?.currentBoardPayload ?? null
+            }
+        case 'setCurrentBoardCopy':
+            return {
+                ...state,
+                currentBoardCopy: action.payload?.currentBoardCopyPayload ?? null
             }
         case 'setNoBoard':
             return {

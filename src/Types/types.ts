@@ -19,8 +19,11 @@ export type AppActionType = {
         usernamePayload?: string;
         errorPayload? : string;
         BoardsPayload?: BoardType[],
-        currentBoardPayload?: BoardType | null
+        currentBoardPayload?: BoardType | null,
+        columnPayload?: columnType,
+        currentBoardCopyPayload?: BoardType | null
     }
+
 }
 
 export type AppContextType = {
@@ -38,12 +41,13 @@ export type AppContextType = {
         deleteBoardModal: boolean,
         addColumnModal: boolean,
         editModal: boolean
-    }
+    },
+    currentBoardCopy: BoardType | null
 }
 
 export type allboardsType = BoardType[]
 
-export type BoardType = {
+export interface BoardType {
     id: number | string;
     name: string;
     isActive: boolean;

@@ -63,6 +63,14 @@ export const generateId = (): string => {
     return nanoid()
 }
 
+export function generateColumn(){
+    return {
+        name: '',
+        id: nanoid(),
+        tasks: []
+    }
+}
+
 export async function deleteBoard(id: string | number, username: string){
     const reference = ref(db, 'users/'+username+'/tasks')
     

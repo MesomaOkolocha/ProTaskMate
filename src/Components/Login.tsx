@@ -11,8 +11,6 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false)
     
-    console.log(currentUser)
-    
     useEffect(()=>{
         dispatch({
             type: 'setNoParameter'

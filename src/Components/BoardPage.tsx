@@ -42,8 +42,18 @@ export default function BoardPage() {
         }
     },[Boards, currentBoard])
 
-    const {editBoardmodal, editModal, boardsModal, deleteBoardModal, addColumnModal} = modals
     
+  useEffect(()=>{
+    dispatch({
+      type: 'setCurrentBoardCopy',
+      payload: {
+        currentBoardCopyPayload: currentBoard
+      }
+    })
+  }, [currentBoard])
+
+    const {editBoardmodal, editModal, boardsModal, deleteBoardModal, addColumnModal} = modals
+    console.log(addColumnModal)
     return (
         <div className=''>
             <Header />
