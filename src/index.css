@@ -86,3 +86,9 @@ animation-delay: -0.5s;
 .no-scrollbar::-webkit-scrollbar{
     display: none;
 }
+
+@media screen and (max-width: 768px) {
+    .tasksHeight{
+        height: 100%
+    }
+} 

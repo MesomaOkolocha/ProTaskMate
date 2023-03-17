@@ -21,7 +21,8 @@ export type AppActionType = {
         BoardsPayload?: BoardType[],
         currentBoardPayload?: BoardType | null,
         columnPayload?: columnType,
-        currentBoardCopyPayload?: BoardType | null
+        currentBoardCopyPayload?: BoardType | null,
+        newTaskPayload?: tasksType
     }
 
 }
@@ -40,9 +41,11 @@ export type AppContextType = {
         editBoardmodal: boolean,
         deleteBoardModal: boolean,
         addColumnModal: boolean,
-        editModal: boolean
+        editModal: boolean,
+        addTaskModal: boolean,
     },
-    currentBoardCopy: BoardType | null
+    currentBoardCopy: BoardType | null,
+    newTask: tasksType
 }
 
 export type allboardsType = BoardType[]
@@ -64,11 +67,12 @@ export type tasksType = {
     description: string;
     title: string;
     status: string;
-    statusId: Number;
+    statusId: string | number;
     subtasks: subtasksType[]
 }
 
 export type subtasksType = {
     title: string;
     isCompleted: Boolean;
+    id: string | number
 }

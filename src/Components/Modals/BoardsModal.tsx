@@ -92,7 +92,7 @@ export default function BoardsModal() {
                     {Boards.map(board=>{
                         //Aside Boards
                         return (
-                            <div key={board.id} onClick={()=>changeBoard(board.id)} className={`flex ${board.isActive ? 'text-white bg-[#635FC7]': 'text-[#828fa3] md:bg-transparent hover:bg-[#635FC7] hover:opacity-70 hover:text-white'} px-4 md:px-10 rounded-r-full items-center gap-2 text-left min-h-[2.8rem] h-fit mb-[0.2rem] relative cursor-pointer transition-all delay-50 ease-linear`}>
+                            <div key={board.id} onClick={()=>changeBoard(board.id)} className={`flex ${board.isActive ? 'text-white bg-[#635FC7]': 'text-[#828fa3] md:bg-transparent hover:bg-[#635FC7] hover:opacity-70 hover:text-white'} px-4 rounded-r-full items-center gap-2 text-left min-h-[2.8rem] h-fit mb-[0.2rem] relative cursor-pointer transition-all delay-50 ease-linear`}>
                                 <i className='text-[1.5rem]'><TbLayoutBoardSplit /></i>
                                 <p className='text-[1rem] font-semibold'>{board.name}</p>          
                             </div>

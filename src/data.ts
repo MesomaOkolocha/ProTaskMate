@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { allboardsType } from "./Types/types";
 
 const defaultBoard: allboardsType = [{
@@ -15,13 +16,16 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Sign up page",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Sign in page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Welcome page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 1,
@@ -31,7 +35,8 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Search page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 2,
@@ -41,10 +46,12 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Account page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Billing page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 3,
@@ -54,10 +61,12 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Internal testing",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "External testing",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }]
     }, {
@@ -71,13 +80,16 @@ const defaultBoard: allboardsType = [{
             statusId: 1,
             subtasks: [{
                 title: "Settings - Account page",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Settings - Billing page",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Search page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 5,
@@ -87,13 +99,16 @@ const defaultBoard: allboardsType = [{
             statusId: 1,
             subtasks: [{
                 title: "Upgrade plan",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Cancel plan",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Update payment method",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 6,
@@ -103,13 +118,16 @@ const defaultBoard: allboardsType = [{
             statusId: 1,
             subtasks: [{
                 title: "Sign up page",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Sign in page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Welcome page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 7,
@@ -119,10 +137,12 @@ const defaultBoard: allboardsType = [{
             statusId: 1,
             subtasks: [{
                 title: "Add search endpoint",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Define search filters",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 8,
@@ -132,10 +152,12 @@ const defaultBoard: allboardsType = [{
             statusId: 1,
             subtasks: [{
                 title: "Define user model",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Add auth endpoints",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 9,
@@ -145,13 +167,16 @@ const defaultBoard: allboardsType = [{
             statusId: 1,
             subtasks: [{
                 title: "Research competitor pricing and business models",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Outline a business model that works for our solution",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Talk to potential customers about our proposed solution and ask for fair price expectancy",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }]
     }, {
@@ -165,7 +190,8 @@ const defaultBoard: allboardsType = [{
             statusId: 2,
             subtasks: [{
                 title: "Complete 5 wireframe prototype tests",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }]
         }, {
             id: 11,
@@ -175,7 +201,8 @@ const defaultBoard: allboardsType = [{
             statusId: 2,
             subtasks: [{
                 title: "Create clickable wireframe prototype in Balsamiq",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }]
         }, {
             id: 12,
@@ -185,13 +212,16 @@ const defaultBoard: allboardsType = [{
             statusId: 2,
             subtasks: [{
                 title: "Meet to review notes from previous tests and plan changes",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Make changes to paper prototypes",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Conduct 5 usability tests",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }]
         }, {
             id: 13,
@@ -201,10 +231,12 @@ const defaultBoard: allboardsType = [{
             statusId: 2,
             subtasks: [{
                 title: "Create paper prototypes for version one",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Complete 10 usability tests",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }]
         }, {
             id: 14,
@@ -214,7 +246,8 @@ const defaultBoard: allboardsType = [{
             statusId: 2,
             subtasks: [{
                 title: "Interview 10 prospective customers",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }]
         }, {
             id: 15,
@@ -224,10 +257,12 @@ const defaultBoard: allboardsType = [{
             statusId: 2,
             subtasks: [{
                 title: "Find direct and indirect competitors",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "SWOT analysis for each competitor",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }]
         }, {
             id: 16,
@@ -237,10 +272,12 @@ const defaultBoard: allboardsType = [{
             statusId: 2,
             subtasks: [{
                 title: "Write up research analysis",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }, {
                 title: "Calculate TAM",
-                isCompleted: !0
+                isCompleted: !0,
+                id: nanoid()
             }]
         }]
     }]
@@ -259,22 +296,28 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Find hunter",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Gather assets",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Draft product page",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Notify customers",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Notify network",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Launch!",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 18,
@@ -284,13 +327,16 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Draft out HN post",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Get feedback and refine",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Publish post",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 19,
@@ -300,16 +346,20 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Write article",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Publish on LinkedIn",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Publish on Inndie Hackers",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Publish on Medium",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }]
     }, {
@@ -332,10 +382,12 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Launch privately to our waitlist",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Launch publicly on PH, HN, etc.",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }, {
             id: 21,
@@ -345,13 +397,16 @@ const defaultBoard: allboardsType = [{
             statusId: 0,
             subtasks: [{
                 title: "Interview 10 customers",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Review common customer pain points and suggestions",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }, {
                 title: "Outline next steps for our roadmap",
-                isCompleted: !1
+                isCompleted: !1,
+                id: nanoid()
             }]
         }]
     }, {

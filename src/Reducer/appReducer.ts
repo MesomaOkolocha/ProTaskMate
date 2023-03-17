@@ -1,8 +1,19 @@
+import { nanoid } from "nanoid";
 import { allBoards } from "../data";
 import { generateColumn } from "../Functions/Functions";
 import { AppActionType, AppContextType } from "../Types/types";
 
 export function appReducer(state: AppContextType, action: AppActionType){
+    
+    const task =  {
+        id: nanoid(),
+        description: '',
+        title: '',
+        status: '',
+        statusId: '',
+        subtasks: []
+    }
+
     switch(action.type){
 
         case 'setCurrentUser':
@@ -68,6 +79,11 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state,
                 currentBoard: null
             }
+        case 'setNewTask':
+            return {
+                ...state,
+                newTask: action.payload?.newTaskPayload ?? task
+            }
         case 'setBoardsModalCurrent':
             return {
                 ...state, 
@@ -132,6 +148,14 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     editModal: true
                 }
             }
+        case 'setAddTaskModalTrue':
+            return {
+                ...state, 
+                modals: {
+                    ...state.modals,
+                    addTaskModal: true
+                }
+            }
         case 'setNoModals':{
             return {
                 ...state,
@@ -140,7 +164,8 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     boardsModal: false,
                     deleteBoardModal: false,
                     addColumnModal: false,
-                    editModal: false
+                    editModal: false,
+                    addTaskModal: false
                 }
             }
         }

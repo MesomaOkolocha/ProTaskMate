@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
 import { allBoards } from "../data";
 import { auth } from "../firebase";
@@ -20,9 +21,22 @@ const AppContext = createContext<AppContextType>({
         editBoardmodal: false,
         deleteBoardModal: false,
         addColumnModal: false,
-        editModal: false
+        editModal: false,
+        addTaskModal: false
     },
-    currentBoardCopy: allBoards.boards[0]
+    currentBoardCopy: allBoards.boards[0],
+    newTask: {
+        id: nanoid(),
+        description: '',
+        title: '',
+        status: '',
+        statusId: '',
+        subtasks: [{
+           title: '',
+           isCompleted: false ,
+           id: nanoid()
+        }]
+    }
 })
 
 export function useAuth(){
