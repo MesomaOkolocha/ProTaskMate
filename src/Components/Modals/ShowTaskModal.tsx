@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react'
 import { useAuth } from '../../Contexts/AppContext'
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaTimes } from 'react-icons/fa';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 
 export default function ShowTaskModal() {
@@ -41,6 +41,20 @@ export default function ShowTaskModal() {
             }
         })
     }, [currentTask])
+
+    useEffect(()=>{
+        const newBoards = Boards.map(board=>{
+            if(board.id === currentBoard?.id){
+                return currentBoard
+            } else return board
+        })
+        dispatch({
+            type: 'setBoards',
+            payload: {
+                BoardsPayload: newBoards
+            }
+        })
+    },[currentBoard])
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -99,10 +113,11 @@ export default function ShowTaskModal() {
                 status: findStatus.name,
                 statusId: findStatus.id
             }
+
             const newCurrentBoard = {
                 ...currentBoard,
                 columns: currentBoard.columns.map(column=>{
-                    if (column.id === findStatus.id){
+                    if (column.name === newCurrentTask.status){
                         return {
                             ...column,
                             tasks: [
@@ -113,11 +128,13 @@ export default function ShowTaskModal() {
                     } else if (column.name === currentTask.status){
                         return {
                             ...column,
-                            tasks: column.tasks.filter(item=>item.title !== currentTask.title)
+                            tasks: column.tasks.filter(task=>task.id !== currentTask.id)
                         }
                     }else return column
                 })
             }
+
+            console.log(newCurrentBoard)
 
             dispatch({
                 type: 'setCurrentBoard',
@@ -136,6 +153,12 @@ export default function ShowTaskModal() {
         setIsStatusOpen(!isStatusOpen)
     }
 
+    function cancel(){
+        dispatch({
+          type: 'setNoModals'
+        })
+    }
+
     const subtasksNumber = currentTask.subtasks.length;
     const completedSubtasks = currentTask.subtasks.filter(item=>item.isCompleted).length 
     
@@ -144,6 +167,7 @@ export default function ShowTaskModal() {
         {
             isOpen &&
             <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[10%] z-[99999] h-full md:min-h-[250px] md:max-h-[550px] md:flex md:flex-col'>  
+                <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-white'><FaTimes /></button>
                 <div className='flex justify-between items-center mb-[0.5rem]'>
                     <h3 className='text-white text-[1.125rem] font-semibold'>{currentTask.title}</h3>
                     <button className='text-[1.2rem] text-[#88899b] min-w-[22px] h-[38px]' ><IoEllipsisVerticalOutline /></button>
