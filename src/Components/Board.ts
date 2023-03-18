@@ -21,11 +21,13 @@ export const createBaseBoard = () =>{
             subtasks: [
               {
                 title: "Subtask 1",
-                isCompleted: false
+                isCompleted: false,
+                id: nanoid()
               },
               {
                 title: "Subtask 2",
-                isCompleted: false
+                isCompleted: false,
+                id: nanoid()
               }
             ]
           },
@@ -38,11 +40,13 @@ export const createBaseBoard = () =>{
             subtasks: [
               {
                 title: "Subtask 1",
-                isCompleted: true
+                isCompleted: true,
+                id: nanoid()
               },
               {
                 title: "Subtask 2",
-                isCompleted: false
+                isCompleted: false,
+                id: nanoid()
               }
             ]
           }
@@ -75,11 +79,13 @@ export const createBaseBoard = () =>{
             subtasks: [
               {
                 title: "Subtask 1",
-                isCompleted: true
+                isCompleted: true,
+                id: nanoid()
               },
               {
                 title: "Subtask 2",
-                isCompleted: true
+                isCompleted: true,
+                id: nanoid()
               }
             ]
           }

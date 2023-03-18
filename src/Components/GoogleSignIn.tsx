@@ -12,8 +12,8 @@ export default function GoogleSignIn() {
   const [loading, setLoading] = useState(false)
 
   const location = useLocation()
-  async function logInWithGoogle(){
 
+  async function logInWithGoogle(){
     const provider = new GoogleAuthProvider()
     provider.setCustomParameters({ prompt: 'select_account' })
 

@@ -7,12 +7,18 @@ import NewColumn from './NewColumn'
 
 export default function Body() {
 
-    const { currentBoard, Boards } = useAuth()
+    const { currentBoard, Boards, dispatch } = useAuth()
     
     const {height} = useWindowDimensions()
     const newHeight = height-96
     const style = {
         height: newHeight
+    }
+
+    function setModalTrue(){
+        dispatch({
+            type: 'setShowTaskModalTrue'
+        })
     }
 
     return (
@@ -31,7 +37,15 @@ export default function Body() {
                             const subtasks = task.subtasks || []
                             const number = subtasks.filter(item => item.isCompleted).length
                             return (
-                                <div key={`${task.id}${index}`} className='flex text-left flex-col w-full min-h-[5.5rem] bg-[#2B2C37] border-[1px] py-6 px-4 border-[#8686861a] rounded-lg shadow-lg shadow-[#364e7e1a] mb-6 transition delay-200 ease-in hover:opacity-40'>
+                                <div onClick={()=>{
+                                    dispatch({
+                                        type: 'setCurrentTask',
+                                        payload: {
+                                          currentTaskPayload: task
+                                        }
+                                      })
+                                      setModalTrue()
+                                }} key={`${task.id}${index}`} className='flex text-left flex-col w-full min-h-[5.5rem] bg-[#2B2C37] cursor-grab border-[1px] py-6 px-4 border-[#8686861a] rounded-lg shadow-lg shadow-[#364e7e1a] mb-6 transition delay-100 ease-linear hover:opacity-40'>
                                     <h4 className='text-[0.9375rem] font-semibold text-white mb-2  clamp overflow-hidden text-ellipsis'>{task.title}</h4>
                                     <p className='text-[0.75rem] font-semibold text-[#828fa3]'>{`${number} of ${subtasks.length} subtasks`}</p>
                                 </div>

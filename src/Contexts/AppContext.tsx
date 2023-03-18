@@ -22,7 +22,8 @@ const AppContext = createContext<AppContextType>({
         deleteBoardModal: false,
         addColumnModal: false,
         editModal: false,
-        addTaskModal: false
+        addTaskModal: false,
+        showTaskModal: false
     },
     currentBoardCopy: allBoards.boards[0],
     newTask: {
@@ -35,6 +36,18 @@ const AppContext = createContext<AppContextType>({
            title: '',
            isCompleted: false ,
            id: nanoid()
+        }]
+    },
+    currentTask: {
+        id: '',
+        description: '',
+        title: '',
+        status: '',
+        statusId: '',
+        subtasks: [{
+           title: '',
+           isCompleted: false ,
+           id: ''
         }]
     }
 })

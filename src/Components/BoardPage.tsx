@@ -10,6 +10,7 @@ import BoardsModal from './Modals/BoardsModal';
 import DeleteBoardModal from './Modals/DeleteBoardModal';
 import EditBoardModal from './Modals/EditBoardModal';
 import EditModal from './Modals/EditModal';
+import ShowTaskModal from './Modals/ShowTaskModal';
 
 export default function BoardPage() {
 
@@ -53,7 +54,7 @@ export default function BoardPage() {
     })
   }, [currentBoard])
 
-    const {editBoardmodal, addTaskModal, editModal, boardsModal, deleteBoardModal, addColumnModal} = modals
+    const {editBoardmodal, addTaskModal, editModal, boardsModal, deleteBoardModal, addColumnModal, showTaskModal } = modals
     return (
         <div className=''>
             <Header />
@@ -63,7 +64,8 @@ export default function BoardPage() {
             {addColumnModal && <div className='relative flex items-center justify-center'><AddColumnModal /></div>}
             {editModal && <div className='relative flex items-center justify-center'><EditModal /></div>}
             {addTaskModal && <div className='relative flex items-center justify-center'><AddNewTask /></div>}
-            <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
+            {showTaskModal && <div className='relative flex items-center justify-center'><ShowTaskModal /></div>}
+            <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal || showTaskModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
                 <Body />
             </main>

@@ -17,7 +17,7 @@ export default function BoardsModal() {
       function handleClickOutside(event: MouseEvent) {
         if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
           dispatch({
-            type: 'setBoardsModalFalse'
+            type: 'setNoModals'
           })
         }
       }

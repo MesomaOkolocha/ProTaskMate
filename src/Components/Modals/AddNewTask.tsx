@@ -79,12 +79,6 @@ export default function AddNewTask() {
 
     function selectStatus(name: string){
         if(currentBoard){
-            dispatch({
-                type: 'setError',
-                payload: {
-                    errorPayload: ''
-                }
-            })
             const selectedColumn = currentBoard.columns.find(item=>item.name === name)
             if(selectedColumn){
                 const newStatusId = selectedColumn.id
@@ -121,8 +115,6 @@ export default function AddNewTask() {
             }
         })
     }
-
-    console.log(currentBoard, newTask)
 
     function saveNewTask(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -183,7 +175,7 @@ export default function AddNewTask() {
         <>
         {
         isOpen && currentBoardCopy &&
-        <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[3%] z-[99999] tasksHeight md:min-h-[250px] md:max-h-[700px] md:flex md:flex-col'>  
+        <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[3%] z-[99999] tasksHeight md:min-h-[250px] md:max-h-[650px] no-scrollbar overflow-y-scroll md:flex md:flex-col'>  
             <h3 className='mb-4 text-[1.125rem] font-semibold text-white'>Add New Task</h3>
             <form onSubmit={saveNewTask}>
                 <div className='flex flex-col'>
@@ -298,7 +290,7 @@ export default function AddNewTask() {
                     </div>
                     }
                 </div>
-                <button type='submit' className=' mt-4 w-full font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-[#635fc7] text-white'>Save Chages</button>
+                <button type='submit' className=' mt-4 w-full font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-[#635fc7] text-white'>Create Task</button>
           </form>
       </div>
     }

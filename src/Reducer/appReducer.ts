@@ -156,6 +156,14 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     addTaskModal: true
                 }
             }
+        case 'setShowTaskModalTrue':
+            return {
+                ...state,
+                modals: {
+                    ...state.modals,
+                    showTaskModal: true
+                }
+            }
         case 'setNoModals':{
             return {
                 ...state,
@@ -165,10 +173,16 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     deleteBoardModal: false,
                     addColumnModal: false,
                     editModal: false,
-                    addTaskModal: false
+                    addTaskModal: false,
+                    showTaskModal: false
                 }
             }
         }
+        case 'setCurrentTask':
+            return {
+                ...state,
+                currentTask: action.payload?.currentTaskPayload ?? task
+            }
         default:
             return state
     }
