@@ -13,6 +13,7 @@ export default function AddNewTask() {
     
     const [isOpen, setIsOpen] = useState(false);
     const [isStatusOpen, setIsStatusOpen] = useState(false)
+    
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -20,6 +21,12 @@ export default function AddNewTask() {
         if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
             dispatch({
                 type: 'setNoModals'
+            })
+            dispatch({
+                type: 'setError',
+                payload: {
+                    errorPayload: ''
+                }
             })
             }
         }
@@ -58,6 +65,12 @@ export default function AddNewTask() {
         dispatch({
         type: 'setNoModals'
         })
+        dispatch({
+            type: 'setError',
+            payload: {
+                errorPayload: ''
+            }
+        })
     }
     
     function setStatusItemsOpen(){
@@ -66,6 +79,12 @@ export default function AddNewTask() {
 
     function selectStatus(name: string){
         if(currentBoard){
+            dispatch({
+                type: 'setError',
+                payload: {
+                    errorPayload: ''
+                }
+            })
             const selectedColumn = currentBoard.columns.find(item=>item.name === name)
             if(selectedColumn){
                 const newStatusId = selectedColumn.id
@@ -103,17 +122,49 @@ export default function AddNewTask() {
         })
     }
 
+    console.log(currentBoard, newTask)
+
     function saveNewTask(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        const {title, subtasks} = newTask
-        if(title === ''){
+        const {title, subtasks, status} = newTask
+        const isFilled = subtasks.every(item=>item.title!=='')
+       
+       if(currentBoard){
+        if(title === '' || !isFilled || status === ''){
             dispatch({
                 type: 'setError',
                 payload: {
                     errorPayload: 'Complete all required fields or delete the incomplete ones.'
                 }
             })
-        }    
+        } else {
+            const newBoards = Boards.map(board=>{
+                if(board.name === currentBoard.name){
+                    return {
+                        ...board,
+                        columns: board.columns.map(col=>{
+                            if(col.name === newTask.status){
+                                col.tasks.push(newTask);
+                                return {
+                                    ...col,
+                                    
+                                }
+                            }else return col
+                        })
+                    }
+                } else return board
+            })
+            dispatch({
+                type: 'setBoards',
+                payload: {
+                    BoardsPayload: newBoards
+                }
+            })
+            dispatch({
+                type: 'setNoModals'
+            })
+        } 
+       }  
     }
   
     function deleteSubTask(id: string | number){
@@ -133,29 +184,36 @@ export default function AddNewTask() {
         {
         isOpen && currentBoardCopy &&
         <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[3%] z-[99999] tasksHeight md:min-h-[250px] md:max-h-[700px] md:flex md:flex-col'>  
-            {errorMessage !== '' && <p className='bg-red-400 text-white font-semibold p-2  rounded-md mb-4'>{errorMessage}</p>}
-            <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-zinc-300'><FaTimes /></button>
             <h3 className='mb-4 text-[1.125rem] font-semibold text-white'>Add New Task</h3>
             <form onSubmit={saveNewTask}>
                 <div className='flex flex-col'>
                 <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Title</h3>
                 <label>
-                  <input 
-                    type='text'
-                    className=' w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] '
-                    value={newTask.title}
-                    onChange={e=>{
-                      dispatch({
-                        type: 'setNewTask',
-                        payload: {
-                          newTaskPayload: {
-                            ...newTask,
-                            title: e.target.value
-                          }
-                        }
-                      })
-                    }}
-                  />
+                    <div>
+                        <input 
+                            type='text'
+                            className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                            value={newTask.title}
+                            onChange={e=>{
+                                dispatch({
+                                    type: 'setError',
+                                    payload: {
+                                        errorPayload: ''
+                                    }
+                                })
+                                dispatch({
+                                    type: 'setNewTask',
+                                    payload: {
+                                    newTaskPayload: {
+                                        ...newTask,
+                                        title: e.target.value
+                                    }
+                                    }
+                                })
+                            }}
+                        />
+                        {errorMessage!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
+                    </div>
                 </label>
                 </div>
                 <div className='flex flex-col mt-6 '>
@@ -182,29 +240,38 @@ export default function AddNewTask() {
                     {newTask.subtasks.map(subtask=>{
                         return (
                             <label className='mb-2 flex justify-between items-center'>
-                                <input 
-                                    type='text'
-                                    className=' w-[90%] bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366]'
-                                    value={subtask.title}
-                                    onChange={(e)=>{
-                                        dispatch({
-                                            type: 'setNewTask',
-                                            payload: {
-                                                newTaskPayload: {
-                                                    ...newTask,
-                                                    subtasks: newTask.subtasks.map(task=>{
-                                                        if(task.title === subtask.title){
-                                                            return {
-                                                                ...task,
-                                                                title: e.target.value
-                                                            }
-                                                        }else return task
-                                                    })
+                                <div className=' w-[90%]'>
+                                    <input 
+                                        type='text'
+                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                                        value={subtask.title}
+                                        onChange={(e)=>{
+                                            dispatch({
+                                                type: 'setError',
+                                                payload: {
+                                                    errorPayload: ''
                                                 }
-                                            }
-                                        })
-                                    }}
-                                />
+                                            })
+                                            dispatch({
+                                                type: 'setNewTask',
+                                                payload: {
+                                                    newTaskPayload: {
+                                                        ...newTask,
+                                                        subtasks: newTask.subtasks.map(task=>{
+                                                            if(task.title === subtask.title){
+                                                                return {
+                                                                    ...task,
+                                                                    title: e.target.value
+                                                                }
+                                                            }else return task
+                                                        })
+                                                    }
+                                                }
+                                            })
+                                        }}
+                                    />
+                                    {errorMessage!=='' && <p className='text-red-400 text-[0.8125rem] mt-2'>Required</p>}
+                                </div>
                                 <button type='button' onClick={(e)=>{e.stopPropagation(); deleteSubTask(subtask.id)}} className='text-[#808080] opacity-20 text-[1.5rem]'><FaTimes /></button>
                             </label>
                         )
@@ -214,10 +281,11 @@ export default function AddNewTask() {
                 </div>
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
                     <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Status</h3>
-                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'}`}>
+                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
                         <span>{newTask.status}</span>
                         <span className='text-[#635fc7] text-[1.2rem]'>{isStatusOpen ? <BiChevronUp /> : <BiChevronDown /> }</span>
                     </button>
+                    {errorMessage!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
                    {isStatusOpen &&  
                    <div className='bg-[#20212C] flex flex-col gap-2 h-fit absolute top-20 p-4 w-full rounded-[4px] '>
                         {
