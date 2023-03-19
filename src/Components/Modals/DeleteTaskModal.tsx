@@ -34,25 +34,6 @@ export default function DeleteTaskModal() {
         }
     }, [modals]);
 
-    async function deleteTask(id: string | number){
-        setLoading(true)
-        try{
-          await deleteTaskItem(id, username)
-          dispatch({
-            type: 'setCurrentBoard',
-            payload:{
-              currentBoardPayload: Boards[0]
-            }
-          })
-          dispatch({
-            type: 'setNoModals'
-          })
-        }catch (err){
-          console.log(err)
-        }finally{
-            setLoading(false)
-        }
-    }
 
     async function deleteTaskItem(id: string | number, username: string){
         const reference = ref(db, 'users/'+username+'/tasks')

@@ -104,6 +104,8 @@ export default function EditTaskModal() {
         })
     }
 
+    console.log(currentTask)
+
     function saveEditedTask(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
         const {title, subtasks, status} = currentTask
@@ -123,14 +125,26 @@ export default function EditTaskModal() {
                     return {
                         ...board,
                         columns: board.columns.map(col=>{
-                            if(col.name === currentTask.status){
-                                col.tasks.push(currentTask);
-                                return {
+                            if(col.id === currentTask.statusId){
+                                if(col.tasks !== undefined){
+                                    return {
+                                        ...col,
+                                        tasks: [
+                                            ...col.tasks,
+                                            currentTask
+                                        ]
+                                    }
+                                }else return {
                                     ...col,
+                                    tasks: [currentTask]
                                 }
-                            }else return {
-                                ...col,
-                                tasks: col.tasks.filter(c=>c.title!== currentTask.title)
+                            }else {
+                                if(col.tasks!==undefined){
+                                    return {
+                                        ...col,
+                                        tasks: col.tasks.filter(item=>item.id !== currentTask.id)
+                                    }
+                                }else return col
                             }
                         })
                     }

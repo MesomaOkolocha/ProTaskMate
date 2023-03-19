@@ -136,10 +136,18 @@ export default function AddNewTask() {
                         ...board,
                         columns: board.columns.map(col=>{
                             if(col.name === newTask.status){
-                                col.tasks.push(newTask);
-                                return {
-                                    ...col,  
-                                }
+                               if(col.tasks !== undefined) {
+                                    return {
+                                        ...col,
+                                        tasks: [
+                                            ...col.tasks,
+                                            newTask
+                                        ]
+                                    }
+                               }else return {
+                                ...col,
+                                tasks: [newTask]
+                               }
                             }else return col
                         })
                     }

@@ -159,8 +159,6 @@ export default function ShowTaskModal() {
                 })
             }
 
-            console.log(newCurrentBoard)
-
             dispatch({
                 type: 'setCurrentBoard',
                 payload: {
