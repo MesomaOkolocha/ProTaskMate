@@ -1,8 +1,9 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { onValue, push, ref, remove, set, update } from "firebase/database";
 import { nanoid } from "nanoid";
+import { useAuth } from "../Contexts/AppContext";
 import { auth, db } from "../firebase";
-import { allboardsType, BoardType } from "../Types/types";
+import { allboardsType, BoardType, columnType } from "../Types/types";
 
 export async function signUpUser(email: string, password: string, username: string, boards: BoardType[]){
     await createUserWithEmailAndPassword(auth, email, password)
@@ -63,7 +64,7 @@ export const generateId = (): string => {
     return nanoid()
 }
 
-export function generateColumn(){
+export function generateColumn(): columnType{
     return {
         name: '',
         id: nanoid(),

@@ -48,7 +48,9 @@ export default function AddColumnModal() {
 
   function addColumn(){
     if(currentBoardCopy){
-      const Board = {...currentBoardCopy, columns: [...currentBoardCopy.columns, generateColumn()]}
+      const newColumn = generateColumn()
+      console.log(newColumn)
+      const Board = {...currentBoardCopy, columns: [...currentBoardCopy.columns, newColumn]}
       dispatch({
         type: 'setCurrentBoardCopy',
         payload: {

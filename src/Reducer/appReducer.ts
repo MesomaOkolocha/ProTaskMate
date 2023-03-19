@@ -164,6 +164,30 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     showTaskModal: true
                 }
             }
+        case 'setShowTaskModalFalse':
+            return {
+                ...state,
+                modals: {
+                    ...state.modals,
+                    showTaskModal: false
+                }
+            }
+        case 'setDeleteTaskModalTrue':
+            return {
+                ...state,
+                modals: {
+                    ...state.modals,
+                    deleteTaskModal: true
+                }
+            }
+        case 'setEditTaskModalTrue':
+            return {
+                ...state,
+                modals: {
+                    ...state.modals,
+                    editTaskModal: true
+                }
+            }
         case 'setNoModals':{
             return {
                 ...state,
@@ -174,7 +198,9 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     addColumnModal: false,
                     editModal: false,
                     addTaskModal: false,
-                    showTaskModal: false
+                    showTaskModal: false,
+                    deleteTaskModal: false,
+                    editTaskModal: false
                 }
             }
         }

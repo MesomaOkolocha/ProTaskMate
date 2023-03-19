@@ -44,7 +44,9 @@ export type AppContextType = {
         addColumnModal: boolean,
         editModal: boolean,
         addTaskModal: boolean,
-        showTaskModal: boolean
+        showTaskModal: boolean,
+        deleteTaskModal: boolean,
+        editTaskModal: boolean
     },
     currentBoardCopy: BoardType | null,
     newTask: tasksType,

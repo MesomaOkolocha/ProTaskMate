@@ -3,14 +3,17 @@ import { useAuth } from '../../Contexts/AppContext'
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
+import EditOrDeleteTaskModal from './EditOrDeletetaskModal';
 
 export default function ShowTaskModal() {
 
     const { currentBoard, dispatch, currentTask, Boards, modals } = useAuth()
 
     const modalRef = useRef<HTMLDivElement>(null);
+    const otherRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isStatusOpen, setIsStatusOpen] = useState(false)
+    const [innerModal, setInnerModal] = useState(false)
 
     useEffect(()=>{
         
@@ -22,7 +25,7 @@ export default function ShowTaskModal() {
                         if(column.name === currentTask.status){
                             return {
                                 ...column,
-                                tasks: column.tasks.map(item=>{
+                                tasks: column.tasks?.map(item=>{
                                     if(item.title === currentTask.title){
                                         return currentTask
                                     }else return item
@@ -54,7 +57,7 @@ export default function ShowTaskModal() {
                 BoardsPayload: newBoards
             }
         })
-    },[currentBoard])
+    }, [currentBoard])
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -72,6 +75,7 @@ export default function ShowTaskModal() {
         };
     }, [modalRef, modals.showTaskModal]);
 
+
     useEffect(() => {
         if (modals.showTaskModal) {
             setIsOpen(true);
@@ -79,6 +83,20 @@ export default function ShowTaskModal() {
             setIsOpen(false);
         }
     }, [modals]);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            event.stopPropagation()
+            if (otherRef.current && !otherRef.current.contains(event.target as Node)) {
+                setInnerModal(false)
+            }
+        }
+
+        window.addEventListener("click", handleClickOutside);
+        return () => {
+            window.removeEventListener("click", handleClickOutside);
+        };
+    }, [otherRef, innerModal]);
 
     function setChecked(id: string | number){
         const newCurrentTask = {
@@ -118,10 +136,17 @@ export default function ShowTaskModal() {
                 ...currentBoard,
                 columns: currentBoard.columns.map(column=>{
                     if (column.name === newCurrentTask.status){
-                        return {
+                        if(column.tasks !== undefined){
+                            return {
+                                ...column,
+                                tasks: [
+                                    ...column.tasks,
+                                    newCurrentTask
+                                ]
+                            }
+                        } else return {
                             ...column,
                             tasks: [
-                                ...column.tasks,
                                 newCurrentTask
                             ]
                         }
@@ -159,8 +184,14 @@ export default function ShowTaskModal() {
         })
     }
 
-    const subtasksNumber = currentTask.subtasks.length;
-    const completedSubtasks = currentTask.subtasks.filter(item=>item.isCompleted).length 
+    function setInnerModalOpen(){
+        setInnerModal(true)
+    }
+
+    console.log(innerModal)
+
+    const subtasksNumber = currentTask.subtasks?.length ?? 0;
+    const completedSubtasks = currentTask.subtasks?.filter(item=>item.isCompleted).length  ?? 0
     
     return (
         <>
@@ -168,16 +199,17 @@ export default function ShowTaskModal() {
             isOpen &&
             <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[10%] z-[99999] h-full md:min-h-[250px] md:max-h-[550px] md:flex md:flex-col'>  
                 <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-white'><FaTimes /></button>
-                <div className='flex justify-between items-center mb-[0.5rem]'>
+                <div className='relative flex justify-between items-center mb-[0.5rem]'>
                     <h3 className='text-white text-[1.125rem] font-semibold'>{currentTask.title}</h3>
-                    <button className='text-[1.2rem] text-[#88899b] min-w-[22px] h-[38px]' ><IoEllipsisVerticalOutline /></button>
+                    <button onClick={(e)=>{e.stopPropagation(); setInnerModalOpen()}} className='text-[1.2rem] text-[#88899b] min-w-[22px] h-[38px]' ><IoEllipsisVerticalOutline /></button>
+                    {innerModal && <div ref={otherRef} className='absolute right-0 top-10'><EditOrDeleteTaskModal /></div>}
                 </div>
                 <p className='text-[#828fa3] max-h-[10rem] overflow-x-hidden break-words overflow-y-auto text-[0.8125rem]'>{currentTask.description ==='' ? 'No description' : currentTask.description}</p>
                 <div className='mt-6 flex flex-col w-full mb-2'>
                     <p className='text-[0.75rem] text-white font-semibold'>{`Subtasks (${completedSubtasks} of ${subtasksNumber})`}</p> 
                    <div className='mt-2'>
                    {
-                        currentTask.subtasks.map(tasks=>{
+                        currentTask.subtasks?.map(tasks=>{
                             return (
                                 <div onClick={(e)=>{e.stopPropagation(); setChecked(tasks.id)}} className={`${tasks.isCompleted ? 'bg-[#525170]' : 'bg-[#20212C]'} mb-2 flex items-center gap-6 p-3 rounded-md text-[0.75rem] text-white font-semibold`}>
                                     <div className={`${tasks.isCompleted ? 'bg-[#635FC7]' : 'bg-[#2B2C37] h-4'} p-1 rounded-sm w-4 text-[0.5rem]`}>{tasks.isCompleted && <FaCheck />}</div>

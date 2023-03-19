@@ -23,7 +23,9 @@ const AppContext = createContext<AppContextType>({
         addColumnModal: false,
         editModal: false,
         addTaskModal: false,
-        showTaskModal: false
+        showTaskModal: false,
+        deleteTaskModal: false,
+        editTaskModal: false
     },
     currentBoardCopy: allBoards.boards[0],
     newTask: {

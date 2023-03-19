@@ -8,8 +8,10 @@ import AddColumnModal from './Modals/AddColumnModal';
 import AddNewTask from './Modals/AddNewTask';
 import BoardsModal from './Modals/BoardsModal';
 import DeleteBoardModal from './Modals/DeleteBoardModal';
+import DeleteTaskModal from './Modals/DeleteTaskModal';
 import EditBoardModal from './Modals/EditBoardModal';
 import EditModal from './Modals/EditModal';
+import EditTaskModal from './Modals/EditTaskModal';
 import ShowTaskModal from './Modals/ShowTaskModal';
 
 export default function BoardPage() {
@@ -54,7 +56,7 @@ export default function BoardPage() {
     })
   }, [currentBoard])
 
-    const {editBoardmodal, addTaskModal, editModal, boardsModal, deleteBoardModal, addColumnModal, showTaskModal } = modals
+    const {editBoardmodal, addTaskModal, editModal, boardsModal, deleteBoardModal, addColumnModal, showTaskModal, deleteTaskModal, editTaskModal } = modals
     return (
         <div className=''>
             <Header />
@@ -65,7 +67,9 @@ export default function BoardPage() {
             {editModal && <div className='relative flex items-center justify-center'><EditModal /></div>}
             {addTaskModal && <div className='relative flex items-center justify-center'><AddNewTask /></div>}
             {showTaskModal && <div className='relative flex items-center justify-center'><ShowTaskModal /></div>}
-            <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal || showTaskModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
+            {deleteTaskModal && <div className='relative flex items-center justify-center'><DeleteTaskModal /></div>}
+            {editTaskModal && <div className='relative flex items-center justify-center'><EditTaskModal /></div>}
+            <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal || showTaskModal || deleteTaskModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
                 <Body />
             </main>

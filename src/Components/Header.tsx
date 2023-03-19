@@ -26,10 +26,10 @@ export default function Header() {
         })
     }
 
-    const {editBoardmodal, editModal, boardsModal, deleteBoardModal, addColumnModal, addTaskModal, showTaskModal } = modals
+    const {editBoardmodal, editModal, boardsModal, deleteBoardModal, addColumnModal, addTaskModal, showTaskModal, deleteTaskModal, editTaskModal } = modals
 
     return (
-        <div className={`${boardsModal || editBoardmodal || editModal || deleteBoardModal || addColumnModal || addTaskModal || showTaskModal ? 'opacity-40 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'} bg-[#2b2c37] h-[6rem] flex items-center sticky top-0 z-[9999]`}>
+        <div className={`${boardsModal || editBoardmodal || editModal || deleteBoardModal || addColumnModal || addTaskModal || showTaskModal || deleteTaskModal || editTaskModal ? 'opacity-40 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'} bg-[#2b2c37] h-[6rem] flex items-center sticky top-0 z-[9999]`}>
             <div className='min-w-[18.75rem] h-[6rem] hidden md:flex items-center gap-2 px-4 py-6 md:px-10 border-b-[1px] border-r-[1px] border-[#8686861a]'>
                 <img src='https://kanban-app-jay.netlify.app/assets/logo-mobile.c1810dc7.svg' 
                     className='min-w-[1.5rem]'

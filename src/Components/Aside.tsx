@@ -8,11 +8,6 @@ import AsideFooter from './AsideFooter'
 import AsideBoards from './AsideBoards'
 
 export default function Aside() {
-
-    
-
-   
-
    
     const { height } = useWindowDimensions()
 

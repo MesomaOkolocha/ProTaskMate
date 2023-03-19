@@ -4,10 +4,10 @@ import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { FaCaretDown, FaTimes } from 'react-icons/fa';
 import { useAuth } from '../../Contexts/AppContext';
 
-export default function AddNewTask() {
+export default function EditTaskModal() {
     
     
-    const {dispatch, newTask, Boards, modals, currentBoard, errorMessage, currentBoardCopy } = useAuth()
+    const {dispatch, newTask, Boards, modals, currentBoard, errorMessage, currentBoardCopy, currentTask } = useAuth()
     
     const modalRef = useRef<HTMLDivElement>(null);
     
@@ -35,31 +35,19 @@ export default function AddNewTask() {
         return () => {
         window.removeEventListener("click", handleClickOutside);
         };
-    }, [modalRef, modals.addTaskModal]);
-
-    useEffect(() => {
+    }, [modalRef, modals.editTaskModal]);
+    
+    useEffect(()=>{
         dispatch({
-            type: 'setNewTask',
+            type: 'setError',
             payload: {
-                newTaskPayload: {
-                    ...newTask,
-                    status: '',
-                    subtasks: [
-                        {
-                            title: '',
-                            isCompleted: false,
-                            id: nanoid() 
-                        }
-                    ],
-                    title: ''
-                }
+                errorPayload: ''
             }
         })
-    }, []);
-    
+    },[])
     useEffect(() => {
-        setIsOpen(modals.addTaskModal)
-    }, [modals.addTaskModal]);
+        setIsOpen(modals.editTaskModal)
+    }, [modals.editTaskModal]);
 
     function cancel(){
         dispatch({
@@ -77,17 +65,17 @@ export default function AddNewTask() {
         setIsStatusOpen(!isStatusOpen)
     }
 
-    function selectStatus(name: string){
+    function selectStatus(id: string | number){
         if(currentBoard){
-            const selectedColumn = currentBoard.columns.find(item=>item.name === name)
+            const selectedColumn = currentBoard.columns.find(item=>item.id === id)
             if(selectedColumn){
                 const newStatusId = selectedColumn.id
                 dispatch({
-                    type: 'setNewTask',
+                    type: 'setCurrentTask',
                     payload: {
-                        newTaskPayload: {
-                            ...newTask,
-                            status: name,
+                        currentTaskPayload: {
+                            ...currentTask,
+                            status: selectedColumn.name,
                             statusId: newStatusId
                         }
                     }
@@ -99,12 +87,12 @@ export default function AddNewTask() {
 
     function addNewSubTask(){
         dispatch({
-            type: 'setNewTask',
+            type: 'setCurrentTask',
             payload: {
-                newTaskPayload: {
-                    ...newTask,
+                 currentTaskPayload: {
+                    ...currentTask,
                     subtasks: [
-                        ...newTask.subtasks,
+                        ...currentTask.subtasks,
                         {
                             title: '',
                             isCompleted: false,
@@ -116,9 +104,9 @@ export default function AddNewTask() {
         })
     }
 
-    function saveNewTask(e: React.FormEvent<HTMLFormElement>){
+    function saveEditedTask(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        const {title, subtasks, status} = newTask
+        const {title, subtasks, status} = currentTask
         const isFilled = subtasks.every(item=>item.title!=='')
        
        if(currentBoard){
@@ -135,12 +123,15 @@ export default function AddNewTask() {
                     return {
                         ...board,
                         columns: board.columns.map(col=>{
-                            if(col.name === newTask.status){
-                                col.tasks.push(newTask);
+                            if(col.name === currentTask.status){
+                                col.tasks.push(currentTask);
                                 return {
-                                    ...col,  
+                                    ...col,
                                 }
-                            }else return col
+                            }else return {
+                                ...col,
+                                tasks: col.tasks.filter(c=>c.title!== currentTask.title)
+                            }
                         })
                     }
                 } else return board
@@ -157,16 +148,16 @@ export default function AddNewTask() {
         } 
        }  
     }
-  
+
     function deleteSubTask(id: string | number){
         const changedTasks = {
-            ...newTask,
-            subtasks: newTask.subtasks.filter(item=>item.id !== id)
+            ...currentTask,
+            subtasks: currentTask.subtasks.filter(item=>item.id !== id)
         }
         dispatch({
-            type: 'setNewTask',
+            type: 'setCurrentTask',
             payload: {
-                newTaskPayload: changedTasks
+                currentTaskPayload: changedTasks
             }
         })
     }
@@ -178,8 +169,8 @@ export default function AddNewTask() {
         isOpen && currentBoardCopy &&
         <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[3%] z-[99999] tasksHeight md:min-h-[250px] md:max-h-[650px] no-scrollbar overflow-y-scroll md:flex md:flex-col'>  
              <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-white'><FaTimes /></button>
-            <h3 className='mb-4 text-[1.125rem] font-semibold text-white'>Add New Task</h3>
-            <form onSubmit={saveNewTask}>
+            <h3 className='mb-4 text-[1.125rem] font-semibold text-white'>Edit Task</h3>
+            <form onSubmit={saveEditedTask}>
                 <div className='flex flex-col'>
                 <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Title</h3>
                 <label>
@@ -187,7 +178,8 @@ export default function AddNewTask() {
                         <input 
                             type='text'
                             className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
-                            value={newTask.title}
+                            defaultValue={currentTask.title}
+                            value={currentTask.title}
                             onChange={e=>{
                                 dispatch({
                                     type: 'setError',
@@ -196,10 +188,10 @@ export default function AddNewTask() {
                                     }
                                 })
                                 dispatch({
-                                    type: 'setNewTask',
+                                    type: 'setCurrentTask',
                                     payload: {
-                                    newTaskPayload: {
-                                        ...newTask,
+                                    currentTaskPayload: {
+                                        ...currentTask,
                                         title: e.target.value
                                     }
                                     }
@@ -216,28 +208,30 @@ export default function AddNewTask() {
                         className='bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] h-20'
                         onChange = {(e)=>{
                             dispatch({
-                                type: 'setNewTask',
+                                type: 'setCurrenttask',
                                 payload: {
-                                  newTaskPayload: {
-                                    ...newTask,
+                                  currentTaskPayload: {
+                                    ...currentTask,
                                     description: e.target.value
                                   }
                                 }
                               })
                         }}
-                        value={newTask.description}
+                        defaultValue={currentTask.description}
+                        value={currentTask.description}
                     />
                 </div>
                 <div className='flex flex-col mt-6 '>
                     <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Subtasks</h3>
                     <div className='max-h-[200px] md:max-h-[150px] overflow-y-scroll no-scrollbar'>
-                    {newTask.subtasks.map(subtask=>{
+                    {currentTask.subtasks.map(subtask=>{
                         return (
                             <label className='mb-2 flex justify-between items-center'>
                                 <div className=' w-[90%]'>
                                     <input 
                                         type='text'
                                         className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                                        defaultValue={subtask.title}
                                         value={subtask.title}
                                         onChange={(e)=>{
                                             dispatch({
@@ -247,11 +241,11 @@ export default function AddNewTask() {
                                                 }
                                             })
                                             dispatch({
-                                                type: 'setNewTask',
+                                                type: 'setCurrentTask',
                                                 payload: {
-                                                    newTaskPayload: {
-                                                        ...newTask,
-                                                        subtasks: newTask.subtasks.map(task=>{
+                                                    currentTaskPayload: {
+                                                        ...currentTask,
+                                                        subtasks: currentTask.subtasks.map(task=>{
                                                             if(task.title === subtask.title){
                                                                 return {
                                                                     ...task,
@@ -276,7 +270,7 @@ export default function AddNewTask() {
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
                     <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Status</h3>
                     <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
-                        <span>{newTask.status}</span>
+                        <span>{currentTask.status}</span>
                         <span className='text-[#635fc7] text-[1.2rem]'>{isStatusOpen ? <BiChevronUp /> : <BiChevronDown /> }</span>
                     </button>
                     {errorMessage!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
@@ -285,14 +279,14 @@ export default function AddNewTask() {
                         {
                             currentBoardCopy.columns.map(status=>{
                                 return (
-                                    <button type='button' onClick={(e)=>{e.stopPropagation(); selectStatus(status.name);}} className='text-[#828fa3] text-[0.8125rem] capitalize text-left'>{status.name}</button>
+                                    <button type='button' onClick={(e)=>{e.stopPropagation(); selectStatus(status.id);}} className='text-[#828fa3] text-[0.8125rem] capitalize text-left'>{status.name}</button>
                                 )
                             })
                         }
                     </div>
                     }
                 </div>
-                <button type='submit' className=' mt-4 w-full font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-[#635fc7] text-white'>Create Task</button>
+                <button type='submit' className=' mt-4 w-full font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-[#635fc7] text-white'>Save Changes</button>
           </form>
       </div>
     }
