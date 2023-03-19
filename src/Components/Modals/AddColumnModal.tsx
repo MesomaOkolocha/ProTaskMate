@@ -114,7 +114,7 @@ export default function AddColumnModal() {
             </div>
             <div className='flex flex-col mt-6 max-h-[250px] overflow-y-scroll no-scrollbar'>
               <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Columns</h3>
-              {currentBoardCopy.columns.map(item=>{
+              {currentBoardCopy.columns?.map(item=>{
                 return (
                   <label key={item.id} className='mb-2 flex justify-between items-center'>
                     <input 

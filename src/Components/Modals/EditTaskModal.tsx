@@ -129,10 +129,11 @@ export default function EditTaskModal() {
                                 if(col.tasks !== undefined){
                                     return {
                                         ...col,
-                                        tasks: [
-                                            ...col.tasks,
-                                            currentTask
-                                        ]
+                                        tasks: col.tasks.map(item=>{
+                                            if(item.id === currentTask.id){
+                                                return currentTask
+                                            }else return item
+                                        })
                                     }
                                 }else return {
                                     ...col,
@@ -222,7 +223,7 @@ export default function EditTaskModal() {
                         className='bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] h-20'
                         onChange = {(e)=>{
                             dispatch({
-                                type: 'setCurrenttask',
+                                type: 'setCurrentTask',
                                 payload: {
                                   currentTaskPayload: {
                                     ...currentTask,

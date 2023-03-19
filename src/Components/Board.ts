@@ -16,7 +16,7 @@ export const createBaseBoard = () =>{
             id: nanoid(),
             title: "Task 1",
             description: "This is the first task",
-            status: "incomplete",
+            status: "To Do",
             statusId: 1,
             subtasks: [
               {
@@ -35,7 +35,7 @@ export const createBaseBoard = () =>{
             id: nanoid(),
             title: "Task 2",
             description: "This is the second task",
-            status: "in progress",
+            status: "To Do",
             statusId: 2,
             subtasks: [
               {

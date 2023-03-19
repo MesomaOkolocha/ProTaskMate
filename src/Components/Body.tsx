@@ -23,7 +23,7 @@ export default function Body() {
 
     return (
         <div className='px-4 py-6 md:px-10 overflow-x-scroll bodyScrollbarH flex md:ml-[300px] scrollbar' style={style}>
-            {currentBoard?.columns.map((column, index)=>{
+            {currentBoard?.columns?.map((column, index)=>{
                 const tasks = column.tasks || []
                 const length = tasks.length
                 return (

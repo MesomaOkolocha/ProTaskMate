@@ -72,13 +72,19 @@ export default function BoardsModal() {
     
 
     async function generateBoard(){
-        const newBoard = createBaseBoard()
-        setLoading(true)
-        await createNewBoard(username, newBoard)
+        // const newBoard = createBaseBoard()
+        // setLoading(true)
+        // await createNewBoard(username, newBoard)
+        // dispatch({
+        //     type: 'setNoModals'
+        // })
+        // setLoading(false)
         dispatch({
-            type: 'setNoModals'
+            type: 'setCreateBoardModalTrue'
         })
-        setLoading(false)
+        dispatch({
+            type: 'setBoardsModalFalse'
+        })
     }
 
     

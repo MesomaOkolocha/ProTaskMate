@@ -8,21 +8,6 @@ export default function EditOrDeleteTaskModal() {
 
   const modalRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  
-//   useEffect(() => {
-//     function handleClickOutside(event: MouseEvent) {
-//       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-//         dispatch({
-//           type: 'setEditBoardsModalFalse'
-//         })
-//         setIsOpen(false)
-//       }
-//     }
-//     window.addEventListener("click", handleClickOutside);
-//     return () => {
-//       window.removeEventListener("click", handleClickOutside);
-//     };
-//   }, [modalRef]);
 
   function deleteTaskOpen(){
     dispatch({

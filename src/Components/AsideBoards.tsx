@@ -50,9 +50,12 @@ export default function AsideBoards() {
     async function generateBoard(){
         const newBoard = createBaseBoard()
         setLoading(true)
-        await createNewBoard(username, newBoard)
+        // await createNewBoard(username, newBoard)
+        // dispatch({
+        //     type: 'setNoModals'
+        // })
         dispatch({
-            type: 'setNoModals'
+            type: 'setCreateBoardModalTrue'
         })
         setLoading(false)
     }

@@ -188,7 +188,7 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     editTaskModal: true
                 }
             }
-        case 'setNoModals':{
+        case 'setNoModals':
             return {
                 ...state,
                 modals: {
@@ -200,10 +200,18 @@ export function appReducer(state: AppContextType, action: AppActionType){
                     addTaskModal: false,
                     showTaskModal: false,
                     deleteTaskModal: false,
-                    editTaskModal: false
+                    editTaskModal: false,
+                    createBoardModal: false
                 }
             }
-        }
+        case 'setCreateBoardModalTrue':
+            return {
+                ...state,
+                modals: {
+                    ...state.modals,
+                    createBoardModal: true
+                }
+            }
         case 'setCurrentTask':
             return {
                 ...state,
