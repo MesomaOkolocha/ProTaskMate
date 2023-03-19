@@ -32,7 +32,7 @@ export default function Body() {
                             <div className='h-[15px] w-[15px] bg-[#49C4E5] rounded-full'></div>
                             <h3>{`${column.name.toUpperCase()}(${length})`}</h3>
                         </div>
-                        <div className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-[#2B2C37] outline-2 rounded-lg' : ''} `}>
+                        <div className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-[#2B2C37] outline-2 rounded-lg' : ''} h-full`}>
                         {column.tasks && column.tasks.map((task, index) => {
                             const subtasks = task.subtasks || []
                             const number = subtasks.filter(item => item.isCompleted).length

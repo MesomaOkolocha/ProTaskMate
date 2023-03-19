@@ -129,11 +129,7 @@ export default function EditTaskModal() {
                                 if(col.tasks !== undefined){
                                     return {
                                         ...col,
-                                        tasks: col.tasks.map(item=>{
-                                            if(item.id === currentTask.id){
-                                                return currentTask
-                                            }else return item
-                                        })
+                                        tasks: [...col.tasks, currentTask]
                                     }
                                 }else return {
                                     ...col,
