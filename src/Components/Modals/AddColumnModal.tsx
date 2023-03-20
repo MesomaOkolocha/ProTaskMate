@@ -112,7 +112,7 @@ export default function AddColumnModal() {
                 {currentBoardCopy.name}
               </p>
             </div>
-            <div className='flex flex-col mt-6 max-h-[250px] overflow-y-scroll no-scrollbar'>
+            <div className='flex flex-col mt-6 overflow-y-scroll no-scrollbar'>
               <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]' : 'text-white '} mb-2`}>Columns</h3>
               {currentBoardCopy.columns?.map(item=>{
                 return (
@@ -147,7 +147,7 @@ export default function AddColumnModal() {
               })}
             </div>
             <div className='mt-4 flex flex-col gap-4 w-full'>
-              <button type='button' onClick={()=>addColumn()} className={`font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center ${isLightToggled ? 'bg-[#f4f7fd]' : 'bg-white'} text-[#635fc7]`}>+ Add New Column</button>
+              <button type='button' onClick={()=>addColumn()} className={`font-semibold rounded-full py-2 text-[0.8125rem] ${currentBoardCopy.columns.length < 5 ? 'flex' : 'hidden'} items-center justify-center ${isLightToggled ? 'bg-[#f4f7fd]' : 'bg-white'} text-[#635fc7]`}>+ Add New Column</button>
               <button type='submit' className='font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-[#635fc7] text-white'>Save Chages</button>
             </div>
           </form>

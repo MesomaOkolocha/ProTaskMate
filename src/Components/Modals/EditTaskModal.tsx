@@ -86,25 +86,41 @@ export default function EditTaskModal() {
     }
 
     function addNewSubTask(){
-        dispatch({
-            type: 'setCurrentTask',
-            payload: {
-                 currentTaskPayload: {
-                    ...currentTask,
-                    subtasks: [
-                        ...currentTask.subtasks,
-                        {
-                            title: '',
-                            isCompleted: false,
-                            id: nanoid()
-                        }
-                    ]
+        if(currentTask.subtasks !== undefined){
+            dispatch({
+                type: 'setCurrentTask',
+                payload: {
+                     currentTaskPayload: {
+                        ...currentTask,
+                        subtasks: [
+                            ...currentTask.subtasks,
+                            {
+                                title: '',
+                                isCompleted: false,
+                                id: nanoid()
+                            }
+                        ]
+                    }
                 }
-            }
-        })
+            })
+        }else {
+            dispatch({
+                type: 'setCurrentTask',
+                payload: {
+                     currentTaskPayload: {
+                        ...currentTask,
+                        subtasks: [
+                            {
+                                title: '',
+                                isCompleted: false,
+                                id: nanoid()
+                            }
+                        ]
+                    }
+                }
+            })
+        }
     }
-
-    console.log(currentTask)
 
     function saveEditedTask(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -234,8 +250,8 @@ export default function EditTaskModal() {
                 </div>
                 <div className='flex flex-col mt-6 '>
                 <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Subtasks</h3>
-                    <div className='max-h-[200px] md:max-h-[150px] overflow-y-scroll no-scrollbar'>
-                    {currentTask.subtasks.map(subtask=>{
+                    <div className='max-h-[250px] md:max-h-[300px] overflow-y-scroll no-scrollbar'>
+                    {currentTask.subtasks?.map(subtask=>{
                         return (
                             <label className='mb-2 flex justify-between items-center'>
                                 <div className=' w-[90%]'>
@@ -257,7 +273,7 @@ export default function EditTaskModal() {
                                                     currentTaskPayload: {
                                                         ...currentTask,
                                                         subtasks: currentTask.subtasks.map(task=>{
-                                                            if(task.title === subtask.title){
+                                                            if(task.id === subtask.id){
                                                                 return {
                                                                     ...task,
                                                                     title: e.target.value
@@ -276,7 +292,7 @@ export default function EditTaskModal() {
                         )
                     })}
                     </div>
-                        <button type='button' onClick={addNewSubTask} className={`mt-4 font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-white'} text-[#635fc7]`}>+ Add New Subtask</button>
+                    <button type='button' onClick={addNewSubTask} className={` ${currentTask.subtasks === undefined || [] && currentTask.subtasks?.length < 5  ? 'flex' : 'hidden'} mt-4 font-semibold rounded-full py-2 text-[0.8125rem] items-center justify-center ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-white'} text-[#635fc7]`}>+ Add New Subtask</button>
                 </div>
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
                     <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Status</h3>

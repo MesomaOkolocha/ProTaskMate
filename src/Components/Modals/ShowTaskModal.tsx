@@ -186,8 +186,6 @@ export default function ShowTaskModal() {
         setInnerModal(true)
     }
 
-    console.log(innerModal)
-
     const subtasksNumber = currentTask.subtasks?.length ?? 0;
     const completedSubtasks = currentTask.subtasks?.filter(item=>item.isCompleted).length  ?? 0
     

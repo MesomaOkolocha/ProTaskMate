@@ -9,7 +9,7 @@ export default function SideEye() {
         <>
         {!sideBarShown &&  
         
-        <div onClick={()=>{dispatch({type: 'setSidebarTrue'})}} className='bg-[#635fc7] h-[3rem] w-[3.5rem] hidden fixed left-0 bottom-14 rounded-r-[25px] md:flex items-center justify-center text-white text-lg'>
+        <div onClick={()=>{dispatch({type: 'setSidebarTrue'})}} className='bg-[#635fc7] h-[3rem] w-[3.5rem] hidden fixed left-0 bottom-4 rounded-r-[25px] md:flex items-center justify-center text-white text-lg'>
             <FaEye />
         </div>
         }

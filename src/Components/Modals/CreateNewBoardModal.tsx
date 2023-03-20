@@ -154,7 +154,7 @@ export default function CreateNewBoard() {
                     </label>
                     {errorMessage!=='' && <p className='text-red-400  font-semibold text-[0.8125rem]'>Required</p>}
                 </div>
-                <div className='flex flex-col mt-6 max-h-[250px] overflow-y-scroll no-scrollbar'>
+                <div className='flex flex-col mt-6 md:max-h-[300px] overflow-y-scroll no-scrollbar'>
                     <h3 className={`text-[0.75rem] font-semibold  ${isLightToggled ? 'text-[#828fa3]' : 'text-white '} mb-2`}>Columns</h3>
                     {currentBoardCopy.columns?.map(item=>{
                         return (
@@ -195,7 +195,7 @@ export default function CreateNewBoard() {
                     {errorMessage!=='' && <p className='text-red-400  font-semibold text-[0.8125rem]'>Required</p>}
                 </div>
                 <div className='mt-4 flex flex-col gap-4 w-full'>
-                    <button type='button' onClick={()=>addColumn()} className={`font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center ${isLightToggled ? 'bg-[#f4f7fd]' : 'bg-white'} text-[#635fc7]`}>+ Add New Column</button>
+                    <button type='button' onClick={()=>addColumn()} className={`${currentBoardCopy.columns.length < 5 ? 'flex' : 'hidden'} font-semibold rounded-full py-2 text-[0.8125rem] items-center justify-center ${isLightToggled ? 'bg-[#f4f7fd]' : 'bg-white'} text-[#635fc7]`}>+ Add New Column</button>
                     <button type='submit' className='font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-[#635fc7] text-white'>Create New Board</button>
                 </div>
             </form>
