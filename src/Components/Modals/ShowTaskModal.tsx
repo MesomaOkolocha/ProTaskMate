@@ -204,14 +204,14 @@ export default function ShowTaskModal() {
                 </div>
                 <p className='text-[#828fa3] max-h-[10rem] overflow-x-hidden break-words overflow-y-auto text-[0.8125rem]'>{currentTask.description ==='' ? 'No description' : currentTask.description}</p>
                 <div className='mt-6 flex flex-col w-full mb-2'>
-                    <p className='text-[0.75rem] text-white font-semibold'>{`Subtasks (${completedSubtasks} of ${subtasksNumber})`}</p> 
+                    <p className={`text-[0.75rem] ${isLightToggled ? 'text-[#828fa3]' : 'text-white'} font-semibold`}>{`Subtasks (${completedSubtasks} of ${subtasksNumber})`}</p> 
                    <div className='mt-2'>
                    {
                         currentTask.subtasks?.map(tasks=>{
                             return (
                                 <div onClick={(e)=>{e.stopPropagation(); setChecked(tasks.id)}} className={`${tasks.isCompleted ? 'bg-[#525170]' : ''} ${isLightToggled ? 'bg-[#F4F7FD] text-black' : 'bg-[#20212C] text-white'} mb-2 flex items-center gap-6 p-3 rounded-md text-[0.75rem] text-white font-semibold`}>
-                                    <div className={`${tasks.isCompleted ? 'bg-[#635FC7] text-white' : 'bg-[#2B2C37] h-4'} ${isLightToggled && !tasks.isCompleted ? 'bg-white' : ''} p-1 rounded-sm w-4 text-[0.5rem]`}>{tasks.isCompleted && <FaCheck />}</div>
-                                    <p className={`${tasks.isCompleted ? 'line-through' : ''}`}>{tasks.title}</p>
+                                    <div className={`${tasks.isCompleted ? 'bg-[#635FC7]' : 'bg-[#2B2C37] h-4'} ${isLightToggled && !tasks.isCompleted ? 'bg-white' : ''} p-1 rounded-sm w-4 text-[0.5rem]`}>{tasks.isCompleted && <FaCheck />}</div>
+                                    <p className={`${tasks.isCompleted ? 'line-through' : ''} ${isLightToggled ? 'text-black' : 'text-white'}` }>{tasks.title}</p>
                                 </div>
                             )
                         })

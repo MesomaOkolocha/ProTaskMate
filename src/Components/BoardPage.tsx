@@ -14,6 +14,7 @@ import EditBoardModal from './Modals/EditBoardModal';
 import EditModal from './Modals/EditModal';
 import EditTaskModal from './Modals/EditTaskModal';
 import ShowTaskModal from './Modals/ShowTaskModal';
+import SideEye from './Modals/SideEye';
 
 export default function BoardPage() {
 
@@ -74,8 +75,8 @@ export default function BoardPage() {
             <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal ||showTaskModal || deleteTaskModal || editTaskModal ||createBoardModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
                 <Body />
+                <SideEye />
             </main>
-            
         </div>
     )
 }

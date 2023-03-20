@@ -222,6 +222,16 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state,
                 isLightToggled: !state.isLightToggled
             }
+        case 'setSidebarTrue':
+            return {
+                ...state,
+                sideBarShown: true
+            }
+        case 'setSidebarFalse':
+            return {
+                ...state,
+                sideBarShown: false
+            }
         default:
             return state
     }
