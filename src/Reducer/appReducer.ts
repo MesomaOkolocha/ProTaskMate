@@ -217,6 +217,11 @@ export function appReducer(state: AppContextType, action: AppActionType){
                 ...state,
                 currentTask: action.payload?.currentTaskPayload ?? task
             }
+        case 'setIsLightToggled':
+            return {
+                ...state,
+                isLightToggled: !state.isLightToggled
+            }
         default:
             return state
     }

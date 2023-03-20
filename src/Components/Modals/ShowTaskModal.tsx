@@ -7,7 +7,7 @@ import EditOrDeleteTaskModal from './EditOrDeletetaskModal';
 
 export default function ShowTaskModal() {
 
-    const { currentBoard, dispatch, currentTask, Boards, modals } = useAuth()
+    const { currentBoard, dispatch, currentTask, Boards, modals, isLightToggled } = useAuth()
 
     const modalRef = useRef<HTMLDivElement>(null);
     const otherRef = useRef<HTMLDivElement>(null);
@@ -195,10 +195,10 @@ export default function ShowTaskModal() {
         <>
         {
             isOpen &&
-            <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[10%] z-[99999] h-full md:min-h-[250px] md:max-h-[550px] md:flex md:flex-col'>  
+            <div ref={modalRef} className={`rounded-[10px] ${isLightToggled ? 'bg-white' : 'bg-[#2B2C37]'} w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[10%] z-[99999] h-full md:min-h-[250px] md:max-h-[550px] md:flex md:flex-col`}>  
                 <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-white'><FaTimes /></button>
                 <div className='relative flex justify-between items-center mb-[0.5rem]'>
-                    <h3 className='text-white text-[1.125rem] font-semibold'>{currentTask.title}</h3>
+                    <h3 className={`${isLightToggled ? 'text-black' : 'text-white'} text-[1.125rem] font-semibold`}>{currentTask.title}</h3>
                     <button onClick={(e)=>{e.stopPropagation(); setInnerModalOpen()}} className='text-[1.2rem] text-[#88899b] min-w-[22px] h-[38px]' ><IoEllipsisVerticalOutline /></button>
                     {innerModal && <div ref={otherRef} className='absolute right-0 top-10'><EditOrDeleteTaskModal /></div>}
                 </div>
@@ -209,8 +209,8 @@ export default function ShowTaskModal() {
                    {
                         currentTask.subtasks?.map(tasks=>{
                             return (
-                                <div onClick={(e)=>{e.stopPropagation(); setChecked(tasks.id)}} className={`${tasks.isCompleted ? 'bg-[#525170]' : 'bg-[#20212C]'} mb-2 flex items-center gap-6 p-3 rounded-md text-[0.75rem] text-white font-semibold`}>
-                                    <div className={`${tasks.isCompleted ? 'bg-[#635FC7]' : 'bg-[#2B2C37] h-4'} p-1 rounded-sm w-4 text-[0.5rem]`}>{tasks.isCompleted && <FaCheck />}</div>
+                                <div onClick={(e)=>{e.stopPropagation(); setChecked(tasks.id)}} className={`${tasks.isCompleted ? 'bg-[#525170]' : ''} ${isLightToggled ? 'bg-[#F4F7FD] text-black' : 'bg-[#20212C] text-white'} mb-2 flex items-center gap-6 p-3 rounded-md text-[0.75rem] text-white font-semibold`}>
+                                    <div className={`${tasks.isCompleted ? 'bg-[#635FC7] text-white' : 'bg-[#2B2C37] h-4'} ${isLightToggled && !tasks.isCompleted ? 'bg-white' : ''} p-1 rounded-sm w-4 text-[0.5rem]`}>{tasks.isCompleted && <FaCheck />}</div>
                                     <p className={`${tasks.isCompleted ? 'line-through' : ''}`}>{tasks.title}</p>
                                 </div>
                             )
@@ -219,13 +219,13 @@ export default function ShowTaskModal() {
                    </div>
                 </div>
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
-                    <p className='text-[0.75rem] font-semibold text-white mb-2'>Status</p>
-                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'}`}>
+                    <p className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Status</p>
+                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? '' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'}`}>
                         <span>{currentTask.status}</span>
                         <span className='text-[#635fc7] text-[1.2rem]'>{isStatusOpen ? <BiChevronUp /> : <BiChevronDown /> }</span>
                     </button>
                    {isStatusOpen &&  
-                   <div className='bg-[#20212C] flex flex-col gap-2 h-fit absolute top-20 p-4 w-full rounded-[4px] '>
+                   <div className={` ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C]'} flex flex-col gap-2 h-fit absolute top-20 p-4 w-full rounded-[4px]`}>
                         {
                             currentBoard?.columns.map(status=>{
                                 return (

@@ -7,7 +7,7 @@ import { useAuth } from '../../Contexts/AppContext';
 export default function EditTaskModal() {
     
     
-    const {dispatch, newTask, Boards, modals, currentBoard, errorMessage, currentBoardCopy, currentTask } = useAuth()
+    const {dispatch, isLightToggled, Boards, modals, currentBoard, errorMessage, currentBoardCopy, currentTask } = useAuth()
     
     const modalRef = useRef<HTMLDivElement>(null);
     
@@ -178,17 +178,17 @@ export default function EditTaskModal() {
         <>
         {
         isOpen && currentBoardCopy &&
-        <div ref={modalRef} className='rounded-[10px] bg-[#2B2C37] w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[3%] z-[99999] tasksHeight md:min-h-[250px] md:max-h-[650px] no-scrollbar overflow-y-scroll md:flex md:flex-col'>  
+        <div ref={modalRef} className={`rounded-[10px] ${isLightToggled ? 'bg-white': 'bg-[#2B2C37]'} w-full max-w-[30rem] min-w-[350px] p-8 fixed top-0 md:top-[3%] z-[99999] tasksHeight md:min-h-[250px] md:max-h-[650px] no-scrollbar overflow-y-scroll md:flex md:flex-col`}>  
              <button onClick={cancel} className='absolute md:hidden top-[0.5rem] right-[0.3rem] rounded-[4px] p-[0.3rem] bg-[#0808081a] text-white'><FaTimes /></button>
-            <h3 className='mb-4 text-[1.125rem] font-semibold text-white'>Edit Task</h3>
+             <h3 className={`mb-4 text-[1.125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'}`}>Edit Task</h3>
             <form onSubmit={saveEditedTask}>
                 <div className='flex flex-col'>
-                <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Title</h3>
+                <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Title</h3>
                 <label>
                     <div>
                         <input 
                             type='text'
-                            className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                            className={`${isLightToggled ? 'text-[#000000]': 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                             defaultValue={currentTask.title}
                             value={currentTask.title}
                             onChange={e=>{
@@ -214,9 +214,9 @@ export default function EditTaskModal() {
                 </label>
                 </div>
                 <div className='flex flex-col mt-6 '>
-                    <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Description</h3>
+                <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Description</h3>
                     <textarea 
-                        className='bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] h-20'
+                        className={`${isLightToggled ? 'text-[#000000]': 'text-white'} bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] h-20`}
                         onChange = {(e)=>{
                             dispatch({
                                 type: 'setCurrentTask',
@@ -233,7 +233,7 @@ export default function EditTaskModal() {
                     />
                 </div>
                 <div className='flex flex-col mt-6 '>
-                    <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Subtasks</h3>
+                <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Subtasks</h3>
                     <div className='max-h-[200px] md:max-h-[150px] overflow-y-scroll no-scrollbar'>
                     {currentTask.subtasks.map(subtask=>{
                         return (
@@ -241,7 +241,7 @@ export default function EditTaskModal() {
                                 <div className=' w-[90%]'>
                                     <input 
                                         type='text'
-                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                                         defaultValue={subtask.title}
                                         value={subtask.title}
                                         onChange={(e)=>{
@@ -276,11 +276,11 @@ export default function EditTaskModal() {
                         )
                     })}
                     </div>
-                  <button type='button' onClick={addNewSubTask} className='mt-4 font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-white text-[#635fc7]'>+ Add New Subtask</button>
+                        <button type='button' onClick={addNewSubTask} className={`mt-4 font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-white'} text-[#635fc7]`}>+ Add New Subtask</button>
                 </div>
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
-                    <h3 className='text-[0.75rem] font-semibold text-white mb-2'>Status</h3>
-                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
+                    <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Status</h3>
+                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
                         <span>{currentTask.status}</span>
                         <span className='text-[#635fc7] text-[1.2rem]'>{isStatusOpen ? <BiChevronUp /> : <BiChevronDown /> }</span>
                     </button>

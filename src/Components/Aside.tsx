@@ -11,6 +11,7 @@ export default function Aside() {
    
     const { height } = useWindowDimensions()
 
+    const {isLightToggled} = useAuth()
     const newHeight = height - 96
     
     const style = {
@@ -18,7 +19,7 @@ export default function Aside() {
     }
 
     return (
-        <div className='fixed bg-[#2B2C37] w-[18.75rem] hidden md:flex gap-2 py-6 border-b-[1px] border-r-[1px] border-[#8686861a]' style={style}>
+        <div className={`fixed ${isLightToggled ? 'bg-white' : 'bg-[#2b2c37]'} transition-all delay-100 ease-linear w-[18.75rem] hidden md:flex gap-2 py-6 border-b-[1px] border-r-[1px] border-[#8686861a]`} style={style}>
             <AsideBoards />
         </div>
 

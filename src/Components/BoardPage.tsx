@@ -71,7 +71,7 @@ export default function BoardPage() {
             {deleteTaskModal && <div className='relative flex items-center justify-center'><DeleteTaskModal /></div>}
             {editTaskModal && <div className='relative flex items-center justify-center'><EditTaskModal /></div>}
             {createBoardModal && <div className='relative flex items-center justify-center'><CreateNewBoard /></div>}
-            <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal || showTaskModal || deleteTaskModal ||createBoardModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
+            <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal ||showTaskModal || deleteTaskModal || editTaskModal ||createBoardModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
                 <Body />
             </main>

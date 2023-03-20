@@ -8,7 +8,7 @@ import { deleteUserAccount, logout } from '../Functions/Functions'
 
 export default function AsideFooter() {
 
-    const {dispatch, username} = useAuth()
+    const {dispatch, username, isLightToggled} = useAuth()
     async function deleteUser(){
         try{
             await deleteUserAccount(username)
@@ -35,11 +35,11 @@ export default function AsideFooter() {
     }
 
     return (
-        <div className='md:absolute md:left-10 md:bottom-0 '>
-            <div className='flex rounded-md items-center justify-center w-[220px] bg-[#20212C] py-2 text-[#828fa3] text-[1.3rem] gap-4'>
+        <div className='md:absolute md:left-10 md:bottom-0 transition-all delay-100 ease-linear'>
+            <div className={`flex rounded-md items-center justify-center w-[220px] ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C] '} py-2 text-[#828fa3] text-[1.3rem] gap-4`}>
                 <i><RiMoonClearFill /></i>
-                <div className='rounded-full w-[45px] h-[23px] p-1 bg-[#635FC7]'>
-                    <div className='bg-white rounded-full h-[15px] w-[15px]'></div>
+                <div className='rounded-full w-[45px] h-[23px] p-1 bg-[#635FC7]' onClick={()=>{dispatch({type: 'setIsLightToggled'})}}>
+                    <div className={`bg-white rounded-full h-[15px] w-[15px] ${isLightToggled ? 'ml-5' : ''}`}></div>
                 </div>
                 <i><MdWbSunny /></i>
             </div>

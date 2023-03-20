@@ -52,7 +52,8 @@ const AppContext = createContext<AppContextType>({
            isCompleted: false ,
            id: ''
         }]
-    }
+    },
+    isLightToggled: false
 })
 
 export function useAuth(){

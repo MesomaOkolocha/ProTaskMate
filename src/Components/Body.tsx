@@ -7,7 +7,7 @@ import NewColumn from './NewColumn'
 
 export default function Body() {
 
-    const { currentBoard, Boards, dispatch } = useAuth()
+    const { currentBoard, Boards, dispatch, isLightToggled } = useAuth()
     
     const {height} = useWindowDimensions()
     const newHeight = height-96
@@ -22,7 +22,7 @@ export default function Body() {
     }
 
     return (
-        <div className='px-4 py-6 md:px-10 overflow-x-scroll bodyScrollbarH flex md:ml-[300px] scrollbar' style={style}>
+        <div className={`${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C]'} delay-100 transition-all ease-linear px-4 py-6 md:px-10 overflow-x-scroll bodyScrollbarH flex md:ml-[300px] scrollbar`} style={style}>
             {currentBoard?.columns?.map((column, index)=>{
                 const tasks = column.tasks || []
                 const length = tasks.length
@@ -32,7 +32,7 @@ export default function Body() {
                             <div className='h-[15px] w-[15px] bg-[#49C4E5] rounded-full'></div>
                             <h3>{`${column.name.toUpperCase()}(${length})`}</h3>
                         </div>
-                        <div className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-[#2B2C37] outline-2 rounded-lg' : ''} h-full`}>
+                        <div className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-2 rounded-lg' : ''} ${isLightToggled ? 'outline-[#cecdcd]' : 'outline-[#2B2C37]'} h-full`}>
                         {column.tasks && column.tasks.map((task, index) => {
                             const subtasks = task.subtasks || []
                             const number = subtasks.filter(item => item.isCompleted).length
@@ -45,8 +45,8 @@ export default function Body() {
                                         }
                                       })
                                       setModalTrue()
-                                }} key={`${task.id}${index}`} className='flex text-left flex-col w-full min-h-[5.5rem] bg-[#2B2C37] cursor-grab border-[1px] py-6 px-4 border-[#8686861a] rounded-lg shadow-lg shadow-[#364e7e1a] mb-6 transition delay-100 ease-linear hover:opacity-40'>
-                                    <h4 className='text-[0.9375rem] font-semibold text-white mb-2  clamp overflow-hidden text-ellipsis'>{task.title}</h4>
+                                }} key={`${task.id}${index}`} className={`flex text-left flex-col w-full min-h-[5.5rem] ${isLightToggled ? 'bg-white' : 'bg-[#2B2C37]'} cursor-grab border-[1px] py-6 px-4 border-[#8686861a] rounded-lg shadow-lg shadow-[#364e7e1a] mb-6 transition delay-100 ease-linear hover:opacity-40`}>
+                                    <h4 className={`text-[0.9375rem] font-semibold ${isLightToggled ? 'text-black font-semibold' : 'text-white'} mb-2  clamp overflow-hidden text-ellipsis`}>{task.title}</h4>
                                     <p className='text-[0.75rem] font-semibold text-[#828fa3]'>{`${number} of ${subtasks.length} subtasks`}</p>
                                 </div>
                             )

@@ -51,7 +51,8 @@ export type AppContextType = {
     },
     currentBoardCopy: BoardType | null,
     newTask: tasksType,
-    currentTask: tasksType
+    currentTask: tasksType,
+    isLightToggled: boolean
 }
 
 export type allboardsType = BoardType[]

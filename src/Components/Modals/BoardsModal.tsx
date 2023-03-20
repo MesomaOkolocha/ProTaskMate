@@ -2,13 +2,10 @@ import {useState, useEffect, useRef} from 'react'
 import { GoPlus } from 'react-icons/go'
 import { TbLayoutBoardSplit } from 'react-icons/tb'
 import { useAuth } from '../../Contexts/AppContext'
-import { createNewBoard } from '../../Functions/Functions'
 import AsideFooter from '../AsideFooter'
-import { createBaseBoard } from '../Board'
 
 export default function BoardsModal() {
-    const [loading, setLoading] = useState(false)
-    const {dispatch, username, Boards, modals} = useAuth()
+    const {dispatch, isLightToggled, Boards, modals} = useAuth()
     
     const modalRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -72,13 +69,6 @@ export default function BoardsModal() {
     
 
     async function generateBoard(){
-        // const newBoard = createBaseBoard()
-        // setLoading(true)
-        // await createNewBoard(username, newBoard)
-        // dispatch({
-        //     type: 'setNoModals'
-        // })
-        // setLoading(false)
         dispatch({
             type: 'setCreateBoardModalTrue'
         })
@@ -92,7 +82,7 @@ export default function BoardsModal() {
         <>
         {
             isOpen &&
-            <div ref={modalRef} className='fixed top-20 z-[9999] left-[15%] px-6 sm:px-10 md:px-0 bg-[#2b2c37] md:bg-transparent md:relative md:top-0 md:left-[0] py-6 rounded-lg md:rounded-none transition-all delay-50 ease-linear'>
+            <div ref={modalRef} className={`fixed top-20 z-[9999] left-[15%] px-6 sm:px-10 md:px-0 ${isLightToggled? 'bg-white' : 'bg-[#2b2c37]'} md:bg-transparent md:relative md:top-0 md:left-[0] py-6 rounded-lg md:rounded-none transition-all delay-50 ease-linear`}>
                 <h3 className='font-semibold text-[#828fa3] text-[0.75rem] mb-4 tracking-[2.4px] px-4 md:px-10'>{`ALL BOARDS (${Boards.length})`}</h3>
                 <div className='max-h-[200px] overflow-y-scroll no-scrollbar'>
                     {Boards.map(board=>{
@@ -108,9 +98,9 @@ export default function BoardsModal() {
                 <div>
                     <div className='flex px-4 md:px-10 hover:opacity-70 items-center gap-2 text-left pb-2 min-h-[2.8rem] h-fit mb-[0.2rem] cursor-pointer relative bg-transparent transition-colors delay-200 ease-in'>
                         <i className='text-[#635fc7] text-[1.5rem]'><TbLayoutBoardSplit /></i>
-                    <div onClick={generateBoard} className='flex items-center gap-1 text-[1rem] text-[#635fc7] font-semibold'>
-                        <i className='text-[0.6rem]'><GoPlus /></i>
-                        <p>Create New board</p>
+                        <div onClick={generateBoard} className='flex items-center gap-1 text-[1rem] text-[#635fc7] font-semibold'>
+                            <i className='text-[0.6rem]'><GoPlus /></i>
+                            <p>Create New board</p>
                         </div>       
                     </div>
                 </div>
