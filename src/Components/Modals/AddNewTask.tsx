@@ -194,7 +194,7 @@ export default function AddNewTask() {
                     <div>
                         <input 
                             type='text'
-                            className={`${isLightToggled ? 'text-[#000000]': 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                            className={`${isLightToggled ? 'text-[#000000]': 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                             value={newTask.title}
                             onChange={e=>{
                                 dispatch({
@@ -221,7 +221,7 @@ export default function AddNewTask() {
                 <div className='flex flex-col mt-6 '>
                     <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Description</h3>
                     <textarea 
-                        className={`${isLightToggled ? 'text-[#000000]': 'text-white'} bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold text-white transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] h-20`}
+                        className={`${isLightToggled ? 'text-[#000000]': 'text-white'} bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] border-[#828ca366] h-20`}
                         onChange = {(e)=>{
                             dispatch({
                                 type: 'setNewTask',
@@ -245,7 +245,7 @@ export default function AddNewTask() {
                                 <div className=' w-[90%]'>
                                     <input 
                                         type='text'
-                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-[#000000]' : 'text-white'} transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                                         value={subtask.title}
                                         onChange={(e)=>{
                                             dispatch({
