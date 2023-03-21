@@ -134,30 +134,37 @@ export default function ShowTaskModal() {
 
             const newCurrentBoard = {
                 ...currentBoard,
-                columns: currentBoard.columns.map(column=>{
-                    if (column.name === newCurrentTask.status){
-                        if(column.tasks !== undefined){
-                            return {
-                                ...column,
-                                tasks: [
-                                    ...column.tasks,
-                                    newCurrentTask
-                                ]
-                            }
-                        } else return {
-                            ...column,
-                            tasks: [
-                                newCurrentTask
-                            ]
-                        }
-                    } else if (column.name === currentTask.status){
-                        return {
-                            ...column,
-                            tasks: column.tasks.filter(task=>task.id !== currentTask.id)
-                        }
-                    }else return column
+                columns: currentBoard.columns.map(col => {
+                  if (newCurrentTask.statusId === currentTask.statusId) {
+                    // If the task is still in the same column, update it directly
+                    return col.id === newCurrentTask.statusId ? {
+                      ...col,
+                      tasks: col.tasks.map(task => task.id === newCurrentTask.id ? newCurrentTask : task)
+                    } : col;
+                  } else {
+                    // If the task has been moved to a different column
+                    if (col.id === newCurrentTask.statusId) {
+                      // Add the new task to the new column
+                      const updatedTasks = col.tasks ? col.tasks.filter(task => task.id !== newCurrentTask.id) : [];
+                      updatedTasks.push(newCurrentTask);
+                      return {
+                        ...col,
+                        tasks: updatedTasks
+                      };
+                    } else if (col.id === currentTask.statusId) {
+                      // Remove the old task from the old column
+                      const updatedTasks = col.tasks ? col.tasks.filter(task => task.id !== currentTask.id) : [];
+                      return {
+                        ...col,
+                        tasks: updatedTasks
+                      };
+                    } else {
+                      return col;
+                    }
+                  }
                 })
-            }
+              };
+              
 
             dispatch({
                 type: 'setCurrentBoard',
@@ -227,7 +234,7 @@ export default function ShowTaskModal() {
                         {
                             currentBoard?.columns.map(status=>{
                                 return (
-                                    <button type='button' onClick={(e)=>{e.stopPropagation(); changeStatus(status.id)}} className='text-[#828fa3] text-[0.8125rem] capitalize text-left'>{status.name}</button>
+                                    <button key={status.id} type='button' onClick={(e)=>{e.stopPropagation(); changeStatus(status.id)}} className='text-[#828fa3] text-[0.8125rem] capitalize text-left'>{status.name}</button>
                                 )
                             })
                         }

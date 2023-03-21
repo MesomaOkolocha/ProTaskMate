@@ -293,7 +293,7 @@ export default function AddNewTask() {
                         {
                             currentBoardCopy.columns.map(status=>{
                                 return (
-                                    <button type='button' onClick={(e)=>{e.stopPropagation(); selectStatus(status.name);}} className='text-[#828fa3] text-[0.8125rem] capitalize text-left'>{status.name}</button>
+                                    <button key={status.id} type='button' onClick={(e)=>{e.stopPropagation(); selectStatus(status.name);}} className='text-[#828fa3] text-[0.8125rem] capitalize text-left'>{status.name}</button>
                                 )
                             })
                         }

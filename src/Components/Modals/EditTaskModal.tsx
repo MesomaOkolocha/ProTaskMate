@@ -122,59 +122,65 @@ export default function EditTaskModal() {
         }
     }
 
-    function saveEditedTask(e: React.FormEvent<HTMLFormElement>){
+    function saveEditedTask(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        const {title, subtasks, status} = currentTask
-        const isFilled = subtasks.every(item=>item.title!=='')
-       
-       if(currentBoard){
-        if(title === '' || !isFilled || status === ''){
-            dispatch({
-                type: 'setError',
-                payload: {
-                    errorPayload: 'Complete all required fields or delete the incomplete ones.'
-                }
-            })
+        const { title, subtasks, status } = currentTask;
+      
+        // Check if all required fields are filled or incomplete ones have been deleted
+        const isFilled = subtasks ? subtasks.every((item) => item.title !== "") : true;
+        if (title === "" || !isFilled || status === "") {
+          dispatch({
+            type: "setError",
+            payload: {
+              errorPayload: "Complete all required fields or delete the incomplete ones.",
+            },
+          });
         } else {
-            const newBoards = Boards.map(board=>{
-                if(board.name === currentBoard.name){
-                    return {
-                        ...board,
-                        columns: board.columns.map(col=>{
-                            if(col.id === currentTask.statusId){
-                                if(col.tasks !== undefined){
-                                    return {
-                                        ...col,
-                                        tasks: [...col.tasks, currentTask]
-                                    }
-                                }else return {
-                                    ...col,
-                                    tasks: [currentTask]
-                                }
-                            }else {
-                                if(col.tasks!==undefined){
-                                    return {
-                                        ...col,
-                                        tasks: col.tasks.filter(item=>item.id !== currentTask.id)
-                                    }
-                                }else return col
-                            }
-                        })
+          // Update boards with the edited task
+          const newBoards = Boards.map((board) => {
+            if (board.name === currentBoard?.name) {
+              return {
+                ...board,
+                columns: board.columns.map((col) => {
+                  if (col.id === currentTask.statusId) {
+                    if (col.tasks !== undefined) {
+                      // If there are already tasks in the column, add the edited task
+                      return {
+                        ...col,
+                        tasks: [...col.tasks.filter((item) => item.id !== currentTask.id), currentTask],
+                      };
+                    } else {
+                      // If the column has no tasks, create a new array with the edited task
+                      return {
+                        ...col,
+                        tasks: [currentTask],
+                      };
                     }
-                } else return board
-            })
-            dispatch({
-                type: 'setBoards',
-                payload: {
-                    BoardsPayload: newBoards
-                }
-            })
-            dispatch({
-                type: 'setNoModals'
-            })
-        } 
-       }  
-    }
+                  } else {
+                    if (col.tasks !== undefined) {
+                      // Remove the edited task from columns that are not its status
+                      return {
+                        ...col,
+                        tasks: col.tasks.filter((item) => item.id !== currentTask.id),
+                      };
+                    } else return col;
+                  }
+                }),
+              };
+            } else return board;
+          });
+          dispatch({
+            type: "setBoards",
+            payload: {
+              BoardsPayload: newBoards,
+            },
+          });
+          dispatch({
+            type: "setNoModals",
+          });
+        }
+      }
+      
 
     function deleteSubTask(id: string | number){
         const changedTasks = {
