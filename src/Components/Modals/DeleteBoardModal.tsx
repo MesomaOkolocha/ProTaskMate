@@ -45,7 +45,8 @@ export default function DeleteBoardModal() {
         }catch (err){
           console.log(err)
         }finally{
-            setLoading(false)  
+            setLoading(false)
+            
           dispatch({
             type: 'setNoModals'
           })

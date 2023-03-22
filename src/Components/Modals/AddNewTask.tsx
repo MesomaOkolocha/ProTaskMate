@@ -239,7 +239,8 @@ export default function AddNewTask() {
                 <div className='flex flex-col mt-6 '>
                     <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Subtasks</h3>
                     <div className='max-h-[250px] md:max-h-[200px] overflow-y-scroll no-scrollbar'>
-                    {newTask.subtasks.map(subtask=>{
+                    {newTask.subtasks.map((subtask, index)=>{
+                        const length = newTask.subtasks.length || 0
                         return (
                             <label key={subtask.id} className='mb-2 flex justify-between items-center'>
                                 <div className=' w-[90%]'>
@@ -271,6 +272,7 @@ export default function AddNewTask() {
                                                 }
                                             })
                                         }}
+                                        autoFocus={length > 1 && length - index === 1 ? true : false}
                                     />
                                     {errorMessage!=='' && <p className='text-red-400 text-[0.8125rem] mt-2'>Required</p>}
                                 </div>

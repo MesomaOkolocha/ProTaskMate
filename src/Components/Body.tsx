@@ -7,7 +7,7 @@ import Column from './Column'
 
 export default function Body() {
 
-    const { currentBoard, sideBarShown, dispatch, isLightToggled, currentTask } = useAuth()
+    const { currentBoard, sideBarShown, isLightToggled } = useAuth()
     
 
     const {height} = useWindowDimensions()

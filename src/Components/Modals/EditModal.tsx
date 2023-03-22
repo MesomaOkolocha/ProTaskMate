@@ -134,7 +134,8 @@ export default function EditModal() {
               </div>
               <div className='flex flex-col mt-6 md:max-h-[300px] overflow-y-scroll no-scrollbar'>
                 <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]' : 'text-white '} mb-2`}>Columns</h3>
-                {currentBoardCopy.columns?.map(item=>{
+                {currentBoardCopy.columns?.map((item, index)=>{
+                  const length = currentBoardCopy.columns.length || 0
                   return (
                     <label key={item.id} className='mb-2 flex justify-between items-center'>
                       <input 
@@ -160,6 +161,7 @@ export default function EditModal() {
                             }
                           })
                         }}
+                        autoFocus={length > 1 && length - index === 1 ? true : false}
                       />
                       <button type='button' className='text-[#808080] opacity-20 text-[1.5rem]' onClick={(e)=>{e.stopPropagation(); deleteItem(item.id)}}><FaTimes /></button>
                     </label>

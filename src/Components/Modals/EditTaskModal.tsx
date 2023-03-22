@@ -257,7 +257,8 @@ export default function EditTaskModal() {
                 <div className='flex flex-col mt-6 '>
                 <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Subtasks</h3>
                     <div className='max-h-[250px] md:max-h-[300px] overflow-y-scroll no-scrollbar'>
-                    {currentTask.subtasks?.map(subtask=>{
+                    {currentTask.subtasks?.map((subtask, index)=>{
+                        const length = currentTask.subtasks.length || 0
                         return (
                             <label className='mb-2 flex justify-between items-center'>
                                 <div className=' w-[90%]'>
@@ -290,6 +291,7 @@ export default function EditTaskModal() {
                                                 }
                                             })
                                         }}
+                                        autoFocus={length > 1 && length - index === 1 ? true : false}
                                     />
                                     {errorMessage!=='' && <p className='text-red-400 text-[0.8125rem] mt-2'>Required</p>}
                                 </div>
