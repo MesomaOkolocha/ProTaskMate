@@ -42,13 +42,13 @@ export default function DeleteBoardModal() {
               currentBoardPayload: Boards[0]
             }
           })
-          dispatch({
-            type: 'setNoModals'
-          })
         }catch (err){
           console.log(err)
         }finally{
-            setLoading(false)
+            setLoading(false)  
+          dispatch({
+            type: 'setNoModals'
+          })
         }
       }
 

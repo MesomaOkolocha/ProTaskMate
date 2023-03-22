@@ -15,7 +15,9 @@ import EditModal from './Modals/EditModal';
 import EditTaskModal from './Modals/EditTaskModal';
 import ShowTaskModal from './Modals/ShowTaskModal';
 import SideEye from './Modals/SideEye';
-import { DndProvider } from 'react-dnd/dist/core';
+import { DndProvider, } from 'react-dnd/dist/core';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 export default function BoardPage() {
 
     const { Boards, dispatch, modals, currentBoard } = useAuth()
@@ -74,7 +76,9 @@ export default function BoardPage() {
             {createBoardModal && <div className='relative flex items-center justify-center'><CreateNewBoard /></div>}
             <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal ||showTaskModal || deleteTaskModal || editTaskModal ||createBoardModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
-                <Body />
+                <DndProvider backend={HTML5Backend}>
+                    <Body />
+                </DndProvider>
                 <SideEye />
             </main>
         </div>
