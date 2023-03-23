@@ -18,12 +18,13 @@ export type AppActionType = {
         passwordPayload?: string;
         usernamePayload?: string;
         errorPayload? : string;
-        BoardsPayload?: BoardType[],
+        BoardsPayload?: BoardType[] | null,
         currentBoardPayload?: BoardType | null,
         columnPayload?: columnType,
         currentBoardCopyPayload?: BoardType | null,
         newTaskPayload?: tasksType,
-        currentTaskPayload? : tasksType
+        currentTaskPayload? : tasksType,
+        newBoardPayload? : BoardType | null
     }
 
 }
@@ -35,7 +36,7 @@ export type AppContextType = {
     password: string;
     errorMessage: string;
     dispatch: React.Dispatch<AppActionType>,
-    Boards: BoardType[],
+    Boards: BoardType[] | null,
     currentBoard: BoardType | null,
     modals: {
         boardsModal: boolean,
@@ -53,7 +54,8 @@ export type AppContextType = {
     newTask: tasksType,
     currentTask: tasksType,
     isLightToggled: boolean,
-    sideBarShown: boolean
+    sideBarShown: boolean,
+    newBoard: BoardType | null
 }
 
 export type allboardsType = BoardType[]

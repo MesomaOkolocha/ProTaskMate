@@ -14,8 +14,8 @@ const AppContext = createContext<AppContextType>({
     password: '',
     errorMessage: '',
     dispatch: ()=>{},
-    Boards: [],
-    currentBoard: allBoards.boards[0],
+    Boards: null,
+    currentBoard: null,
     modals: {
         boardsModal: false,
         editBoardmodal: false,
@@ -28,7 +28,7 @@ const AppContext = createContext<AppContextType>({
         editTaskModal: false,
         createBoardModal: false
     },
-    currentBoardCopy: allBoards.boards[0],
+    currentBoardCopy: null,
     newTask: {
         id: nanoid(),
         description: '',
@@ -54,7 +54,8 @@ const AppContext = createContext<AppContextType>({
         }]
     },
     isLightToggled: false,
-    sideBarShown: true
+    sideBarShown: true,
+    newBoard: null
 })
 
 export function useAuth(){

@@ -17,7 +17,7 @@ export default function ShowTaskModal() {
 
     useEffect(()=>{
         
-        const newBoards = Boards.map(item=>{
+        const newBoards = Boards?.map(item=>{
             if(item.name === currentBoard?.name){
                 return {
                     ...item,
@@ -46,7 +46,7 @@ export default function ShowTaskModal() {
     }, [currentTask])
 
     useEffect(()=>{
-        const newBoards = Boards.map(board=>{
+        const newBoards = Boards?.map(board=>{
             if(board.id === currentBoard?.id){
                 return currentBoard
             } else return board

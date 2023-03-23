@@ -78,7 +78,7 @@ export default function EditModal() {
 
   function saveChangesToBoard(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    if(currentBoard && currentBoardCopy){
+    if(currentBoard && currentBoardCopy && Boards){
       const newColumns = currentBoardCopy?.columns?.filter(item=>item.name !=='') ?? []
       const newBoards: BoardType[] = Boards.map(items=>{
         if(items.id === currentBoard.id){

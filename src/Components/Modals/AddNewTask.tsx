@@ -130,7 +130,7 @@ export default function AddNewTask() {
                 }
             })
         } else {
-            const newBoards = Boards.map(board=>{
+            const newBoards = Boards?.map(board=>{
                 if(board.name === currentBoard.name){
                     return {
                         ...board,

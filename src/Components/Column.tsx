@@ -10,7 +10,6 @@ export default function Column({column, index}: {column: columnType, index: stri
     const tasks = column.tasks || []
     const length = tasks.length
 
-
     function handleOnDrop(e: React.DragEvent){
         e.preventDefault()
         const taskString = e.dataTransfer.getData('task')
@@ -36,7 +35,7 @@ export default function Column({column, index}: {column: columnType, index: stri
                 })
             } 
 
-            const newBoards = Boards.map(board=>{
+            const newBoards = Boards?.map(board=>{
                 if(board.id === currentBoard.id){
                     return newBoard
                 }else return board

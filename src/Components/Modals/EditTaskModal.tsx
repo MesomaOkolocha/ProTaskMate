@@ -137,7 +137,7 @@ export default function EditTaskModal() {
           });
         } else {
           // Update boards with the edited task
-          const newBoards = Boards.map((board) => {
+          const newBoards = Boards?.map((board) => {
             if (board.name === currentBoard?.name) {
               return {
                 ...board,

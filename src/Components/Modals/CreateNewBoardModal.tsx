@@ -85,7 +85,7 @@ export default function CreateNewBoard() {
 
     function newBoardFunction(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        if(currentBoard && currentBoardCopy){
+        if(currentBoardCopy){
             const {name, columns} = currentBoardCopy
             const isFilled = columns.every(col=>col.name!=='')
             if(name==='' || !isFilled){
@@ -97,9 +97,9 @@ export default function CreateNewBoard() {
                 })
             } else {
                 const newBoards: BoardType[] = [
-                    ...Boards.map(board=>{
+                    ...(Boards?.map(board=>{
                         return {...board, isActive: false}
-                    }),
+                    }) || []),
                     {...currentBoardCopy, isActive: true}
                 ]
                 

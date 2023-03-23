@@ -65,6 +65,7 @@ export default function DeleteTaskModal() {
         const newReference =  ref(db, 'users/'+username)
        
         setLoading(true)
+        if(Boards)
         try{
             await update(newReference,{ tasks: newData})
           dispatch({

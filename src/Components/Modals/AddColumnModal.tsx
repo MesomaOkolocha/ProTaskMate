@@ -74,7 +74,7 @@ export default function AddColumnModal() {
 
   function saveChangesToBoard(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    if(currentBoard && currentBoardCopy){
+    if(Boards && currentBoard && currentBoardCopy){
       const newColumns = currentBoardCopy?.columns.filter(item=>item.name !=='') ?? []
       const newBoards: BoardType[] = Boards.map(items=>{
         if(items.id === currentBoard.id){

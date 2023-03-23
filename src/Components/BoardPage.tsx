@@ -25,7 +25,7 @@ export default function BoardPage() {
     const [currentBoardSet, setCurrentBoardSet] = useState(false);
 
     useEffect(()=>{
-        if (Boards.length > 0) {
+        if (Boards && Boards.length > 0) {
             const mainboard = Boards.find((item) => {
                 return item.isActive === true
             })

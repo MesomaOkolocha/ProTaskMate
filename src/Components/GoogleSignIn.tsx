@@ -6,6 +6,7 @@ import { useState } from "react"
 import { BoardType } from "../Types/types"
 import { defaultBoard } from "../data"
 import { useLocation } from "react-router-dom"
+import { createBaseBoard } from "./Board"
 
 export default function GoogleSignIn() {
 
@@ -35,7 +36,7 @@ export default function GoogleSignIn() {
           set(reference, {
             email: result.user.email,
             username: result.user.displayName,
-            tasks: defaultBoard
+            tasks: [createBaseBoard()]
           })
         } else{
           update(reference, {

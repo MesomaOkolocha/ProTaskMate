@@ -5,7 +5,6 @@ import { onValue, ref, set, update } from '@firebase/database'
 import { db } from '../firebase'
 import Loader from './Loader'
 import { useLocation } from 'react-router-dom'
-
 import BoardPage from './BoardPage'
 import { createBaseBoard } from './Board'
 
@@ -56,35 +55,35 @@ export default function DashBoard() {
     },[])
 
     useEffect(()=>{
-        if(username!==''){
+        if(username!=='' && Boards && Boards.length>0){
             const reference = ref(db, 'users/'+username)
 
             update(reference, {
                 tasks: Boards
             })
         }
-    },[Boards])
+    }, [Boards])
 
     useEffect(()=>{
-        if(username!=='' && Boards.length === 0){
+        if(username!=='' && !Boards || Boards?.length === 0){
 
             const reference = ref(db, 'users/'+username+'/tasks')
             onValue(reference, snapshot=>{
                 const data = snapshot.val()
-               if(data!==null){
+                if(data!==null){
                     dispatch({
                         type: 'setBoards',
                         payload:{
                             BoardsPayload: data
                         }
                     })
-               } else {
-                dispatch({
-                    type: 'setBoards',
-                    payload:{
-                        BoardsPayload: [createBaseBoard()]
-                    }
-                })
+                } else {
+                    dispatch({
+                        type: 'setBoards',
+                        payload:{
+                            BoardsPayload: null
+                        }
+                    })
                }
             })
 
