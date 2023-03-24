@@ -34,4 +34,4 @@ We welcome contributions from the community. If you find a bug or have a feature
 
 
 ## Acknowledgments
-This app was inspired by the Kanban methodology and built using various open-source libraries and tools, including React, Node.js, MongoDB, and Bootstrap. We would like to thank the developers and contributors of these projects for making them available to the community.
+This app was inspired by the Kanban methodology and built using various open-source libraries and tools, including React, Node.js, Firebase and Tailwind. We would like to thank the developers and contributors of these projects for making them available to the community.
