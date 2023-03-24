@@ -86,5 +86,5 @@ export async function deleteBoard(id: string | number, username: string){
 
     const newData = data.filter(item=>item.id !== id)
     const newReference =  ref(db, 'users/'+username)
-    await update(newReference,{ tasks: newData})
+    await update(newReference, { tasks: newData })
 }

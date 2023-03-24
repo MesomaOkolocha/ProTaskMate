@@ -4,13 +4,15 @@ import { FaTimes } from 'react-icons/fa'
 import { generateColumn } from '../../Functions/Functions'
 import { BoardType } from '../../Types/types'
 import { nanoid } from 'nanoid'
+import { ref, update } from 'firebase/database'
+import { db } from '../../firebase'
 
 export default function CreateNewBoard() {
 
-  const {dispatch, isLightToggled, Boards, modals, currentBoard, currentBoardCopy, errorMessage } = useAuth()
-  
-  const modalRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+    const {dispatch, isLightToggled, username, Boards, modals, currentBoard, currentBoardCopy, errorMessage } = useAuth()
+    
+    const modalRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen] = useState(false);
 
     const newBoard: BoardType = {
         id: nanoid(),
@@ -60,14 +62,14 @@ export default function CreateNewBoard() {
 
     function addColumn(){
         if(currentBoardCopy){
-        const newColumn = generateColumn()
-        const Board = {...currentBoardCopy, columns: [...currentBoardCopy.columns, newColumn]}
-        dispatch({
-            type: 'setCurrentBoardCopy',
-            payload: {
-            currentBoardCopyPayload: Board
-            }
-        })
+            const newColumn = generateColumn()
+            const Board = {...currentBoardCopy, columns: [...currentBoardCopy.columns, newColumn]}
+            dispatch({
+                type: 'setCurrentBoardCopy',
+                payload: {
+                currentBoardCopyPayload: Board
+                }
+            }) 
         }
     }
 
@@ -103,15 +105,24 @@ export default function CreateNewBoard() {
                     {...currentBoardCopy, isActive: true}
                 ]
                 
-                dispatch({
-                    type: 'setBoards',
-                    payload: {
-                        BoardsPayload: newBoards
-                    }
-                })
-                dispatch({
-                    type: 'setNoModals'
-                })
+                try{
+                    dispatch({
+                        type: 'setBoards',
+                        payload: {
+                            BoardsPayload: newBoards
+                        }
+                    })
+                    const reference = ref(db, 'users/'+username)
+
+                    update(reference, {tasks: newBoards})
+                    
+                    dispatch({
+                        type: 'setNoModals'
+                    })
+                }catch(error){
+                    console.log(error)
+                }
+                
             }
             
         }
@@ -130,7 +141,6 @@ export default function CreateNewBoard() {
                     <label className='mb-2 flex justify-between items-center'>
                         <input 
                         type='text'
-                        defaultValue={currentBoardCopy.name}
                         className={`${isLightToggled ? 'text-black' : 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold  transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7]  ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}
                         value={currentBoardCopy.name}
                         onChange={(e)=>{
