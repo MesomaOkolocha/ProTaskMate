@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     fontFamily: {
       'jakarta': ['Plus Jakarta Sans', 'sans-serif'],
+      'alkatra': ['Alkatra', 'cursive'],
     },
     extend: {},
   },

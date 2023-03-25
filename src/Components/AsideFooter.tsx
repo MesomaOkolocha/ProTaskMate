@@ -43,13 +43,15 @@ export default function AsideFooter() {
                 </div>
                 <i><MdWbSunny /></i>
             </div>
-            <div className='mt-4 flex justify-center md:justify-between gap-4 md:gap-0 px-4'>
+            <div className='mt-4 flex flex-col justify-center md:justify-between gap-2 px-4'>
                 <div onClick={()=>{dispatch({type: 'setSidebarFalse'})}} className='cursor-pointer hidden md:flex items-center gap-3 text-[0.9rem] font-semibold text-[#828fa3]'>
                     <i className='text-[1.2rem]'><BiHide /></i>
                     <p>Hide Sidebar</p>
                 </div>
-                <i className='text-[1.1rem] text-[#c22d2d]' onClick={logoutUser}><TbUserOff /></i>
-                <i className='text-[1.1rem] text-[#c22d2d]' onClick={deleteUser}><RiDeleteBin2Fill /></i>
+                <div className='flex cursor-pointer items-center gap-3 text-[0.9rem] font-semibold text-[#828fa3]' onClick={logoutUser}>
+                    <i className='text-[1.1rem] text-[#c22d2d]'><TbUserOff /></i>
+                    <p className=''>Logout</p>
+                </div>
             </div>
         </div>
     )

@@ -7,10 +7,12 @@ import Loader from './Loader'
 import GoogleSignIn from './GoogleSignIn'
 import { defaultBoard } from '../data'
 import { createBaseBoard } from './Board'
+import { RiMoonClearFill } from 'react-icons/ri'
+import { MdWbSunny } from 'react-icons/md'
 
 export default function Signup() {
     
-    const { currentUser, username, password, email, dispatch, errorMessage } = useAuth()
+    const { currentUser, isLightToggled, username, password, email, dispatch, errorMessage } = useAuth()
 
     const [loading, setLoading] = useState(false)
     useEffect(()=>{
@@ -55,7 +57,14 @@ export default function Signup() {
     }
     
     return (
-        <div className='min-h-screen flex flex-col justify-center items-center'>
+        <div className={`min-h-screen ${isLightToggled ? 'bg-[#f5f4fd]' : 'bg-[#20212C]'} flex flex-col justify-center items-center`}>
+             <div className={`flex rounded-md items-center justify-center w-[220px] ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C] '} py-2 text-[#828fa3] text-[1.3rem] gap-4`}>
+                <i><RiMoonClearFill /></i>
+                <div className='rounded-full w-[45px] h-[23px] p-1 bg-[#635FC7]' onClick={()=>{dispatch({type: 'setIsLightToggled'})}}>
+                    <div className={`bg-white rounded-full h-[15px] w-[15px] ${isLightToggled ? 'ml-5' : ''}`}></div>
+                </div>
+                <i><MdWbSunny /></i>
+            </div>
             <h2 className='font-bold text-[2rem] mb-6 text-blue-400'>SIGN UP</h2>
             {errorMessage !== '' && <p className='w-[300px] p-2 text-white bg-red-400 mb-6'>{errorMessage}</p>}
             <form className='flex flex-col gap-5' onSubmit={handleSignUp}>
@@ -108,7 +117,7 @@ export default function Signup() {
                 <button disabled={loading} type='submit' className='text-white w-[300px] p-4 bg-blue-500 rounded-lg text-[1.3rem] font-bold tracking-wide mt-6'>Sign Up</button>
             </form>
             <GoogleSignIn />
-            <p className='mt-6 text-white'>Already have an account? <Link to='/login' className='text-blue-400 '>Log In</Link></p>
+            <p className={`mt-6 ${isLightToggled ?'text-black':'text-white'}`}>Already have an account? <Link to='/login' className='text-blue-400 '>Log In</Link></p>
         </div>
     )
 }

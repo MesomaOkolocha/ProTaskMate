@@ -21,31 +21,30 @@ export default function GoogleSignIn() {
     setLoading(true)
 
       await signInWithPopup(auth, provider)
-        .then(result=>{
+      .then(result=>{
         const reference = ref(db, 'users/'+result.user.displayName)
-        let data: BoardType[] = [] 
         const newReference = ref(db, 'users/'+result.user.displayName+'/tasks')
-
+      
         onValue(newReference, snapshot=>{
-          if(snapshot.val()!==null){
-            data = snapshot.val()
+          const data = snapshot.val() || [] // Use empty array if snapshot.val() is null
+          console.log(data)
+          
+          // Only update tasks with createBaseBoard() if data is an empty array
+          if(data.length === 0){
+            update(reference, {
+              email: result.user.email,
+              username: result.user.displayName,
+              tasks: [createBaseBoard()]
+            })
+          } else {
+            update(reference, {
+              email: result.user.email,
+              username: result.user.displayName,
+            })
           }
         })
-
-        if(data.length === 0){
-          set(reference, {
-            email: result.user.email,
-            username: result.user.displayName,
-            tasks: [createBaseBoard()]
-          })
-        } else{
-          update(reference, {
-            tasks: [...data], 
-            email: result.user.email, 
-            username: result.user.displayName
-          })
-        }
-      }).catch(error=>{
+      })
+      .catch(error=>{
         console.log(error)
       })
 

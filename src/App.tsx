@@ -8,7 +8,7 @@ import { AppProvider } from './Contexts/AppContext'
 function App() {
 
   return (
-    <div className="bg-[#20212C] min-h-screen font-jakarta">
+    <div className="bg-[#20212C] min-h-screen font-jakarta transition-all delay-100 ease-linear">
       <AppProvider>
         <Router>
           <Routes>

@@ -65,7 +65,7 @@ export default function DashBoard() {
     }, [Boards])
 
     useEffect(()=>{
-        if(username!=='' && !Boards || Boards?.length === 0){
+        if(username !=='' && !Boards || Boards?.length === 0){
 
             const reference = ref(db, 'users/'+username+'/tasks')
             onValue(reference, snapshot=>{
@@ -96,10 +96,6 @@ export default function DashBoard() {
     }
     
     if(currentUser && username === ''){
-        return <Loader />
-    }
-    
-    if(username === ''){
         return <Loader />
     }
     

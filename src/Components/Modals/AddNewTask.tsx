@@ -51,8 +51,7 @@ export default function AddNewTask() {
                             id: nanoid() 
                         }
                     ],
-                    title: '',
-                    id: nanoid()
+                    title: ''
                 }
             }
         })
@@ -122,7 +121,7 @@ export default function AddNewTask() {
         const {title, subtasks, status} = newTask
         const isFilled = subtasks.every(item=>item.title!=='')
        
-       if(currentBoard && Boards){
+       if(currentBoard){
         if(title === '' || !isFilled || status === ''){
             dispatch({
                 type: 'setError',
@@ -131,15 +130,23 @@ export default function AddNewTask() {
                 }
             })
         } else {
-            const newBoards = Boards.map(board=>{
+            const newBoards = Boards?.map(board=>{
                 if(board.name === currentBoard.name){
                     return {
                         ...board,
                         columns: board.columns.map(col=>{
                             if(col.name === newTask.status){
-                               return {
+                               if(col.tasks !== undefined) {
+                                    return {
+                                        ...col,
+                                        tasks: [
+                                            ...col.tasks,
+                                            newTask
+                                        ]
+                                    }
+                               }else return {
                                 ...col,
-                                tasks: [...(col.tasks || []), newTask]
+                                tasks: [newTask]
                                }
                             }else return col
                         })
@@ -158,7 +165,7 @@ export default function AddNewTask() {
         } 
        }  
     }
-
+  
     function deleteSubTask(id: string | number){
         const changedTasks = {
             ...newTask,
