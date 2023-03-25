@@ -6,7 +6,7 @@ import { BoardType } from '../../Types/types'
 
 export default function AddColumnModal() {
 
-  const {dispatch, username, Boards, modals, currentBoard, currentBoardCopy, isLightToggled } = useAuth()
+  const {dispatch, Boards, modals, currentBoard, currentBoardCopy, isLightToggled } = useAuth()
   
   const modalRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +50,7 @@ export default function AddColumnModal() {
     if(currentBoardCopy){
       const newColumn = generateColumn()
       console.log(newColumn)
-      const Board = {...currentBoardCopy, columns: [...currentBoardCopy.columns, newColumn]}
+      const Board = {...currentBoardCopy, columns: [...(currentBoardCopy.columns || []), newColumn]}
       dispatch({
         type: 'setCurrentBoardCopy',
         payload: {
@@ -75,7 +75,7 @@ export default function AddColumnModal() {
   function saveChangesToBoard(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     if(Boards && currentBoard && currentBoardCopy){
-      const newColumns = currentBoardCopy?.columns.filter(item=>item.name !=='') ?? []
+      const newColumns = currentBoardCopy?.columns?.filter(item=>item.name !=='') ?? []
       const newBoards: BoardType[] = Boards.map(items=>{
         if(items.id === currentBoard.id){
           return {
@@ -97,6 +97,8 @@ export default function AddColumnModal() {
       })
     }
   }
+
+  const columnsLength = currentBoardCopy?.columns?.length || 0
   
   return (
     <>
@@ -149,7 +151,7 @@ export default function AddColumnModal() {
               })}
             </div>
             <div className='mt-4 flex flex-col gap-4 w-full'>
-              <button type='button' onClick={()=>addColumn()} className={`font-semibold rounded-full py-2 text-[0.8125rem] ${currentBoardCopy.columns.length < 5 ? 'flex' : 'hidden'} items-center justify-center ${isLightToggled ? 'bg-[#f4f7fd]' : 'bg-white'} text-[#635fc7]`}>+ Add New Column</button>
+              <button type='button' onClick={()=>addColumn()} className={`font-semibold rounded-full py-2 text-[0.8125rem] ${columnsLength < 5 ? 'flex' : 'hidden'} items-center justify-center ${isLightToggled ? 'bg-[#f4f7fd]' : 'bg-white'} text-[#635fc7]`}>+ Add New Column</button>
               <button type='submit' className='font-semibold rounded-full py-2 text-[0.8125rem] flex items-center justify-center bg-[#635fc7] text-white'>Save Chages</button>
             </div>
           </form>

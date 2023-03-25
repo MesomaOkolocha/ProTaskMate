@@ -13,6 +13,9 @@ export default function EditTaskModal() {
     
     const [isOpen, setIsOpen] = useState(false);
     const [isStatusOpen, setIsStatusOpen] = useState(false)
+    const [titleError, setTitleError] = useState('')
+    const [statusError, setStatusError] = useState('')
+    const [subtaskError, setSubtaskError] = useState('')
     
 
     useEffect(() => {
@@ -22,12 +25,10 @@ export default function EditTaskModal() {
             dispatch({
                 type: 'setNoModals'
             })
-            dispatch({
-                type: 'setError',
-                payload: {
-                    errorPayload: ''
-                }
-            })
+            
+            setTitleError('')
+            setStatusError('')
+            setSubtaskError('')
             }
         }
 
@@ -45,23 +46,26 @@ export default function EditTaskModal() {
             }
         })
     },[])
+
     useEffect(() => {
         setIsOpen(modals.editTaskModal)
     }, [modals.editTaskModal]);
 
     function cancel(){
         dispatch({
-        type: 'setNoModals'
+            type: 'setNoModals'
         })
-        dispatch({
-            type: 'setError',
-            payload: {
-                errorPayload: ''
-            }
-        })
+        
+        setTitleError('')
+        setStatusError('')
+        setSubtaskError('')
     }
     
     function setStatusItemsOpen(){
+        
+        setTitleError('')
+        setStatusError('')
+        setSubtaskError('')
         setIsStatusOpen(!isStatusOpen)
     }
 
@@ -128,13 +132,12 @@ export default function EditTaskModal() {
       
         // Check if all required fields are filled or incomplete ones have been deleted
         const isFilled = subtasks ? subtasks.every((item) => item.title !== "") : true;
-        if (title === "" || !isFilled || status === "") {
-          dispatch({
-            type: "setError",
-            payload: {
-              errorPayload: "Complete all required fields or delete the incomplete ones.",
-            },
-          });
+        if(title === ''){
+            setTitleError('Title is required')
+        } else if(status ==='') {
+            setStatusError('Status is required')
+        }else if(!isFilled){
+            setSubtaskError('Subtask need names')
         } else {
           // Update boards with the edited task
           const newBoards = Boards?.map((board) => {
@@ -210,16 +213,11 @@ export default function EditTaskModal() {
                     <div>
                         <input 
                             type='text'
-                            className={`${isLightToggled ? 'text-[#000000]': 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold  transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                            className={`${isLightToggled ? 'text-[#000000]': 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold  transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ titleError !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                             defaultValue={currentTask.title}
                             value={currentTask.title}
                             onChange={e=>{
-                                dispatch({
-                                    type: 'setError',
-                                    payload: {
-                                        errorPayload: ''
-                                    }
-                                })
+                                setTitleError('')
                                 dispatch({
                                     type: 'setCurrentTask',
                                     payload: {
@@ -231,7 +229,7 @@ export default function EditTaskModal() {
                                 })
                             }}
                         />
-                        {errorMessage!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
+                        {titleError!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
                     </div>
                 </label>
                 </div>
@@ -264,16 +262,11 @@ export default function EditTaskModal() {
                                 <div className=' w-[90%]'>
                                     <input 
                                         type='text'
-                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ subtaskError !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                                         defaultValue={subtask.title}
                                         value={subtask.title}
                                         onChange={(e)=>{
-                                            dispatch({
-                                                type: 'setError',
-                                                payload: {
-                                                    errorPayload: ''
-                                                }
-                                            })
+                                            setSubtaskError('')
                                             dispatch({
                                                 type: 'setCurrentTask',
                                                 payload: {
@@ -293,7 +286,7 @@ export default function EditTaskModal() {
                                         }}
                                         autoFocus={length > 1 && length - index === 1 ? true : false}
                                     />
-                                    {errorMessage!=='' && <p className='text-red-400 text-[0.8125rem] mt-2'>Required</p>}
+                                    {subtaskError!=='' && <p className='text-red-400 text-[0.8125rem] mt-2'>Required</p>}
                                 </div>
                                 <button type='button' onClick={(e)=>{e.stopPropagation(); deleteSubTask(subtask.id)}} className='text-[#808080] opacity-20 text-[1.5rem]'><FaTimes /></button>
                             </label>
@@ -304,11 +297,11 @@ export default function EditTaskModal() {
                 </div>
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
                     <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Status</h3>
-                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
+                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ statusError !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
                         <span>{currentTask.status}</span>
                         <span className='text-[#635fc7] text-[1.2rem]'>{isStatusOpen ? <BiChevronUp /> : <BiChevronDown /> }</span>
                     </button>
-                    {errorMessage!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
+                    {statusError!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
                    {isStatusOpen &&  
                    <div className='bg-[#20212C] flex flex-col gap-2 h-fit absolute top-20 p-4 w-full rounded-[4px] '>
                         {

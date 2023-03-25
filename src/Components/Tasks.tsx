@@ -21,9 +21,7 @@ export default function Tasks({task}: {task: tasksType}) {
             dispatch({
                 type: 'setCurrentTask',
                 payload: {
-                    currentTaskPayload: {
-                        ...task,
-                    }
+                    currentTaskPayload: task
                 }
             })
         }

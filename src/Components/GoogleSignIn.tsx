@@ -3,8 +3,6 @@ import { onValue, ref, set, update } from "firebase/database"
 import { auth, db } from "../firebase"
 import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react"
-import { BoardType } from "../Types/types"
-import { defaultBoard } from "../data"
 import { useLocation } from "react-router-dom"
 import { createBaseBoard } from "./Board"
 

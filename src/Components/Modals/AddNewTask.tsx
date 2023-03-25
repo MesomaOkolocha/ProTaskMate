@@ -13,21 +13,20 @@ export default function AddNewTask() {
     
     const [isOpen, setIsOpen] = useState(false);
     const [isStatusOpen, setIsStatusOpen] = useState(false)
-    
+    const [titleError, setTitleError] = useState('')
+    const [statusError, setStatusError] = useState('')
+    const [subtaskError, setSubtaskError] = useState('')
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
-        event.stopPropagation()
-        if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-            dispatch({
-                type: 'setNoModals'
-            })
-            dispatch({
-                type: 'setError',
-                payload: {
-                    errorPayload: ''
-                }
-            })
+            event.stopPropagation()
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                dispatch({
+                    type: 'setNoModals'
+                })
+                setTitleError('')
+                setStatusError('')
+                setSubtaskError('')
             }
         }
 
@@ -63,23 +62,25 @@ export default function AddNewTask() {
 
     function cancel(){
         dispatch({
-        type: 'setNoModals'
+            type: 'setNoModals'
         })
-        dispatch({
-            type: 'setError',
-            payload: {
-                errorPayload: ''
-            }
-        })
+        setTitleError('')
+        setStatusError('')
+        setSubtaskError('')
+        
     }
     
     function setStatusItemsOpen(){
         setIsStatusOpen(!isStatusOpen)
+        setTitleError('')
+        setStatusError('')
+        setSubtaskError('')
     }
 
     function selectStatus(name: string){
+        
         if(currentBoard){
-            const selectedColumn = currentBoard.columns.find(item=>item.name === name)
+            const selectedColumn = currentBoard.columns?.find(item=>item.name === name)
             if(selectedColumn){
                 const newStatusId = selectedColumn.id
                 dispatch({
@@ -122,13 +123,12 @@ export default function AddNewTask() {
         const isFilled = subtasks.every(item=>item.title!=='')
        
        if(currentBoard){
-        if(title === '' || !isFilled || status === ''){
-            dispatch({
-                type: 'setError',
-                payload: {
-                    errorPayload: 'Complete all required fields or delete the incomplete ones.'
-                }
-            })
+        if(title === ''){
+            setTitleError('Title is required')
+        } else if(status ==='') {
+            setStatusError('Status is required')
+        }else if(!isFilled){
+            setSubtaskError('Subtask need names')
         } else {
             const newBoards = Boards?.map(board=>{
                 if(board.name === currentBoard.name){
@@ -194,15 +194,10 @@ export default function AddNewTask() {
                     <div>
                         <input 
                             type='text'
-                            className={`${isLightToggled ? 'text-[#000000]': 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                            className={`${isLightToggled ? 'text-[#000000]': 'text-white'} w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ titleError !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                             value={newTask.title}
                             onChange={e=>{
-                                dispatch({
-                                    type: 'setError',
-                                    payload: {
-                                        errorPayload: ''
-                                    }
-                                })
+                                setTitleError('')
                                 dispatch({
                                     type: 'setNewTask',
                                     payload: {
@@ -214,7 +209,7 @@ export default function AddNewTask() {
                                 })
                             }}
                         />
-                        {errorMessage!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
+                        {titleError!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
                     </div>
                 </label>
                 </div>
@@ -246,15 +241,10 @@ export default function AddNewTask() {
                                 <div className=' w-[90%]'>
                                     <input 
                                         type='text'
-                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-[#000000]' : 'text-white'} transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
+                                        className={`w-full bg-transparent border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-[#000000]' : 'text-white'} transition-colors delay-200 ease-linear outline-none focus:border-[#635FC7] ${ subtaskError !=='' ? 'border-red-400' : 'border-[#828ca366]'} `}
                                         value={subtask.title}
                                         onChange={(e)=>{
-                                            dispatch({
-                                                type: 'setError',
-                                                payload: {
-                                                    errorPayload: ''
-                                                }
-                                            })
+                                            setSubtaskError('')
                                             dispatch({
                                                 type: 'setNewTask',
                                                 payload: {
@@ -274,7 +264,7 @@ export default function AddNewTask() {
                                         }}
                                         autoFocus={length > 1 && length - index === 1 ? true : false}
                                     />
-                                    {errorMessage!=='' && <p className='text-red-400 text-[0.8125rem] mt-2'>Required</p>}
+                                    {subtaskError!=='' && <p className='text-red-400 text-[0.8125rem] mt-2'>Required</p>}
                                 </div>
                                 <button type='button' onClick={(e)=>{e.stopPropagation(); deleteSubTask(subtask.id)}} className='text-[#808080] opacity-20 text-[1.5rem]'><FaTimes /></button>
                             </label>
@@ -285,11 +275,11 @@ export default function AddNewTask() {
                 </div>
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
                     <h3 className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Status</h3>
-                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ errorMessage !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
+                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? 'text-black' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'} ${ statusError !=='' ? 'border-red-400' : 'border-[#828ca366]'}`}>
                         <span>{newTask.status}</span>
                         <span className='text-[#635fc7] text-[1.2rem]'>{isStatusOpen ? <BiChevronUp /> : <BiChevronDown /> }</span>
                     </button>
-                    {errorMessage!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
+                    {statusError!=='' && <p className='text-red-400 mt-2 font-semibold text-[0.8125rem]'>Required</p>}
                    {isStatusOpen &&  
                    <div className={`${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C]'} flex flex-col gap-2 h-fit absolute top-20 p-4 w-full rounded-[4px] `}>
                         {
