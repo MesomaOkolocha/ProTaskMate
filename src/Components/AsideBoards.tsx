@@ -60,7 +60,7 @@ export default function AsideBoards() {
 
     
     return (
-        <div className={`fixed top-20 z-[9999] left-[15%] px-6 sm:px-10 md:px-0  md:bg-transparent md:relative md:top-0 md:left-[0] py-6 rounded-lg md:rounded-none transition-all delay-50 ease-linear`}>
+        <div className={`z-[9999] left-[15%] px-6 sm:px-10 md:px-0  md:bg-transparent md:relative md:top-0 md:left-[0] py-6 pt-0 rounded-lg md:rounded-none transition-all delay-50 ease-linear`}>
             <h3 className='font-semibold text-[#828fa3] text-[0.75rem] mb-4 tracking-[2.4px] px-4 md:px-10'>{`ALL BOARDS (${Boards?.length})`}</h3>
             <div className='max-h-[200px] overflow-y-scroll no-scrollbar'>
                 {Boards?.map(board=>{

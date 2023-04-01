@@ -17,12 +17,43 @@ import ShowTaskModal from './Modals/ShowTaskModal';
 import SideEye from './Modals/SideEye';
 import { DndProvider, } from 'react-dnd/dist/core';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { onValue, ref } from '@firebase/database';
+import { db } from '../firebase';
+import Loader from './Loader';
 
 export default function BoardPage() {
 
-    const { Boards, dispatch, modals, currentBoard } = useAuth()
+    const { Boards, username, dispatch, modals, currentBoard } = useAuth()
     
     const [currentBoardSet, setCurrentBoardSet] = useState(false);
+    const [loading, setLoading] = useState(false)
+
+    useEffect(()=>{
+        if(username !=='' && !Boards || Boards?.length === 0){
+            setLoading(true)
+            const reference = ref(db, 'users/'+username+'/tasks')
+            onValue(reference, snapshot=>{
+                const data = snapshot.val()
+                if(data!==null){
+                    dispatch({
+                        type: 'setBoards',
+                        payload:{
+                            BoardsPayload: data
+                        }
+                    })
+                } else {
+                    dispatch({
+                        type: 'setBoards',
+                        payload:{
+                            BoardsPayload: null
+                        }
+                    })
+               }
+            })
+            setLoading(false)
+
+        }
+    },[username, Boards])
 
     useEffect(()=>{
         if (Boards && Boards.length > 0) {
@@ -76,9 +107,7 @@ export default function BoardPage() {
             {createBoardModal && <div className='relative flex items-center justify-center'><CreateNewBoard /></div>}
             <main className={`flex ${boardsModal || deleteBoardModal || addColumnModal || editModal || addTaskModal ||showTaskModal || deleteTaskModal || editTaskModal ||createBoardModal ? 'opacity-30 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'}`}>
                 <Aside />
-                <DndProvider backend={HTML5Backend}>
-                    <Body />
-                </DndProvider>
+                {loading ? <Loader /> : <Body />}
                 <SideEye />
             </main>
         </div>

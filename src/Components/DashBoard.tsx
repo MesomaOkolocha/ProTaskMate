@@ -64,32 +64,6 @@ export default function DashBoard() {
         }
     }, [Boards])
 
-    useEffect(()=>{
-        if(username !=='' && !Boards || Boards?.length === 0){
-
-            const reference = ref(db, 'users/'+username+'/tasks')
-            onValue(reference, snapshot=>{
-                const data = snapshot.val()
-                if(data!==null){
-                    dispatch({
-                        type: 'setBoards',
-                        payload:{
-                            BoardsPayload: data
-                        }
-                    })
-                } else {
-                    dispatch({
-                        type: 'setBoards',
-                        payload:{
-                            BoardsPayload: null
-                        }
-                    })
-               }
-            })
-
-        }
-    },[username, Boards])
-
     
     if(!currentUser){
         return <Navigate to='/login' />

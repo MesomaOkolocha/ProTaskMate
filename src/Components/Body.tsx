@@ -5,6 +5,7 @@ import NewColumn from './NewColumn'
 import { tasksType } from '../Types/types'
 import Column from './Column'
 import { GoPlus } from 'react-icons/go'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 export default function Body() {
 
@@ -15,6 +16,10 @@ export default function Body() {
     const newHeight = height-96
     const style = {
         height: newHeight
+    }
+
+    function dragEnd(){
+        
     }
 
     if(!Boards || Boards.length===0){
@@ -34,6 +39,7 @@ export default function Body() {
     }
 
     return (
+        <DragDropContext onDragEnd={dragEnd}>
         <div className={`${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C]'} delay-100 transition-all ease-linear px-4 py-6 md:px-10 w-full overflow-x-scroll bodyScrollbarH flex ${sideBarShown && 'md:ml-[300px]'} scrollbar`} style={style}>
             {currentBoard?.columns?.map((column, index)=>{
                 return (
@@ -42,5 +48,6 @@ export default function Body() {
             })}
             <NewColumn />
         </div>
+        </DragDropContext>
     )
 }
