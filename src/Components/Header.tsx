@@ -32,14 +32,14 @@ export default function Header() {
     return (
         <div className={`${boardsModal || editModal || deleteBoardModal || addColumnModal || addTaskModal || showTaskModal || deleteTaskModal || editTaskModal || createBoardModal ? 'opacity-40 delay-100 transition-all ease-linear' : ' delay-100 transition-all ease-linear'} ${isLightToggled? 'bg-white' : 'bg-[#2b2c37]'} h-[6rem] flex items-center sticky top-0 z-[9999]`}>
             <div className='min-w-[18.75rem] h-[6rem] hidden md:flex items-center gap-2 px-4 py-6 md:px-10 border-b-[1px] border-r-[1px] border-[#8686861a]'>
-                <img src='https://kanban-app-jay.netlify.app/assets/logo-mobile.c1810dc7.svg' 
+                <img src='logo.svg' 
                     className='min-w-[1.5rem]'
                 />
                 <h1 className={`text-[1.5rem] ${isLightToggled ? 'text-black' : 'text-white'} font-extrabold`}>TaskMate</h1>
             </div>
             <div className='flex items-center justify-between w-full px-4 py-6 md:px-10 border-b-[1px] border-[#8686861a] h-[6rem]'>
                 <div className='flex items-center gap-3 relative'>
-                    <img src='https://kanban-app-jay.netlify.app/assets/logo-mobile.c1810dc7.svg' 
+                    <img src='logo.svg' 
                         className='min-w-[1.5rem] md:hidden'
                     />
                     <div className='flex gap-1 items-center'>
