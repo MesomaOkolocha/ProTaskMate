@@ -57,7 +57,15 @@ export default function Column({column, index}: {column: columnType, index: stri
     return (
         <div key={`${column.id}${index}`} className={` min-w-[17.5rem] flex flex-col mr-8 h-full text-white p-1`}>
             <div className='flex items-center gap-2 tracking-[2.4px] font-semibold text-[0.75rem] text-[#828fa3]'>
-                <div className='h-[15px] w-[15px] bg-[#49C4E5] rounded-full'></div>
+                <div className={`h-[15px] w-[15px] rounded-full 
+                    ${
+                        index === 0 ? 'bg-[#49C4E5]' : 
+                        index===1 ? 'bg-[#49e597]':
+                        index===2 ? 'bg-[#e54949]':
+                        index===3 ? 'bg-[#e549c1]': 
+                        'bg-[#4c49e5]'
+                    }`}>
+                </div>
                 <h3>{`${column.name.toUpperCase()}(${length})`}</h3>
             </div>
             <div 
