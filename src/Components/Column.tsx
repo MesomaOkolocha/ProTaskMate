@@ -1,4 +1,5 @@
 import React from 'react'
+import { Droppable } from 'react-beautiful-dnd'
 import { useDrop } from 'react-dnd'
 import { useAuth } from '../Contexts/AppContext'
 import { columnType, tasksType } from '../Types/types'
@@ -9,50 +10,6 @@ export default function Column({column, index}: {column: columnType, index: stri
     const { Boards, dispatch, isLightToggled, currentBoard, currentTask } = useAuth()
     const tasks = column.tasks || []
     const length = tasks.length
-
-    function handleOnDrop(e: React.DragEvent){
-        e.preventDefault()
-        const taskString = e.dataTransfer.getData('task')
-        const task = JSON.parse(taskString)
-
-        if(currentBoard){
-            const newBoard = {
-                ...currentBoard,
-                columns: currentBoard.columns.map(col=>{
-                    if(col.id === column.id){
-                        const newTasks: tasksType[] = [
-                            ...(col.tasks || []).filter(item=>item.id !== task.id), 
-                            {...task, status: col.name, statusId: col.id}
-                        ]
-                        return {
-                            ...col,
-                            tasks: newTasks
-                        }
-                    } else return {
-                        ...col,
-                        tasks: [...(col.tasks || []).filter(t => t.id !== task.id)]
-                    }
-                })
-            } 
-
-            const newBoards = Boards?.map(board=>{
-                if(board.id === currentBoard.id){
-                    return newBoard
-                }else return board
-            })
-
-            dispatch({
-                type: 'setBoards',
-                payload:{
-                    BoardsPayload: newBoards
-                }
-            })
-        }
-    }
-
-    function handleDragOver(e: React.DragEvent){
-        e.preventDefault()
-    }
 
     return (
         <div key={`${column.id}${index}`} className={` min-w-[17.5rem] flex flex-col mr-8 h-full text-white p-1`}>
@@ -68,16 +25,24 @@ export default function Column({column, index}: {column: columnType, index: stri
                 </div>
                 <h3>{`${column.name.toUpperCase()}(${length})`}</h3>
             </div>
-            <div 
-                onDrop={handleOnDrop} onDragOver={handleDragOver}
-                className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-2 rounded-lg' : ''} ${isLightToggled ? 'outline-[#cecdcd]' : 'outline-[#2B2C37]'} h-full  overflow-y-scroll no-scrollbar`}
-            >
-            {column.tasks && column.tasks?.map((task) => {
-                return (
-                    <Tasks task={task} key={task.id}/>
-                )
-            })}
-            </div>
+            <Droppable droppableId={column.id.toString()}>
+                {provided=>{
+                    return (
+                       <>
+                        <div ref={provided.innerRef} className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-2 rounded-lg' : ''} ${isLightToggled ? 'outline-[#cecdcd]' : 'outline-[#2B2C37]'} h-full`}>
+                            {column.tasks && column.tasks?.map((task, index) => {
+                                return (
+                                    <>
+                                        <Tasks task={task} key={task.id} index={index}/>
+                                    </>
+                                )
+                            })}
+                        </div>
+                        {provided.placeholder}
+                       </>
+                    )
+                }}
+            </Droppable>
         </div>
     )
 }

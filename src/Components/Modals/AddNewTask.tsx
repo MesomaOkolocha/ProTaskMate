@@ -50,7 +50,8 @@ export default function AddNewTask() {
                             id: nanoid() 
                         }
                     ],
-                    title: ''
+                    title: '',
+                    id: nanoid()
                 }
             }
         })

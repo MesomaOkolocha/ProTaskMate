@@ -18,8 +18,93 @@ export default function Body() {
         height: newHeight
     }
 
-    function dragEnd(){
-        
+    function dragEnd(result: any){
+        console.log(result)
+        const {destination, source, draggableId} = result
+
+        if(!destination){
+            return;
+        }
+
+        if (
+            destination.droppableId === source.droppableId && 
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        if(
+            destination.droppableId === source.droppableId &&
+            destination.index !== source.index
+        ) {
+            if(currentBoard){
+                const newBoard = {
+                    ...currentBoard,
+                    columns: currentBoard.columns.map(col=>{
+                        if(col.id.toString()===source.droppableId){
+                            const newTasks = [...col.tasks]
+                            const findTask = newTasks.find(task=>task.id.toString() === draggableId) || newTasks[0]
+                            newTasks.splice(source.index, 1)
+                            newTasks.splice(destination.index, 0, findTask)
+                            return {
+                                ...col,
+                                tasks: newTasks
+                            }
+                        }else return col
+                    })
+                } 
+
+                const newBoards = Boards?.map(board=>{
+                    if(board.id === currentBoard.id){
+                        return newBoard
+                    }else return board
+                })
+
+                dispatch({
+                    type: 'setBoards',
+                    payload:{
+                        BoardsPayload: newBoards
+                    }
+                })
+            }
+        }
+        if(destination.droppableId !== source.droppableId){
+            if(currentBoard){
+                const newBoard = {
+                    ...currentBoard,
+                    columns: currentBoard.columns.map(col=>{
+                        if(col.id.toString()===destination.droppableId){
+                            const newTasks = [...(col.tasks || [])]
+                            const findTask = currentBoard.columns.find(col=>col.id.toString() === source.droppableId)?.tasks.find(task=>task.id.toString()===draggableId) || col.tasks[0]
+                            newTasks.splice(destination.index, 0, findTask)
+                            console.log(findTask)
+                            return {
+                                ...col,
+                                tasks: newTasks
+                            }
+                        }else if(col.id.toString()===source.droppableId){
+                            return {
+                                ...col,
+                                tasks: col.tasks.filter(item=>item.id.toString()!==draggableId)
+                            }
+                        }else return col
+                    })
+                } 
+    
+                const newBoards = Boards?.map(board=>{
+                    if(board.id === currentBoard.id){
+                        return newBoard
+                    }else return board
+                })
+    
+                dispatch({
+                    type: 'setBoards',
+                    payload:{
+                        BoardsPayload: newBoards
+                    }
+                })
+            }
+        }
     }
 
     if(!Boards || Boards.length===0){
