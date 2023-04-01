@@ -76,8 +76,9 @@ export default function Body() {
                         if(col.id.toString()===destination.droppableId){
                             const newTasks = [...(col.tasks || [])]
                             const findTask = currentBoard.columns.find(col=>col.id.toString() === source.droppableId)?.tasks.find(task=>task.id.toString()===draggableId) || col.tasks[0]
+                            findTask.statusId =col.id
+                            findTask.status= col.name
                             newTasks.splice(destination.index, 0, findTask)
-                            console.log(findTask)
                             return {
                                 ...col,
                                 tasks: newTasks
