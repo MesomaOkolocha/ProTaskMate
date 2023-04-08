@@ -24,7 +24,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         "purpose": "any"
       }
     ],
-    "start_url": "/",
+    "start_url": "https://protaskmate.web.app/",
     "scope": "/",
     "display": "standalone",
     "background_color": "#F4F7FD",

@@ -16,7 +16,7 @@
       "purpose": "any"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "https://protaskmate.web.app/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#F4F7FD",
