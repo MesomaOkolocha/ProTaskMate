@@ -28,7 +28,7 @@ export default function Column({column, index}: {column: columnType, index: stri
             <Droppable droppableId={column.id.toString()}>
                 {provided=>{
                     return (
-                       <>
+                       <div key={column.id}>
                         <div ref={provided.innerRef} className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-2 rounded-lg' : ''} ${isLightToggled ? 'outline-[#cecdcd]' : 'outline-[#2B2C37]'} h-full`}>
                             {column.tasks && column.tasks?.map((task, index) => {
                                 return (
@@ -39,7 +39,7 @@ export default function Column({column, index}: {column: columnType, index: stri
                             })}
                         </div>
                         {provided.placeholder}
-                       </>
+                       </div>
                     )
                 }}
             </Droppable>

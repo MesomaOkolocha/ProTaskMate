@@ -82,16 +82,21 @@ export default function BoardPage() {
     },[Boards, currentBoard])
 
     
-  useEffect(()=>{
-    dispatch({
-      type: 'setCurrentBoardCopy',
-      payload: {
-        currentBoardCopyPayload: currentBoard
-      }
-    })
-  }, [currentBoard])
+    useEffect(()=>{
+        dispatch({
+        type: 'setCurrentBoardCopy',
+        payload: {
+            currentBoardCopyPayload: currentBoard
+        }
+        })
+    }, [currentBoard])
 
     const {editBoardmodal, addTaskModal, editModal, boardsModal, deleteBoardModal, addColumnModal, showTaskModal, deleteTaskModal, editTaskModal,createBoardModal } = modals
+    
+    if(currentBoard === null){
+        return <Loader />
+    }
+    
     return (
         <div className=''>
             <Header />

@@ -41,17 +41,16 @@ export default function Login() {
                     errorPayload: 'Failed to Log In'
                 }
             })
+        }finally{
+            setLoading(false)
         }
-        setLoading(false)
     }
+
 
     if(currentUser){
         return <Navigate to ='/' />
     }
-
-    if(currentUser && username === ''){
-        return <Loader />
-    }
+    
     
     if(loading){
         return <Loader />
