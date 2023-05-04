@@ -6,6 +6,12 @@ import { generateId } from "../Functions/Functions";
 import { appReducer } from "../Reducer/appReducer";
 import { AppContextType } from "../Types/types";
 
+function getTheme(){
+    const theme = localStorage.getItem("theme");
+    if(theme === 'dark'){
+        return false
+    }else return true
+}
 
 const AppContext = createContext<AppContextType>({
     currentUser: null,
@@ -53,7 +59,7 @@ const AppContext = createContext<AppContextType>({
            id: ''
         }]
     },
-    isLightToggled: false,
+    isLightToggled: getTheme() || false,
     sideBarShown: true,
     newBoard: null
 })

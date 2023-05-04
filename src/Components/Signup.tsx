@@ -58,13 +58,6 @@ export default function Signup() {
     
     return (
         <div className={`min-h-screen ${isLightToggled ? 'bg-[#f5f4fd]' : 'bg-[#20212C]'} flex flex-col justify-center items-center`}>
-             <div className={`flex rounded-md items-center justify-center w-[220px] ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C] '} py-2 text-[#828fa3] text-[1.3rem] gap-4`}>
-                <i><RiMoonClearFill /></i>
-                <div className='rounded-full w-[45px] h-[23px] p-1 bg-[#635FC7]' onClick={()=>{dispatch({type: 'setIsLightToggled'})}}>
-                    <div className={`bg-white rounded-full h-[15px] w-[15px] ${isLightToggled ? 'ml-5' : ''}`}></div>
-                </div>
-                <i><MdWbSunny /></i>
-            </div>
             <h2 className='font-bold text-[2rem] mb-6 text-blue-400'>SIGN UP</h2>
             {errorMessage !== '' && <p className='w-[300px] p-2 text-white bg-red-400 mb-6'>{errorMessage}</p>}
             <form className='flex flex-col gap-5' onSubmit={handleSignUp}>

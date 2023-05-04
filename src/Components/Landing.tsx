@@ -6,7 +6,7 @@ export default function Landing() {
 
     const { isLightToggled } = useAuth()
     return (
-        <div className='font-jakarta p-6'>
+        <div className={`font-jakarta p-6 ${isLightToggled ? 'bg-[#f5f4fd]' : 'bg-[#20212C]'} `}>
             <div className='flex items-center gap-3'>
                 <img src='logo.svg' 
                     className='min-w-[1.5rem] h-8'
