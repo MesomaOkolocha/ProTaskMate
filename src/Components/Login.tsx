@@ -4,8 +4,7 @@ import {  loginUser } from '../Functions/Functions'
 import { useState, useEffect } from 'react'
 import Loader from './Loader'
 import GoogleSignIn from './GoogleSignIn'
-import { RiMoonClearFill } from 'react-icons/ri'
-import { MdWbSunny } from 'react-icons/md'
+import {FaUser} from 'react-icons/fa'
 
 export default function Login() {
     
@@ -19,6 +18,15 @@ export default function Login() {
         })
     },[])
     
+    function useGuest() {
+        dispatch({
+            type: 'setCurrentUser',
+            payload: {
+                currentUserPayload: 'Guest'
+            }
+        })
+    }
+
     async function handleLogin(e: React.FormEvent<HTMLFormElement>){
        
         e.preventDefault()
@@ -92,7 +100,8 @@ export default function Login() {
                     placeholder='Password'
                 />
                 <Link to='/forgotPassword' className='text-blue-400'>Forgotten Password?</Link>
-                <button disabled={loading} className='text-white w-[300px] p-4 bg-blue-400 rounded-lg text-[1.3rem] font-bold tracking-wide'>Login</button>
+                <button disabled={loading} className='text-white w-[300px] p-2 bg-blue-400 rounded-lg text-[1.3rem] font-bold tracking-wide'>Login</button>
+                <button type='button' onClick={useGuest} className='text-white w-[300px] p-2 bg-blue-400 rounded-lg text-[1.2rem] font-bold tracking-wide flex items-center justify-center gap-3'><i><FaUser /></i> Browse as Guest</button>
             </form>
             <GoogleSignIn />
             <p className={`mt-6 ${isLightToggled ?'text-black':'text-white'}`}>Need an account? <Link to='/signup' className='text-blue-400 '>Sign Up</Link></p>

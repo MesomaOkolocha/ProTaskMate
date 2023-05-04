@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react'
 import { useAuth } from '../Contexts/AppContext'
 import Aside from './Aside';
-import AsideBoards from './AsideBoards';
+import {defaultBoard} from '../data'
 import Body from './Body';
 import Header from './Header';
 import AddColumnModal from './Modals/AddColumnModal';
@@ -23,13 +23,20 @@ import Loader from './Loader';
 
 export default function BoardPage() {
 
-    const { Boards, username, dispatch, modals, currentBoard } = useAuth()
+    const { Boards, username, currentUser, dispatch, modals, currentBoard } = useAuth()
     
     const [currentBoardSet, setCurrentBoardSet] = useState(false);
     const [loading, setLoading] = useState(false)
 
     useEffect(()=>{
-        if(username !=='' && !Boards || Boards?.length === 0){
+        if(currentUser === 'Guest'){
+            dispatch({
+                type: 'setBoards',
+                payload: {
+                    BoardsPayload: defaultBoard
+                }
+            })
+        } else if(username !=='' && !Boards || Boards?.length === 0){
             setLoading(true)
             const reference = ref(db, 'users/'+username+'/tasks')
             onValue(reference, snapshot=>{

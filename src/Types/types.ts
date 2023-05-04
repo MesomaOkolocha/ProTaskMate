@@ -13,7 +13,7 @@ export interface logInFormInterface {
 export type AppActionType = {
     type: string;
     payload?:{
-        currentUserPayload?: User | null
+        currentUserPayload?: User | null | 'Guest'
         emailPayload?: string;
         passwordPayload?: string;
         usernamePayload?: string;
@@ -30,7 +30,7 @@ export type AppActionType = {
 }
 
 export type AppContextType = {
-    currentUser: User | null
+    currentUser: User | null | 'Guest'
     email: string;
     username: string;
     password: string;
