@@ -58,7 +58,7 @@ export default function Signup() {
     
     return (
         <div className={`min-h-screen ${isLightToggled ? 'bg-[#f5f4fd]' : 'bg-[#20212C]'} flex flex-col justify-center items-center`}>
-            <h2 className='font-bold text-[2rem] mb-6 text-blue-400'>SIGN UP</h2>
+            <h2 className='font-bold text-[2rem] mb-6 text-[#635fc7]'>SIGN UP</h2>
             {errorMessage !== '' && <p className='w-[300px] p-2 text-white bg-red-400 mb-6'>{errorMessage}</p>}
             <form className='flex flex-col gap-5' onSubmit={handleSignUp}>
                 <input 
@@ -73,7 +73,7 @@ export default function Signup() {
                             }
                         })
                     }}
-                    className='p-2 border-[2px] w-[300px] border-[#808080] focus:border-blue-400 outline-none rounded-md'
+                    className='p-2 border-[2px] w-[300px] border-[#808080] focus:border-[#635fc7] outline-none rounded-md'
                     placeholder='Email'
                 />
                 <input 
@@ -88,7 +88,7 @@ export default function Signup() {
                             }
                         })
                     }}
-                    className='p-2 border-[2px] w-[300px] focus:border-blue-400 outline-none border-[#808080] rounded-md'
+                    className='p-2 border-[2px] w-[300px] focus:border-[#635fc7] outline-none border-[#808080] rounded-md'
                     placeholder='Username'
                 />
                 <input 
@@ -103,14 +103,14 @@ export default function Signup() {
                             }
                         })
                     }}
-                    className='p-2 border-[2px] w-[300px] focus:border-blue-400 outline-none border-[#808080] rounded-md'
+                    className='p-2 border-[2px] w-[300px] focus:border-[#635fc7] outline-none border-[#808080] rounded-md'
                     placeholder='Password'
                 />
                 
-                <button disabled={loading} type='submit' className='text-white w-[300px] p-4 bg-blue-500 rounded-lg text-[1.3rem] font-bold tracking-wide mt-6'>Sign Up</button>
+                <button disabled={loading} type='submit' className='text-white w-[300px] p-4 bg-[#635fc7] rounded-lg text-[1.3rem] font-bold tracking-wide mt-6'>Sign Up</button>
             </form>
             <GoogleSignIn />
-            <p className={`mt-6 ${isLightToggled ?'text-black':'text-white'}`}>Already have an account? <Link to='/login' className='text-blue-400 '>Log In</Link></p>
+            <p className={`mt-6 ${isLightToggled ?'text-black':'text-white'}`}>Already have an account? <Link to='/login' className='text-[#635fc7] '>Log In</Link></p>
         </div>
     )
 }
