@@ -8,17 +8,7 @@ import { deleteUserAccount, logout } from '../Functions/Functions'
 
 export default function AsideFooter() {
 
-    const {dispatch, username, isLightToggled} = useAuth()
-    async function deleteUser(){
-        try{
-            await deleteUserAccount(username)
-            dispatch({
-                type: 'setNoUser'
-            })
-        } catch (error){
-            console.log(error)
-        }
-    }
+    const {dispatch, isLightToggled} = useAuth()
 
     useEffect(()=>{
         if(isLightToggled === true){
@@ -30,6 +20,9 @@ export default function AsideFooter() {
 
     function logoutUser(){
         logout()
+        dispatch({
+            type: 'setNoModals'
+        })
         dispatch({
             type: 'setNoUser'
         })
