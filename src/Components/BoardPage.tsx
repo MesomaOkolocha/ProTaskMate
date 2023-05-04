@@ -30,12 +30,14 @@ export default function BoardPage() {
 
     useEffect(()=>{
         if(currentUser === 'Guest'){
-            dispatch({
-                type: 'setBoards',
-                payload: {
-                    BoardsPayload: defaultBoard
-                }
-            })
+            setTimeout(()=>{
+                dispatch({
+                    type: 'setBoards',
+                    payload: {
+                        BoardsPayload: defaultBoard
+                    }
+                })
+            }, 2000)
         } else if(username !=='' && !Boards || Boards?.length === 0){
             setLoading(true)
             const reference = ref(db, 'users/'+username+'/tasks')
@@ -100,6 +102,9 @@ export default function BoardPage() {
 
     const {editBoardmodal, addTaskModal, editModal, boardsModal, deleteBoardModal, addColumnModal, showTaskModal, deleteTaskModal, editTaskModal,createBoardModal } = modals
     
+    if(currentUser === 'Guest' && Boards?.length === 0){
+        return <Loader />
+    }
     if(currentBoard === null){
         return <Loader />
     }
