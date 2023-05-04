@@ -66,7 +66,7 @@ export default function DashBoard() {
 
     
     if(!currentUser){
-        return <Navigate to='/login' />
+        return <Navigate to='/landing' />
     }
     
     if(currentUser && username === ''){
