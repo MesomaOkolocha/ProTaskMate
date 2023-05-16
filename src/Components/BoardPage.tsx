@@ -38,7 +38,11 @@ export default function BoardPage() {
                     }
                 })
             }, 2000)
-        } else if(username !=='' && !Boards || Boards?.length === 0){
+        }
+    }, [])
+
+    useEffect(()=>{
+        if(username !=='' && !Boards || Boards?.length === 0){
             setLoading(true)
             const reference = ref(db, 'users/'+username+'/tasks')
             onValue(reference, snapshot=>{
