@@ -90,7 +90,8 @@ export default function AddNewTask() {
                         newTaskPayload: {
                             ...newTask,
                             status: name,
-                            statusId: newStatusId
+                            statusId: newStatusId,
+                            description: ''
                         }
                     }
                 })
