@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
 import { useAuth } from '../Contexts/AppContext'
 import useWindowDimensions from '../Hooks/windowDimensions'
 import NewColumn from './NewColumn'
-import { tasksType } from '../Types/types'
 import Column from './Column'
 import { GoPlus } from 'react-icons/go'
 import { DragDropContext } from 'react-beautiful-dnd'

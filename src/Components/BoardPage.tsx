@@ -15,8 +15,6 @@ import EditModal from './Modals/EditModal';
 import EditTaskModal from './Modals/EditTaskModal';
 import ShowTaskModal from './Modals/ShowTaskModal';
 import SideEye from './Modals/SideEye';
-import { DndProvider, } from 'react-dnd/dist/core';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { onValue, ref } from '@firebase/database';
 import { db } from '../firebase';
 import Loader from './Loader';

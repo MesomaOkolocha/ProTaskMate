@@ -82,6 +82,9 @@ export function AppProvider({children}: {children: ReactNode}){
                     currentUserPayload: user
                 }
             })
+            if(user){
+                localStorage.setItem('user', JSON.stringify(user))
+            }
         })
         return unsubscribe
     },[])

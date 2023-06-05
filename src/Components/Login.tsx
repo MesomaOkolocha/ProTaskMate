@@ -8,7 +8,7 @@ import {FaUser} from 'react-icons/fa'
 
 export default function Login() {
     
-    const { currentUser, isLightToggled, username, password, email, dispatch, errorMessage } = useAuth()
+    const { currentUser, isLightToggled, password, email, dispatch, errorMessage } = useAuth()
 
     const [loading, setLoading] = useState(false)
     
@@ -42,6 +42,7 @@ export default function Login() {
         try{
             setLoading(true)
             await loginUser(email, password)
+            
         }catch{
             dispatch({
                 type: 'setError',

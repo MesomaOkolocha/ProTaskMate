@@ -5,10 +5,7 @@ import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import Loader from './Loader'
 import GoogleSignIn from './GoogleSignIn'
-import { defaultBoard } from '../data'
 import { createBaseBoard } from './Board'
-import { RiMoonClearFill } from 'react-icons/ri'
-import { MdWbSunny } from 'react-icons/md'
 
 export default function Signup() {
     
