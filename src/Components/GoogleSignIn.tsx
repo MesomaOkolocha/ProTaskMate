@@ -25,7 +25,6 @@ export default function GoogleSignIn() {
       
         onValue(newReference, snapshot=>{
           const data = snapshot.val() || [] // Use empty array if snapshot.val() is null
-          console.log(data)
           
           // Only update tasks with createBaseBoard() if data is an empty array
           if(data.length === 0){

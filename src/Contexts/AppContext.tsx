@@ -13,8 +13,10 @@ function getTheme(){
     }else return true
 }
 
+const user = localStorage.getItem("user")
+
 const AppContext = createContext<AppContextType>({
-    currentUser: null,
+    currentUser: user !== null ? JSON.parse(user) : null,
     email: '',
     username: '',
     password: '',
