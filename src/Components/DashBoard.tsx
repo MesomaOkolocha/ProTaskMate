@@ -6,15 +6,17 @@ import { db } from '../firebase'
 import Loader from './Loader'
 import { useLocation } from 'react-router-dom'
 import BoardPage from './BoardPage'
-import { createBaseBoard } from './Board'
 
 export default function DashBoard() {
-    const { currentUser, dispatch , username, Boards, currentBoard } = useAuth()
+    const { currentUser, dispatch , username, Boards } = useAuth()
 
     const location = useLocation()
     
     useEffect(()=>{
         window.scrollTo(0, 0);
+        if(currentUser === 'Guest'){
+            return
+        }
         if(username===''){
             onValue(ref(db, '/users'), snapshot=>{
                 const data = snapshot.val()
@@ -44,7 +46,14 @@ export default function DashBoard() {
     },[location.pathname])
 
     useEffect(()=>{
-        if(currentUser?.displayName && username === ''){
+        if(currentUser === 'Guest'){
+            dispatch({
+                type: 'setUsername',
+                payload: {
+                    usernamePayload: 'Guest'
+                }
+            })
+        }else if(currentUser?.displayName && username === ''){
             dispatch({
                 type: 'setUsername',
                 payload: {
@@ -66,7 +75,7 @@ export default function DashBoard() {
 
     
     if(!currentUser){
-        return <Navigate to='/login' />
+        return <Navigate to='/landing' />
     }
     
     if(currentUser && username === ''){

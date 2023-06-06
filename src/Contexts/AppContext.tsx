@@ -6,9 +6,17 @@ import { generateId } from "../Functions/Functions";
 import { appReducer } from "../Reducer/appReducer";
 import { AppContextType } from "../Types/types";
 
+function getTheme(){
+    const theme = localStorage.getItem("theme");
+    if(theme === 'dark'){
+        return false
+    }else return true
+}
+
+const user = localStorage.getItem("user")
 
 const AppContext = createContext<AppContextType>({
-    currentUser: null,
+    currentUser: user !== null ? JSON.parse(user) : null,
     email: '',
     username: '',
     password: '',
@@ -53,7 +61,7 @@ const AppContext = createContext<AppContextType>({
            id: ''
         }]
     },
-    isLightToggled: false,
+    isLightToggled: getTheme() || false,
     sideBarShown: true,
     newBoard: null
 })
@@ -76,6 +84,9 @@ export function AppProvider({children}: {children: ReactNode}){
                     currentUserPayload: user
                 }
             })
+            if(user){
+                localStorage.setItem('user', JSON.stringify(user))
+            }
         })
         return unsubscribe
     },[])

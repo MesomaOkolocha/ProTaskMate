@@ -1,13 +1,12 @@
 import React from 'react'
 import { Droppable } from 'react-beautiful-dnd'
-import { useDrop } from 'react-dnd'
 import { useAuth } from '../Contexts/AppContext'
-import { columnType, tasksType } from '../Types/types'
+import { columnType } from '../Types/types'
 import Tasks from './Tasks'
 
 export default function Column({column, index}: {column: columnType, index: string | number}) {
     
-    const { Boards, dispatch, isLightToggled, currentBoard, currentTask } = useAuth()
+    const { isLightToggled } = useAuth()
     const tasks = column.tasks || []
     const length = tasks.length
 
@@ -28,7 +27,7 @@ export default function Column({column, index}: {column: columnType, index: stri
             <Droppable droppableId={column.id.toString()}>
                 {provided=>{
                     return (
-                       <>
+                       <div key={column.id} className='h-full'>
                         <div ref={provided.innerRef} className={`mt-6 ${length === 0 ? 'outline-dashed h-full outline-2 rounded-lg' : ''} ${isLightToggled ? 'outline-[#cecdcd]' : 'outline-[#2B2C37]'} h-full`}>
                             {column.tasks && column.tasks?.map((task, index) => {
                                 return (
@@ -39,7 +38,7 @@ export default function Column({column, index}: {column: columnType, index: stri
                             })}
                         </div>
                         {provided.placeholder}
-                       </>
+                       </div>
                     )
                 }}
             </Droppable>

@@ -1,5 +1,3 @@
-import { BoardType } from "../Types/types";
-import { generateId } from "../Functions/Functions";
 import {nanoid} from 'nanoid'
 
 export const createBaseBoard = () =>{

@@ -4,12 +4,11 @@ import {  loginUser } from '../Functions/Functions'
 import { useState, useEffect } from 'react'
 import Loader from './Loader'
 import GoogleSignIn from './GoogleSignIn'
-import { RiMoonClearFill } from 'react-icons/ri'
-import { MdWbSunny } from 'react-icons/md'
+import {FaUser} from 'react-icons/fa'
 
 export default function Login() {
     
-    const { currentUser, isLightToggled, username, password, email, dispatch, errorMessage } = useAuth()
+    const { currentUser, isLightToggled, password, email, dispatch, errorMessage } = useAuth()
 
     const [loading, setLoading] = useState(false)
     
@@ -19,6 +18,15 @@ export default function Login() {
         })
     },[])
     
+    function useGuest() {
+        dispatch({
+            type: 'setCurrentUser',
+            payload: {
+                currentUserPayload: 'Guest'
+            }
+        })
+    }
+
     async function handleLogin(e: React.FormEvent<HTMLFormElement>){
        
         e.preventDefault()
@@ -34,6 +42,7 @@ export default function Login() {
         try{
             setLoading(true)
             await loginUser(email, password)
+            
         }catch{
             dispatch({
                 type: 'setError',
@@ -41,17 +50,16 @@ export default function Login() {
                     errorPayload: 'Failed to Log In'
                 }
             })
+        }finally{
+            setLoading(false)
         }
-        setLoading(false)
     }
+
 
     if(currentUser){
         return <Navigate to ='/' />
     }
-
-    if(currentUser && username === ''){
-        return <Loader />
-    }
+    
     
     if(loading){
         return <Loader />
@@ -59,14 +67,7 @@ export default function Login() {
     
     return (
         <div className={`min-h-screen ${isLightToggled ? 'bg-[#f5f4fd]' : 'bg-[#20212C]'} flex flex-col justify-center items-center`}>
-            <div className={`flex rounded-md items-center justify-center w-[220px] ${isLightToggled ? 'bg-[#F4F7FD]' : 'bg-[#20212C] '} py-2 text-[#828fa3] text-[1.3rem] gap-4`}>
-                <i><RiMoonClearFill /></i>
-                <div className='rounded-full w-[45px] h-[23px] p-1 bg-[#635FC7]' onClick={()=>{dispatch({type: 'setIsLightToggled'})}}>
-                    <div className={`bg-white rounded-full h-[15px] w-[15px] ${isLightToggled ? 'ml-5' : ''}`}></div>
-                </div>
-                <i><MdWbSunny /></i>
-            </div>
-            <h2 className='font-bold tracking-wider text-[2rem] mb-6 text-blue-400'>LOG IN</h2>
+            <h2 className='font-bold tracking-wider text-[2rem] mb-6 text-[#635fc7]'>LOG IN</h2>
             {errorMessage !== '' && <p className='p-2 w-[300px] bg-red-400 mb-6 text-white'>{errorMessage}</p>}
             <form className='flex flex-col gap-5' onSubmit={handleLogin}>
                 <input 
@@ -81,7 +82,7 @@ export default function Login() {
                             }
                         })
                     }}
-                    className='p-2 border-[2px] w-[300px] border-[#808080] focus:border-blue-400 outline-none rounded-md'
+                    className='p-2 border-[2px] w-[300px] border-[#808080] focus:border-[#635fc7] outline-none rounded-md'
                     placeholder='Email'
                 />
                 <input 
@@ -96,14 +97,15 @@ export default function Login() {
                             }
                         })
                     }}
-                    className='p-2 border-[2px] w-[300px] focus:border-blue-400 outline-none border-[#8a8383] rounded-md'
+                    className='p-2 border-[2px] w-[300px] focus:border-[#635fc7] outline-none border-[#8a8383] rounded-md'
                     placeholder='Password'
                 />
-                <Link to='/forgotPassword' className='text-blue-400'>Forgotten Password?</Link>
-                <button disabled={loading} className='text-white w-[300px] p-4 bg-blue-400 rounded-lg text-[1.3rem] font-bold tracking-wide'>Login</button>
+                <Link to='/forgotPassword' className='text-[#635fc7]'>Forgotten Password?</Link>
+                <button disabled={loading} className='text-white w-[300px] p-2 bg-[#635fc7] rounded-lg text-[1.3rem] font-bold tracking-wide'>Login</button>
+                <button type='button' onClick={useGuest} className='text-white w-[300px] p-2 bg-[#635fc7] rounded-lg text-[1.2rem] font-bold tracking-wide flex items-center justify-center gap-3'><i><FaUser /></i> Browse as Guest</button>
             </form>
             <GoogleSignIn />
-            <p className={`mt-6 ${isLightToggled ?'text-black':'text-white'}`}>Need an account? <Link to='/signup' className='text-blue-400 '>Sign Up</Link></p>
+            <p className={`mt-6 ${isLightToggled ?'text-black':'text-white'}`}>Need an account? <Link to='/signup' className='text-[#635fc7] '>Sign Up</Link></p>
         </div>
     )
 }

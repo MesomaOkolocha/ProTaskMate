@@ -225,7 +225,7 @@ export default function ShowTaskModal() {
                 </div>
                 <div className='flex flex-col mt-6 relative transition-all delay-75'>
                     <p className={`text-[0.75rem] font-semibold ${isLightToggled ? 'text-[#828fa3]': 'text-white'} mb-2`}>Status</p>
-                    <button type='button' onClick={setStatusItemsOpen} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? '' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'}`}>
+                    <button type='button' onClick={(e)=>{e.stopPropagation(); setStatusItemsOpen();}} className={`flex justify-between border-[2px] rounded-md px-4 py-2 text-[0.8125rem] font-semibold ${isLightToggled ? '' : 'text-white'} transition-colors delay-200 ease-linear outline-none ${isStatusOpen ? 'border-[#635FC7]' : 'border-[#828ca366]'}`}>
                         <span>{currentTask.status}</span>
                         <span className='text-[#635fc7] text-[1.2rem]'>{isStatusOpen ? <BiChevronUp /> : <BiChevronDown /> }</span>
                     </button>

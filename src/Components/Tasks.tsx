@@ -4,7 +4,7 @@ import { useAuth } from '../Contexts/AppContext'
 import { tasksType } from '../Types/types'
 
 export default function Tasks({task, index}: {task: tasksType, index: number}) {
-    const {dispatch, isLightToggled, currentBoard} = useAuth()
+    const { dispatch, isLightToggled } = useAuth()
     const subtasks = task.subtasks || []
     const number = subtasks.filter(item => item.isCompleted).length
 
@@ -12,20 +12,6 @@ export default function Tasks({task, index}: {task: tasksType, index: number}) {
         dispatch({
             type: 'setShowTaskModalTrue'
         })
-    }
-
-    function handleDragStart(e: React.DragEvent, task: tasksType){
-        e.dataTransfer.effectAllowed = 'move'
-        const taskString = JSON.stringify(task)
-        e.dataTransfer.setData('task', taskString)
-        if(currentBoard){
-            dispatch({
-                type: 'setCurrentTask',
-                payload: {
-                    currentTaskPayload: task
-                }
-            })
-        }
     }
 
     return (

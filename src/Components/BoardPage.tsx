@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react'
 import { useAuth } from '../Contexts/AppContext'
 import Aside from './Aside';
-import AsideBoards from './AsideBoards';
+import {defaultBoard} from '../data'
 import Body from './Body';
 import Header from './Header';
 import AddColumnModal from './Modals/AddColumnModal';
@@ -15,18 +15,29 @@ import EditModal from './Modals/EditModal';
 import EditTaskModal from './Modals/EditTaskModal';
 import ShowTaskModal from './Modals/ShowTaskModal';
 import SideEye from './Modals/SideEye';
-import { DndProvider, } from 'react-dnd/dist/core';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { onValue, ref } from '@firebase/database';
 import { db } from '../firebase';
 import Loader from './Loader';
 
 export default function BoardPage() {
 
-    const { Boards, username, dispatch, modals, currentBoard } = useAuth()
+    const { Boards, username, currentUser, dispatch, modals, currentBoard } = useAuth()
     
     const [currentBoardSet, setCurrentBoardSet] = useState(false);
     const [loading, setLoading] = useState(false)
+
+    useEffect(()=>{
+        if(currentUser === 'Guest'){
+            setTimeout(()=>{
+                dispatch({
+                    type: 'setBoards',
+                    payload: {
+                        BoardsPayload: defaultBoard
+                    }
+                })
+            }, 2000)
+        }
+    }, [])
 
     useEffect(()=>{
         if(username !=='' && !Boards || Boards?.length === 0){
@@ -82,16 +93,24 @@ export default function BoardPage() {
     },[Boards, currentBoard])
 
     
-  useEffect(()=>{
-    dispatch({
-      type: 'setCurrentBoardCopy',
-      payload: {
-        currentBoardCopyPayload: currentBoard
-      }
-    })
-  }, [currentBoard])
+    useEffect(()=>{
+        dispatch({
+        type: 'setCurrentBoardCopy',
+        payload: {
+            currentBoardCopyPayload: currentBoard
+        }
+        })
+    }, [currentBoard])
 
     const {editBoardmodal, addTaskModal, editModal, boardsModal, deleteBoardModal, addColumnModal, showTaskModal, deleteTaskModal, editTaskModal,createBoardModal } = modals
+    
+    if(currentUser === 'Guest' && Boards?.length === 0){
+        return <Loader />
+    }
+    if(currentBoard === null){
+        return <Loader />
+    }
+    
     return (
         <div className=''>
             <Header />
